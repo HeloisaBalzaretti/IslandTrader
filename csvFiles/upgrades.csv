@@ -1,0 +1,8 @@
+idNumber|name|description|priceToSell|priceToBuy|increaseSpeed|increaseSneakiness|increaseCargoCapacity|increaseEndurance
+51|Small cannon|Increase your ship endurance|150.00|115.00|0|0|0|3
+52|Large cannon|Increase your ship endurance|280.00|200.00|0|0|0|8
+53|Turbine|Increase the speed and sneakiness of your ship|300.00|200.00|10|10|0|0
+54|Cargo space|Increase 100 kgs in the space of your cargo, now you can trade more items|200.00|135.00|0|0|100|0
+55|Umbrella|Increase the endurance of your ship during bad weather|180.00|102.00|0|0|0|10
+56|knife|Increase endurance and sneakiness to help you scape from pirates|80.00|55.00|0|10|0|10
+57|Cup of cocoa|Drinking cocoa to increase endurance and help you scape from pirates|400.00|256.00|0|0|0|10

@@ -1,0 +1,16 @@
+idNumber|name|description|priceToStoreSell|priceToStoreBuy|weight(kg)
+1|Bag of corn seeds|One bag of corn seeds|10.00|8.00|10
+2|Bag of rice seeds|One bag of rice seeds|13.00|9.00|12
+3|Bag of cocoa beans|One bag of cocoa beans|15.00|11.00|15
+4|Bag of coffee beans|One bag of coffee beans|18.00|12.50|14
+5|Box of cinnamon|One nice box of cinnamon sticks|6.50|4.50|4
+6|Box of chili|One hot box of chili powder|5.50|3.50|4
+7|Box of garlic|One tasty box of garlic cloves|7.40|4.90|4
+8|Box of smoked paprika|One tasty box of smoked paprika|4.90|2.90|4
+9|Box of tea leaves|One box of fancy tea|5.75|3.00|4
+10|Wine barrel|One barrel of red wine|25.00|18.00|12
+11|Box of penicillin|One box of the magic penicillin medicine|13.50|10.50|2
+12|Box of anti-allergic|One box of anti-allergic to keep the ichy away|12.00|9.00|2
+13|Coil of rope|One meter of rope to tie any stuff|8.50|6.00|1
+14|Lot of wood|A lot of wood to build anything|50.00|41.00|60
+15|Lot of bricks|A lot of bricks to build anything|60.00|55.00|80
