@@ -12,23 +12,22 @@ import islandtrader.core.Trader;
 import repository.IslandRepository;
 import repository.ShipRepository;
 
+@SuppressWarnings("unused")
 public class GameEnvironmentSwing extends GameEnvironment {
 
 	private ArrayList<Island> islands = new ArrayList<>();
-	private ArrayList<Route> routes = new ArrayList<>();
+	private ArrayList<Route> routesArray = new ArrayList<>();
 	private ArrayList<Ship> ships = new ArrayList<>();
 	private Island selectedIsland;
 	private Ship ship;
 
-	/**
-	 *
-	 */
 	public GameEnvironmentSwing() {
 		ShipRepository shipRepository = new ShipRepository();
 		this.ships = shipRepository.getList();
 		IslandRepository islandRepository = new IslandRepository();
 		islands = islandRepository.getList();
 		currentIsland = islands.get(0);
+
 	}
 
 	public void launchMainScreen(Trader trader) {
@@ -37,7 +36,7 @@ public class GameEnvironmentSwing extends GameEnvironment {
 
 	public void closeMainScreen(MainWindow mainWindow) {
 		mainWindow.closeWindow();
-		;
+
 	}
 
 	public void launchSetupScreen() {
@@ -46,6 +45,15 @@ public class GameEnvironmentSwing extends GameEnvironment {
 
 	public void closeSetupScreen(SetupTrader setupScreen) {
 		setupScreen.closeWindow();
+
+	}
+
+	public void launchRoutesInformation() {
+		RouteInformation routesInformation = new RouteInformation(this, trader);
+	}
+
+	public void closeRoutesInformation(RouteInformation routesInformationwindow) {
+		routesInformationwindow.closeWindow();
 
 	}
 
@@ -89,6 +97,7 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	/**
 	 * @param selectedIsland the selectedIsland to set
 	 */
+
 	public void setSelectedIsland(Island selectedIsland) {
 		this.selectedIsland = selectedIsland;
 	}
@@ -111,14 +120,15 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	 * @return the routes
 	 */
 	public ArrayList<Route> getRoutes() {
-		return routes;
+		return routesArray;
 	}
 
 	/**
 	 * @param routes the routes to set
 	 */
 	public void setRoutes(ArrayList<Route> routes) {
-		this.routes = routes;
+
+		this.routesArray = routes;
 	}
 
 	/**

@@ -16,7 +16,7 @@ import service.RandomEventService;
 /**
  * Class that models objects of the class Island for the database.
  *
- * @author Sebastian
+ * @author
  */
 public class IslandRepository extends BaseRepository {
 	/**
@@ -151,7 +151,7 @@ public class IslandRepository extends BaseRepository {
 	}
 
 	/**
-	
+
 	*/
 	public void getIslandRoutes(ArrayList<Island> islands) {
 		for (Island island : islands) {

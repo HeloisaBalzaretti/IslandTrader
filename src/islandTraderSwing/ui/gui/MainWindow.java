@@ -3,6 +3,8 @@ package islandTraderSwing.ui.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -87,8 +89,8 @@ public class MainWindow {
 	private void initialize() {
 		mainWindowTraderAdventure = new JFrame();
 		mainWindowTraderAdventure.getContentPane().setFont(new Font("Serif", Font.PLAIN, 12));
-		mainWindowTraderAdventure.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				"C:\\Users\\heloi\\Heloisa\\javaGroupProject\\TraderProject\\src\\islandTraderSwing\\ui\\gui\\images\\weel2.jfif"));
+		mainWindowTraderAdventure.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(MainWindow.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
 		mainWindowTraderAdventure.setTitle("Island Trader Adventure");
 		mainWindowTraderAdventure.setBounds(100, 100, 842, 527);
 		mainWindowTraderAdventure.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -122,8 +124,8 @@ public class MainWindow {
 
 		JLabel lblTraderImg = new JLabel("");
 		lblTraderImg.setVerticalAlignment(SwingConstants.TOP);
-		lblTraderImg.setIcon(new ImageIcon(
-				"C:\\Users\\heloi\\Heloisa\\javaGroupProject\\TraderProject\\src\\islandTraderSwing\\ui\\gui\\images\\capitain9.png"));
+		lblTraderImg
+				.setIcon(new ImageIcon(MainWindow.class.getResource("/islandTraderSwing/ui/gui/images/capitain9.png")));
 		lblTraderImg.setBounds(0, 10, 130, 90);
 		mainWindowTraderAdventure.getContentPane().add(lblTraderImg);
 
@@ -157,22 +159,15 @@ public class MainWindow {
 		mainWindowTraderAdventure.getContentPane().add(lblShipProp);
 
 		JLabel lblIslandImg = new JLabel("");
-		lblIslandImg.setIcon(new ImageIcon(
-				"C:\\Users\\heloi\\Heloisa\\javaGroupProject\\TraderProject\\src\\islandTraderSwing\\ui\\gui\\images\\Island8Sml.png"));
-		lblIslandImg.setBounds(10, 154, 189, 184);
+		lblIslandImg.setIcon(
+				new ImageIcon(MainWindow.class.getResource("/islandTraderSwing/ui/gui/images/Island8Sml.png")));
+		lblIslandImg.setBounds(10, 161, 154, 184);
 		mainWindowTraderAdventure.getContentPane().add(lblIslandImg);
 
 		JLabel lblCurrentDocked = new JLabel("Currently docket at " + game.getCurrentIsland().getName());
 		lblCurrentDocked.setFont(new Font("Serif", Font.BOLD, 14));
 		lblCurrentDocked.setBounds(10, 127, 224, 24);
 		mainWindowTraderAdventure.getContentPane().add(lblCurrentDocked);
-
-		JButton btnViewRoutesLeavingCurrentIsland = new JButton("View Route Information");
-		btnViewRoutesLeavingCurrentIsland.setForeground(new Color(51, 51, 102));
-		btnViewRoutesLeavingCurrentIsland.setFont(new Font("Serif", Font.BOLD, 16));
-		btnViewRoutesLeavingCurrentIsland.setBackground(Color.WHITE);
-		btnViewRoutesLeavingCurrentIsland.setBounds(382, 419, 204, 37);
-		mainWindowTraderAdventure.getContentPane().add(btnViewRoutesLeavingCurrentIsland);
 
 		JButton btnViewMyItems = new JButton("View my cargo items");
 		btnViewMyItems.setForeground(new Color(51, 51, 102));
@@ -185,7 +180,7 @@ public class MainWindow {
 		btnSail.setForeground(new Color(0, 153, 102));
 		btnSail.setFont(new Font("Serif", Font.BOLD, 16));
 		btnSail.setBackground(Color.WHITE);
-		btnSail.setBounds(646, 419, 69, 37);
+		btnSail.setBounds(749, 419, 69, 37);
 		mainWindowTraderAdventure.getContentPane().add(btnSail);
 
 		JLabel lbCurrentlIslandDescription = new JLabel(game.getCurrentIsland().getDescription());
@@ -203,6 +198,7 @@ public class MainWindow {
 		mainWindowTraderAdventure.getContentPane().add(btnViewCurrentStore);
 
 		JProgressBar progressBarShipHealth = new JProgressBar();
+		progressBarShipHealth.setForeground(Color.GREEN);
 		progressBarShipHealth.setValue(100);
 		progressBarShipHealth.setBounds(236, 87, 130, 16);
 		mainWindowTraderAdventure.getContentPane().add(progressBarShipHealth);
@@ -219,13 +215,14 @@ public class MainWindow {
 		btnViewArchipelagoMap.setBounds(9, 413, 172, 43);
 		mainWindowTraderAdventure.getContentPane().add(btnViewArchipelagoMap);
 
-		JLabel lblChooseIsland = new JLabel("Choose Island to Sail:");
+		JLabel lblChooseIsland = new JLabel("Select Island to Sail:");
 		lblChooseIsland.setFont(new Font("Serif", Font.BOLD, 14));
-		lblChooseIsland.setBounds(474, 257, 146, 24);
+		lblChooseIsland.setBounds(474, 257, 136, 24);
 		mainWindowTraderAdventure.getContentPane().add(lblChooseIsland);
 
 		DefaultListModel<Island> islandListModel = new DefaultListModel<Island>();
 		islandListModel.addAll(game.getIslands());
+		islandListModel.removeElement(game.getCurrentIsland());
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(317, 284, 501, 125);
@@ -236,6 +233,22 @@ public class MainWindow {
 		islandsList.setFont(new Font("Serif", Font.PLAIN, 14));
 
 		islandsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		JButton btnViewRoutesLeavingCurrentIsland = new JButton("View All Routes Information");
+		btnViewRoutesLeavingCurrentIsland.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				game.launchRoutesInformation();
+
+			}
+		});
+		btnViewRoutesLeavingCurrentIsland.setForeground(new Color(51, 51, 102));
+		btnViewRoutesLeavingCurrentIsland.setFont(new Font("Serif", Font.BOLD, 16));
+		btnViewRoutesLeavingCurrentIsland.setBackground(Color.WHITE);
+		btnViewRoutesLeavingCurrentIsland.setBounds(342, 419, 244, 37);
+		mainWindowTraderAdventure.getContentPane().add(btnViewRoutesLeavingCurrentIsland);
+
 	}
 
 }

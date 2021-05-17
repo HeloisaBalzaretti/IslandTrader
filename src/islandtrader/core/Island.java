@@ -3,7 +3,7 @@ package islandtrader.core;
 /**
  * Class that models an Island.
  *
- * @author Sebastian
+ * @author
  *
  */
 public class Island extends Entity {
@@ -106,7 +106,7 @@ public class Island extends Entity {
 	}
 
 	/**
-	 * @param routes the routes to set
+	 * @param routes2 the routes to set
 	 */
 	public void setRoutes(Route[] routes) {
 		this.routes = routes;

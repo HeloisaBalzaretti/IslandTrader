@@ -16,7 +16,7 @@ public class Route extends Entity {
 
 	private final String ROUTE_NAME_TEMPLATE = "to %s";
 	private static final String PROBABILITY_RANDOM_EVENT_MESSAGE = "\nThe possible random encounters you may have if you take this route are:"
-			+ "\n => %s %s (Chance of encounter: %.0f%%)\n => %s %s (Chance of encounter: %.0f%%)\n => %s %s (Chance of encounter: %.0f%%)";
+			+ "<br>\n => %s %s (Chance of encounter: %.0f%%)<br>\n => %s %s (Chance of encounter: %.0f%%)<br>\n => %s %s (Chance of encounter: %.0f%%)";
 
 	public Route(int idNumber, ArrayList<RandomEvent> possibleEvents) {
 		super(idNumber, "", "");

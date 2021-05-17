@@ -24,13 +24,14 @@ import javax.swing.event.ChangeListener;
 import islandtrader.core.Ship;
 import islandtrader.core.Trader;
 
-public class SetupTrader {
+@SuppressWarnings("serial")
+public class SetupTrader extends JFrame {
 
 	private JFrame windowSetupTrader;
 	private JTextField textTraderName;
 
 	private int durationSelected;
-	private int txtLblNumDaysChoosen;
+	// private int txtLblNumDaysChoosen;
 	private String traderName;
 	private GameEnvironmentSwing game;
 
@@ -63,8 +64,8 @@ public class SetupTrader {
 		windowSetupTrader.getContentPane().setForeground(new Color(51, 51, 153));
 		windowSetupTrader.getContentPane().setBackground(SystemColor.control);
 		windowSetupTrader.getContentPane().setFont(new Font("Serif", Font.PLAIN, 14));
-		windowSetupTrader.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				"C:\\Users\\heloi\\Heloisa\\javaGroupProject\\TraderProject\\src\\islandTraderSwing\\ui\\gui\\images\\weel2.jfif"));
+		windowSetupTrader.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(SetupTrader.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
 		windowSetupTrader.setTitle("Island Trader Adventure");
 		windowSetupTrader.setBounds(100, 100, 842, 527);
 		windowSetupTrader.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,12 +89,11 @@ public class SetupTrader {
 		windowSetupTrader.getContentPane().add(lblInformTraderName);
 
 		JLabel lblSteeringWeelImg = new JLabel("captain");
-		lblSteeringWeelImg.setVerticalAlignment(SwingConstants.TOP);
 		lblSteeringWeelImg.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSteeringWeelImg.setForeground(SystemColor.textHighlightText);
-		lblSteeringWeelImg.setBounds(10, 14, 213, 186);
-		lblSteeringWeelImg.setIcon(new ImageIcon(
-				"C:\\Users\\heloi\\Heloisa\\javaGroupProject\\TraderProject\\src\\islandTraderSwing\\ui\\gui\\images\\SteeringWeelSmall.png"));
+		lblSteeringWeelImg.setBounds(10, 14, 193, 186);
+		lblSteeringWeelImg.setIcon(
+				new ImageIcon(SetupTrader.class.getResource("/islandTraderSwing/ui/gui/images/SteeringWeelSmall.png")));
 		windowSetupTrader.getContentPane().add(lblSteeringWeelImg);
 
 		JLabel lblNewLabel = new JLabel("Welcome to the Island trader adventure!");
@@ -103,7 +103,7 @@ public class SetupTrader {
 		windowSetupTrader.getContentPane().add(lblNewLabel);
 
 		textTraderName = new JTextField();
-		textTraderName.setHorizontalAlignment(SwingConstants.CENTER);
+		textTraderName.setHorizontalAlignment(SwingConstants.LEFT);
 		textTraderName.setFont(new Font("Serif", Font.PLAIN, 12));
 		textTraderName.setBounds(342, 93, 343, 19);
 		windowSetupTrader.getContentPane().add(textTraderName);
@@ -149,10 +149,10 @@ public class SetupTrader {
 		windowSetupTrader.getContentPane().add(lblChooseShip);
 
 		JLabel lblShipImg = new JLabel("");
-		lblShipImg.setHorizontalAlignment(SwingConstants.LEFT);
-		lblShipImg.setIcon(new ImageIcon(
-				"C:\\Users\\heloi\\Heloisa\\javaGroupProject\\TraderProject\\src\\islandTraderSwing\\ui\\gui\\images\\shipWater1.png"));
-		lblShipImg.setBounds(605, 218, 213, 204);
+		lblShipImg.setHorizontalAlignment(SwingConstants.CENTER);
+		lblShipImg.setIcon(
+				new ImageIcon(SetupTrader.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
+		lblShipImg.setBounds(588, 218, 230, 204);
 		windowSetupTrader.getContentPane().add(lblShipImg);
 		// Create a ListModel to store the items in the JList
 		DefaultListModel<Ship> shipListModel = new DefaultListModel<Ship>();
@@ -178,7 +178,7 @@ public class SetupTrader {
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Trader trader = new Trader(textTraderName.getText(), ", a Very Brave Sailer!",
+				Trader trader = new Trader(textTraderName.getText(), ", a Very Brave Captain!",
 						getChoosenShip(list_ShipToChoose));
 				game.setTrader(trader);
 				game.launchMainScreen(trader);
