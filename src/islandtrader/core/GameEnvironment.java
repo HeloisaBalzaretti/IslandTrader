@@ -24,25 +24,25 @@ public abstract class GameEnvironment {
 		return daysElapsed < durationChosenInDays && !isGameOver;
 	}
 
-	protected int getDaysRemaining() {
+	public int getDaysRemaining() {
 		return durationChosenInDays - daysElapsed;
 	}
 
 	/**
 	 * @return the daysElapsed
 	 */
-	protected int getDaysElapsed() {
+	public int getDaysElapsed() {
 		return daysElapsed;
 	}
 
 	/**
 	 * @param daysElapsed the daysElapsed to set
 	 */
-	protected void setDaysElapsed(int daysElapsed) {
+	public void setDaysElapsed(int daysElapsed) {
 		this.daysElapsed = daysElapsed;
 	}
 
-	protected RandomEvent getEventFromListOfPossibleEvents(ArrayList<RandomEvent> randomEventList) {
+	public RandomEvent getEventFromListOfPossibleEvents(ArrayList<RandomEvent> randomEventList) {
 
 		int randomValue = getRandomBetweenMinMax(0, 100);
 

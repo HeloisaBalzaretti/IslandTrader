@@ -2,8 +2,6 @@ package islandTraderSwing.ui.gui;
 
 import java.util.ArrayList;
 
-import javax.swing.JList;
-
 import islandtrader.core.GameEnvironment;
 import islandtrader.core.Island;
 import islandtrader.core.Route;
@@ -31,7 +29,7 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	}
 
 	public void launchMainScreen(Trader trader) {
-		MainWindow mainWindow = new MainWindow(this, trader);
+		MainWindow mainWindow = new MainWindow(this);
 	}
 
 	public void closeMainScreen(MainWindow mainWindow) {
@@ -55,6 +53,18 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	public void closeRoutesInformation(RouteInformation routesInformationwindow) {
 		routesInformationwindow.closeWindow();
 
+	}
+
+	public void launchArchipelagoWindow() {
+		ArchipelagoWindow archipelagoWindowWindow = new ArchipelagoWindow(this);
+	}
+
+	public void launchIslandDetail(Island island) {
+		IslandDetail islandDetailWindow = new IslandDetail(island);
+	}
+
+	public void launchCargoStoreTradablesWindow() {
+		CargoAllStoreTradablesWindow cargoWindow = new CargoAllStoreTradablesWindow(this);
 	}
 
 	/**
@@ -103,6 +113,13 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	}
 
 	/**
+	 * @return the selectedIsland
+	 */
+	public Island getSelectedIsland() {
+		return selectedIsland;
+	}
+
+	/**
 	 * @return the islands
 	 */
 	public ArrayList<Island> getIslands() {
@@ -147,25 +164,19 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	}
 
 	/**
-	 * @return the selectedIsland
-	 */
-	public Island getSelectedIsland() {
-		return selectedIsland;
-	}
-
-	/**
-	 * @param selectedIsland the selectedIsland to set
-	 */
-	public void setSelectedIsland(JList<Island> islandsList) {
-		this.selectedIsland = islandsList.getSelectedValue();
-	}
-
-	/**
 	 * @param currentIsland the currentIsland to set
 	 */
 	public void setCurrentIsland() {
 		setCurrentIsland(getIslands().get(0));
 
+	}
+
+	public void setDurationChosenInDays(int durationSelected) {
+		durationChosenInDays = durationSelected;
+	}
+
+	public int getDurationChosenInDays() {
+		return durationChosenInDays;
 	}
 
 	@Override

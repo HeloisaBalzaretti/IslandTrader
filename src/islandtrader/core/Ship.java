@@ -33,6 +33,7 @@ public class Ship extends Entity {
 
 	private boolean ableToSail = true;
 	private ArrayList<StoreTradable> currentCargoTradables;
+	private ArrayList<StoreTradable> soldCargoTradables = new ArrayList<StoreTradable>();
 	private double currentHealthStatus = 100;
 	private final double CREW_COST_TO_SAIL = 2.90;
 	private final double FULL_HEALTH = 100;
@@ -228,6 +229,14 @@ public class Ship extends Entity {
 
 	public void setCurrentCargoTradables(ArrayList<StoreTradable> cargoTradables) {
 		this.currentCargoTradables = cargoTradables;
+	}
+
+	public ArrayList<StoreTradable> getSoldCargoTradables() {
+		return soldCargoTradables;
+	}
+
+	public void setSoldCargoTradables(ArrayList<StoreTradable> allCargoTradables) {
+		this.soldCargoTradables = allCargoTradables;
 	}
 
 	public void addTradable(StoreTradable tradable) {

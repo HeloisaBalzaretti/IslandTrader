@@ -2,5 +2,5 @@ idNumber|storeName|description|storePercentageFee
 1|Store1|This store is located at %s|0.2
 2|Store2|This store is located at %s|0.3
 3|Store3|This store is located at %s|0.25
-4|Store4|This store is located at %s|0.4
+4|Store4|This store is located at %s|0.1
 5|Store5|This store is located at %s|0.15

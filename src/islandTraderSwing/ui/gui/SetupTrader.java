@@ -6,6 +6,7 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -30,7 +32,6 @@ public class SetupTrader extends JFrame {
 	private JFrame windowSetupTrader;
 	private JTextField textTraderName;
 
-	private int durationSelected;
 	// private int txtLblNumDaysChoosen;
 	private String traderName;
 	private GameEnvironmentSwing game;
@@ -178,12 +179,37 @@ public class SetupTrader extends JFrame {
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Trader trader = new Trader(textTraderName.getText(), ", a Very Brave Captain!",
-						getChoosenShip(list_ShipToChoose));
-				game.setTrader(trader);
-				game.launchMainScreen(trader);
-				finishedWindow();
 
+				boolean areFieldsValid = true;
+				String errors = "";
+				if (textTraderName.getText().isEmpty()) {
+					areFieldsValid = false;
+					errors = "Name cannot be empty!\n";
+				}
+				if (list_ShipToChoose.getSelectedValue() == null) {
+					areFieldsValid = false;
+					errors += "Select a ship!\n";
+				}
+				if ((textTraderName.getText().length() < 3 || textTraderName.getText().length() > 15)) {
+					areFieldsValid = false;
+					errors += "Name must be between 3 and 15 characters long.\n";
+				}
+				if (!Pattern.matches("[a-zA-Z ]+", textTraderName.getText())) {
+					areFieldsValid = false;
+					errors += "Name must not contain special characters or numbers.\n";
+				}
+
+				if (areFieldsValid) {
+					String name = textTraderName.getText().trim();
+					Trader trader = new Trader(name, ", a Very Brave Captain!", getChoosenShip(list_ShipToChoose));
+					game.setTrader(trader);
+					game.setDurationChosenInDays(sliderDurationDays.getValue());
+					game.launchMainScreen(trader);
+					finishedWindow();
+				} else {
+					String message = "Some errors were found: \n";
+					JOptionPane.showMessageDialog(new JFrame(), message + errors, "Dialog", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnStart.setForeground(new Color(51, 51, 102));
@@ -209,15 +235,11 @@ public class SetupTrader extends JFrame {
 		return traderName;
 	}
 
-	public void setDurationSelected(JSlider sliderDurationDays) {
-		durationSelected = sliderDurationDays.getValue();
-	}
-
 	/**
 	 * @return the durationSelected
 	 */
 	public int getDurationSelected() {
-		return durationSelected;
+		return game.getDurationChosenInDays();
 	}
 
 	public void setChoosenShip(JList<Ship> list_ShipToChoose) {

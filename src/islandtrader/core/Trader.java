@@ -8,7 +8,7 @@ package islandtrader.core;
 public class Trader extends Entity {
 	private Ship shipOwned;
 	private double traderAccountBalance;
-	private final double STARTING_MONEY = 5000;
+	private final double STARTING_MONEY = 10000;
 
 	public Trader(String name, String description, Ship shipOwned) {
 		super(1, name, description);

@@ -326,7 +326,7 @@ public class GameEnvironmentCmdLine extends GameEnvironment {
 		} else if (trader.getTraderAccountBalance() < costToSail) {
 			messageHelper.printMessage("You don't have enough money to pay your crew for this many days sailing!");
 
-		} else if (currentIsland.distanceToInDays(selectedIslandIndex) > getDaysRemaining()) {
+		} else if (days > getDaysRemaining()) {
 			messageHelper.printMessage("You don't have enough time to afford this many days sailing!");
 		} else {
 			randomEventHappenedHelper(selectedIslandIndex);

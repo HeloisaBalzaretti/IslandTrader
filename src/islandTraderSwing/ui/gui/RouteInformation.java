@@ -17,7 +17,7 @@ import islandtrader.core.Trader;
 
 public class RouteInformation {
 
-	private final String ROUTE_MENU_LINE_MESSAGE = " %s: <br> %d days of sailing with a total cost of %.2f$ to get %s <br>";
+	private final String ROUTE_MENU_LINE_MESSAGE = " %s: <br> %d days and %d kms of sailing with a total cost of %.2f$ to get %s <br>";
 	private JFrame routesInformationWindow;
 	private GameEnvironmentSwing game;
 
@@ -38,7 +38,7 @@ public class RouteInformation {
 	private void initialize() {
 		routesInformationWindow = new JFrame();
 		routesInformationWindow.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(RouteInformation.class.getResource("/islandTraderSwing/ui/gui/images/island11.png")));
+				.getImage(RouteInformation.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
 		routesInformationWindow.setTitle("View routes information");
 		routesInformationWindow.setBounds(100, 100, 842, 721);
 		routesInformationWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -119,9 +119,10 @@ public class RouteInformation {
 			if (route != null) {
 				routesToString += "Route " + getCurrentRoutes()[routeIndex].getIdNumber();
 				int durationDays = game.getCurrentIsland().distanceToInDays(routeIndex);
+				int distanceKms = game.getCurrentIsland().distanceToInKm(routeIndex);
 
 				double totalCostCrewToSail = trader.getShipOwned().getCrewCostToSailByTotalDays(durationDays);
-				routesToString += String.format(ROUTE_MENU_LINE_MESSAGE, route.getName(), durationDays,
+				routesToString += String.format(ROUTE_MENU_LINE_MESSAGE, route.getName(), durationDays, distanceKms,
 						totalCostCrewToSail, route);
 			}
 		}

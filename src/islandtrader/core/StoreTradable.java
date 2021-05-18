@@ -18,6 +18,7 @@ public class StoreTradable extends Entity implements Cloneable {
 	 * quantity of each tradable that the store has available to sell or wishes to
 	 * buy from Trader.
 	 */
+	private String template = "%s - %s ->%.2f$";
 	private Tradable tradable;
 	private float price;
 	private int quantity;
@@ -110,4 +111,8 @@ public class StoreTradable extends Entity implements Cloneable {
 		this.quantity += quantity;
 	}
 
+	@Override
+	public String toString() {
+		return String.format(template, this.name, this.description, this.price);
+	}
 }

@@ -21,8 +21,8 @@ public class Pirate extends RandomEvent {
 
 	private final String DEFEATED_THE_PIRATE = "You successfully scaped from the pirate and saved all your goods";
 	private final String PIRATE_TAKE_ALL_GOODS = "It was not enough to defeat the pirate and you lost your goods!";
-	private final String MESSAGE_HAPPY_PIRATE = "You played %d and %s was satisfied and happy taking your goods, you can go on with your travels";
-	private final String MESSAGE_WALK_THE_PLANK = "You played %d but you could not convince %s to be satisfied with your goods and to let you go. You lost your ship and your money...Go walk the plank and swim with the sharks.";;
+	private final String MESSAGE_HAPPY_PIRATE = "You played the dice again and got a %d and it was enough to convinced %s to be satisfied and happy taking only your goods,\n you can go on with your travels";
+	private final String MESSAGE_WALK_THE_PLANK = "You played the dice again and got a %d but you could not convince %s to be satisfied with your goods and to let you go. You lost your ship and your money...Go walk the plank and swim with the sharks.";;
 
 	public Pirate(int idNumber, String name, String description, int numberNeededToScapeThisPirate,
 			int happinessLevel) {
@@ -81,7 +81,7 @@ public class Pirate extends RandomEvent {
 
 	@Override
 	public String resultOfEncounterMessage() {
-		return "You needed a " + this.numberNeededToScapeThisPirate + " to scape from " + this.name
+		return "You needed a " + this.numberNeededToScapeThisPirate + " on the dice game to scape from " + this.name
 				+ ". You played the dice and got a " + traderDicePlayed;
 	}
 
