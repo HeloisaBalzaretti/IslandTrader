@@ -1,3 +1,7 @@
+/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
 package islandtrader.core;
 
 /**
@@ -7,7 +11,7 @@ package islandtrader.core;
  * that the Store buys/sells. This class is mainly used in the StoreRepository
  * class- Repository package.
  *
- * @author
+ * @author Maria Heloisa Balzaretti
  */
 public class StoreTradable extends Entity implements Cloneable {
 	/**
@@ -18,17 +22,25 @@ public class StoreTradable extends Entity implements Cloneable {
 	 * quantity of each tradable that the store has available to sell or wishes to
 	 * buy from Trader.
 	 */
-	private String template = "%s - %s ->%.2f$";
 	private Tradable tradable;
+
+	/**
+	 * the price selling or buying price where the store fee will be applied.
+	 */
 	private float price;
+
+	/**
+	 * The quantity available to be traded
+	 */
 	private int quantity;
 
 	/**
-	 * A new StoreTradable using parameters from Super(Entity).
-	 *
-	 * @param tradable
-	 * @param idNumber
-	 * @param quantity
+	 * a template for the toString method message.
+	 */
+	private String template = "%s - %s ->%.2f$ | %d available";
+
+	/**
+	 * A new StoreTradable Object using parameters from Super(Entity).
 	 */
 	public StoreTradable(Tradable tradable, int idNumber, int quantity) {
 		super(idNumber, tradable.getName(), tradable.getDescription());
@@ -36,6 +48,10 @@ public class StoreTradable extends Entity implements Cloneable {
 		this.quantity = quantity;
 	}
 
+	/**
+	 * To copy the object without affecting the original, to be added to the Ship
+	 * cargo tradables.
+	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
@@ -76,10 +92,23 @@ public class StoreTradable extends Entity implements Cloneable {
 		this.price = price;
 	}
 
+	/**
+	 * Increases the price to Tradables to be sold, as each Store will make a
+	 * different profit margin
+	 *
+	 * @param price
+	 */
 	public void increasePrice(float price) {
 		this.price += price;
 	}
 
+	/**
+	 * Decreases the price for Tradables that the Store is willing to buy - So the
+	 * Trader will have to go somewhere else to make a profit, and not at the same
+	 * place where the Trader got the tradables
+	 *
+	 * @param price
+	 */
 	public void decreasePrice(float price) {
 		this.price -= price;
 	}
@@ -93,6 +122,11 @@ public class StoreTradable extends Entity implements Cloneable {
 		return quantity;
 	}
 
+	/**
+	 * When the item is traded the quantity available will decrease in the Store.
+	 *
+	 * @param quantity
+	 */
 	public void decreaseQuantity(int quantity) {
 		this.quantity -= quantity;
 	}
@@ -107,12 +141,21 @@ public class StoreTradable extends Entity implements Cloneable {
 		this.quantity = quantity;
 	}
 
+	/**
+	 * Increases the quantity available of each Tradable in Store
+	 *
+	 * @param quantity
+	 */
 	public void increaseQuantity(int quantity) {
 		this.quantity += quantity;
 	}
 
+	/**
+	 * @Override the toString method to give more relevant information about the
+	 *           Tradable for each Store
+	 */
 	@Override
 	public String toString() {
-		return String.format(template, this.name, this.description, this.price);
+		return String.format(template, this.name, this.description, this.price, this.quantity);
 	}
 }

@@ -133,7 +133,7 @@ public class SetupTrader extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
-				showSliderValue(sliderDurationDays, lblNumDaysChoosen);
+				game.showSliderValue(sliderDurationDays, lblNumDaysChoosen);
 
 			}
 		});
@@ -218,10 +218,6 @@ public class SetupTrader extends JFrame {
 		btnStart.setBounds(653, 432, 134, 37);
 		windowSetupTrader.getContentPane().add(btnStart);
 
-	}
-
-	public void showSliderValue(JSlider sliderDurationDays, JLabel lblNumDaysChoosen) {
-		lblNumDaysChoosen.setText("" + sliderDurationDays.getValue());
 	}
 
 	public void setTraderName() {

@@ -1,41 +1,49 @@
+/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
 package islandtrader.core;
 
 /**
+ * Represents an upgrade that the Trader can buy to equip their ship. The trader
+ * can also sell the upgrade to any store willing to buy it, in case the Trader
+ * needs more money.
  *
- * @author x Represents an upgrade that the Trader can buy to equip their ship.
- *         The trader can also sell the upgrade to any store willing to buy it,
- *         in case the Trader needs money.
+ * @author Maria Heloisa Balzaretti
+ *
  */
 public class Upgrade extends Tradable {
 	/**
-	 * the Upgrade properties represent: - increaseSpeed: the amount of speed to be
-	 * added to the ship. - increaseSpeed: the amount of speed to be added to the
-	 * ship and make it faster. - increaseSneakiness: the amount of sneakiness to be
-	 * added to the ship and help it escape from pirates. - increaseCargoCapacity:
-	 * the amount of Cargo space to be added to the ship, allowing more items to be
-	 * carried. - increaseEndurance: the amount of endurance to be added to the ship
-	 * and help it endure bad weather while out sailing.
+	 * the Upgrade properties represent: - - - increaseSneakiness: the amount of
+	 * sneakiness to be added to the ship and help it escape from pirates. -
+	 * increaseCargoCapacity: the amount of Cargo space to be added to the ship,
+	 * allowing more items to be carried. -
+	 */
+
+	/**
+	 * increaseSpeed: the amount of speed to be added to the ship.
 	 */
 	private int increaseSpeed = 0;
+
+	/**
+	 * increaseSneakiness: the amount of sneakiness to be added to the ship and help
+	 * it escape from pirates.
+	 */
 	private int increaseSneakiness = 0;
+
+	/**
+	 * increaseCargoCapacity: the amount of Cargo space to be added to the ship
+	 */
 	private int increaseCargoCapacity = 0;
+
+	/**
+	 * increaseEndurance: the amount of endurance to be added to the ship and help
+	 * it endure bad weather while out sailing.
+	 */
 	private int increaseEndurance = 0;
 
 	/**
-	 * Creates a new Upgrade with the given parameters. These are from super class
-	 * Tradable:
-	 *
-	 * @param name
-	 * @param description
-	 * @param priceToBuy
-	 * @param priceToSell
-	 * @param idNumber              These are special parameters that will be
-	 *                              applied to the trader ship when Trader buys, or
-	 *                              removed when trader sells it:
-	 * @param increaseEndurance
-	 * @param increaseSneakiness
-	 * @param increaseCargoCapacity
-	 * @param increaseSpeed
+	 * Creates a new Upgrade Object of type Tradable
 	 */
 	public Upgrade(String name, String description, float priceToBuy, float priceToSell, int idNumber,
 			int increaseEndurance, int increaseSneakiness, int increaseCargoCapacity, int increaseSpeed) {

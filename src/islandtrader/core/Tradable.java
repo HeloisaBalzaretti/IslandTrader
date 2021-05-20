@@ -1,27 +1,31 @@
+/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
 package islandtrader.core;
 
 /**
- * @author This ABSTRACT class represents a basic item or upgrade that the
- *         Island'store will have available to sell to the trader or buy from
- *         trader
+ * Class that represents a basic item or upgrade that will be traded between
+ * Trader and Island'Stores
+ *
+ * @author Maria Heloisa Balzaretti
  */
 public abstract class Tradable extends Entity {
 
 	/**
-	 * These are the main properties of the Tradable: -name: the item or upgrade
-	 * name. -description: the item or upgrade description. -priceToSell: The
-	 * default price that the Store would accept to sell item/upgrade from Trader.
-	 * -priceToBuy: The default price that the Store would pay to buy item/upgrade
-	 * from Trader.
+	 * The default price that the Store would pay to buy item/upgrade from Trader.
 	 */
 	private float priceToBuy;
+	/**
+	 * The default price that the Store would accept to sell item/upgrade from
+	 * Trader.
+	 */
 	private float priceToSell;
 
 	/**
-	 * Creates a new Tradable with the given properties. includes the
-	 * super(idNumber) from Entity.
+	 * Creates a new Tradable Object. includes the super(idNumber, name,
+	 * description) from Entity.
 	 */
-
 	public Tradable(String name, String description, float priceToBuy, float priceToSell, int idNumber) {
 		super(idNumber, name, description);
 		this.priceToBuy = priceToBuy;
@@ -49,8 +53,8 @@ public abstract class Tradable extends Entity {
 	}
 
 	/**
-	 * Gets the item/upgrade priceToSell of this Tradable. The price that store will
-	 * accept to receive from trader to sell the item/upgrade to the trader
+	 * Gets the item or upgrade priceToSell of this Tradable. The price that store
+	 * will accept to receive from trader to sell the item/upgrade to the trader
 	 *
 	 * @return this Tradable's priceToSell.
 	 */
@@ -59,8 +63,10 @@ public abstract class Tradable extends Entity {
 	}
 
 	/**
-	 * Changes the priceToSell of this Tradable. The price that store will accept to
-	 * receive from trader to sell the item/upgrade to the trader
+	 * Changes the priceToSell of this Tradable.
+	 *
+	 * @set The price that store will accept to receive from trader to sell the item
+	 *      or upgrade to the trader
 	 *
 	 * @param priceToSell This Tradable's new priceToSell.
 	 */
@@ -69,12 +75,14 @@ public abstract class Tradable extends Entity {
 	}
 
 	/**
-	 * Changes the toString method of this Tradable. This should return a good
-	 * description of the item/upgrade
+	 * Changes the toString method of this Tradable.
+	 *
+	 * @return information about the item or upgrade
+	 * @Override the default toString method
 	 */
 	@Override
 	public String toString() {
-		return "[" + name + ", " + description + ", it costs " + priceToBuy
-				+ "$ for you buy and the store will buy it from you for " + priceToSell + "$]";
+		return String.format("[%s, %s, it costs %.2f$ $ for you buy and the store will buy it from you for %.2f$ $]",
+				name, description, priceToBuy, priceToSell);
 	}
 }

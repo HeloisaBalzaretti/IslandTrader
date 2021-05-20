@@ -2,6 +2,9 @@ package islandTraderSwing.ui.gui;
 
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
+import javax.swing.JSlider;
+
 import islandtrader.core.GameEnvironment;
 import islandtrader.core.Island;
 import islandtrader.core.Route;
@@ -63,8 +66,16 @@ public class GameEnvironmentSwing extends GameEnvironment {
 		IslandDetail islandDetailWindow = new IslandDetail(island);
 	}
 
+	public void launchIslandStore() {
+		IslandStore islandStore = new IslandStore(this);
+	}
+
 	public void launchCargoStoreTradablesWindow() {
 		CargoAllStoreTradablesWindow cargoWindow = new CargoAllStoreTradablesWindow(this);
+	}
+
+	public void showSliderValue(JSlider slider, JLabel lblToChangeTxt) {
+		lblToChangeTxt.setText("" + slider.getValue());
 	}
 
 	/**

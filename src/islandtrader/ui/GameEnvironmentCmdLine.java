@@ -17,7 +17,7 @@ import repository.IslandRepository;
 import repository.ShipRepository;
 
 /**
- * @author Maria
+ * @author Maria Heloisa Balzaretti
  *
  */
 

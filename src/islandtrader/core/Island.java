@@ -1,21 +1,24 @@
+/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
 package islandtrader.core;
 
 /**
- * Class that models an Island.
+ * Class that models an Island Object.
  *
- * @author
- *
+ * @author Maria Heloisa Balzaretti
  */
 public class Island extends Entity {
 
 	/*
 	 * Distance list. idNumber of the islands are used to access the index of the
-	 * array to get the distance to other/s island/s.
+	 * array to get the distance to other/s island/s. distance list corresponding to
+	 * distanceMatrix[idNumber] from IslandRepository. Each index corresponds to
+	 * distance in days to each Island idNumber.
 	 */
 
-	private int[] distancesInDays; // distance list corresponding to distanceMatrix[idNumber] from
-									// IslandRepository. Each index corresponds to distance in days to each Island
-									// idNumber.
+	private int[] distancesInDays;
 
 	private Store store;
 

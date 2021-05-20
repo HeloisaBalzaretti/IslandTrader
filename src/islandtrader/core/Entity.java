@@ -1,27 +1,31 @@
+/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
 package islandtrader.core;
 
 /**
+ * Class that models an Island. Every entity in the project has to have an
+ * identifier that will facilitate the game environment.
  *
- * @author a Every entity in the project has to have an identifier that will
- *         facilitate the game environment
+ * @author Maria Heloisa Balzaretti
  */
 public abstract class Entity {
 	/**
 	 * id number will be used to identify each entity needed in the game
 	 */
 	protected int idNumber;
-
 	/**
-	 *
+	 * the name of the Entity
 	 */
 	protected String name;
 	/**
-	 *
+	 * The description of the Entity
 	 */
 	protected String description;
 
 	/**
-	 * @return the name
+	 * @return the name of the Entity
 	 */
 	public String getName() {
 		return name;
@@ -35,7 +39,7 @@ public abstract class Entity {
 	}
 
 	/**
-	 * @return the description
+	 * @return the description of the Entity
 	 */
 	public String getDescription() {
 		return description;
@@ -76,5 +80,4 @@ public abstract class Entity {
 	public void setIdNumber(int idNumber) {
 		this.idNumber = idNumber;
 	}
-
 }

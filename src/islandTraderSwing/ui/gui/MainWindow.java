@@ -160,6 +160,12 @@ public class MainWindow {
 		mainWindowTraderAdventure.getContentPane().add(lbCurrentlIslandDescription);
 
 		JButton btnViewCurrentStore = new JButton("Visit Island Store");
+		btnViewCurrentStore.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				game.launchIslandStore();
+			}
+		});
 		btnViewCurrentStore.setForeground(new Color(51, 51, 102));
 		btnViewCurrentStore.setFont(new Font("Serif", Font.BOLD, 16));
 		btnViewCurrentStore.setBackground(Color.WHITE);
