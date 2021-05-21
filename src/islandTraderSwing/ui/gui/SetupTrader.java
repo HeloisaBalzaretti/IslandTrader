@@ -32,7 +32,6 @@ public class SetupTrader extends JFrame {
 	private JFrame windowSetupTrader;
 	private JTextField textTraderName;
 
-	// private int txtLblNumDaysChoosen;
 	private String traderName;
 	private GameEnvironmentSwing game;
 
@@ -72,11 +71,6 @@ public class SetupTrader extends JFrame {
 		windowSetupTrader.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowSetupTrader.getContentPane().setLayout(null);
 
-		JLabel lblNewLabel_1 = new JLabel("Name | Speed | Cargo Capacity | Endurance | Sneakiness | Crew size");
-		lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(88, 295, 420, 13);
-		windowSetupTrader.getContentPane().add(lblNewLabel_1);
-
 		JLabel lblInformDuration = new JLabel("Inform how many days you want to travel:");
 		lblInformDuration.setHorizontalAlignment(SwingConstants.LEFT);
 		lblInformDuration.setFont(new Font("Serif", Font.BOLD, 14));
@@ -98,9 +92,10 @@ public class SetupTrader extends JFrame {
 		windowSetupTrader.getContentPane().add(lblSteeringWeelImg);
 
 		JLabel lblNewLabel = new JLabel("Welcome to the Island trader adventure!");
+		lblNewLabel.setBackground(new Color(0, 0, 102));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 20));
-		lblNewLabel.setBounds(201, 0, 361, 45);
+		lblNewLabel.setFont(new Font("Stencil", Font.PLAIN, 20));
+		lblNewLabel.setBounds(178, 14, 640, 64);
 		windowSetupTrader.getContentPane().add(lblNewLabel);
 
 		textTraderName = new JTextField();
@@ -132,9 +127,7 @@ public class SetupTrader extends JFrame {
 		sliderDurationDays.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-
 				game.showSliderValue(sliderDurationDays, lblNumDaysChoosen);
-
 			}
 		});
 		sliderDurationDays.setValue(35);
@@ -146,7 +139,7 @@ public class SetupTrader extends JFrame {
 
 		JLabel lblChooseShip = new JLabel("Choose a ship to captain:");
 		lblChooseShip.setFont(new Font("Serif", Font.BOLD, 15));
-		lblChooseShip.setBounds(253, 263, 164, 22);
+		lblChooseShip.setBounds(201, 273, 164, 22);
 		windowSetupTrader.getContentPane().add(lblChooseShip);
 
 		JLabel lblShipImg = new JLabel("");
@@ -155,25 +148,17 @@ public class SetupTrader extends JFrame {
 				new ImageIcon(SetupTrader.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
 		lblShipImg.setBounds(588, 218, 230, 204);
 		windowSetupTrader.getContentPane().add(lblShipImg);
-		// Create a ListModel to store the items in the JList
 		DefaultListModel<Ship> shipListModel = new DefaultListModel<Ship>();
-
-		// Add the existing items to the ListModel
 		shipListModel.addAll(game.getShips());
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(88, 318, 416, 92);
+		scrollPane.setBounds(10, 318, 568, 92);
 		windowSetupTrader.getContentPane().add(scrollPane);
-
-		// Create the actual JList, notice that we put the astronautListModel in as an
-		// argument to new JList
 
 		JList<Ship> list_ShipToChoose = new JList<Ship>(shipListModel);
 		scrollPane.setViewportView(list_ShipToChoose);
 		list_ShipToChoose.setFont(new Font("Serif", Font.PLAIN, 14));
 		list_ShipToChoose.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		// get the selected ship.
 
 		JButton btnStart = new JButton("Start!");
 		btnStart.addActionListener(new ActionListener() {
@@ -198,7 +183,6 @@ public class SetupTrader extends JFrame {
 					areFieldsValid = false;
 					errors += "Name must not contain special characters or numbers.\n";
 				}
-
 				if (areFieldsValid) {
 					String name = textTraderName.getText().trim();
 					Trader trader = new Trader(name, "a very Brave Captain!", getChoosenShip(list_ShipToChoose));
@@ -215,9 +199,8 @@ public class SetupTrader extends JFrame {
 		btnStart.setForeground(new Color(51, 51, 102));
 		btnStart.setBackground(new Color(255, 255, 255));
 		btnStart.setFont(new Font("Serif", Font.BOLD, 16));
-		btnStart.setBounds(653, 432, 134, 37);
+		btnStart.setBounds(327, 431, 134, 37);
 		windowSetupTrader.getContentPane().add(btnStart);
-
 	}
 
 	public void setTraderName() {

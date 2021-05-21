@@ -1,5 +1,6 @@
 package islandTraderSwing.ui.gui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
 
@@ -47,7 +48,7 @@ public class IslandDetail {
 		lblIslandImg.setHorizontalAlignment(SwingConstants.CENTER);
 		changeIslandImg();
 		lblIslandImg.setIcon(new ImageIcon(IslandDetail.class.getResource(changeIslandImg())));
-		lblIslandImg.setBounds(10, 10, 245, 220);
+		lblIslandImg.setBounds(10, 10, 276, 234);
 		islandDetailsWindow.getContentPane().add(lblIslandImg);
 
 		JLabel lblIslandDescription = new JLabel(
@@ -55,12 +56,12 @@ public class IslandDetail {
 						+ islandSelected.getDescription() + "</body></html>");
 		lblIslandDescription.setVerticalAlignment(SwingConstants.TOP);
 		lblIslandDescription.setFont(new Font("Serif", Font.PLAIN, 15));
-		lblIslandDescription.setBounds(274, 68, 443, 115);
+		lblIslandDescription.setBounds(296, 68, 421, 143);
 		islandDetailsWindow.getContentPane().add(lblIslandDescription);
 
 		JLabel lblIslandName = new JLabel(islandSelected.getName());
-		lblIslandName.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
-		lblIslandName.setBounds(286, 28, 393, 26);
+		lblIslandName.setFont(new Font("Stencil", Font.PLAIN, 20));
+		lblIslandName.setBounds(306, 28, 393, 26);
 		islandDetailsWindow.getContentPane().add(lblIslandName);
 		DefaultListModel<StoreTradable> tradablesBuyListModel = new DefaultListModel<StoreTradable>();
 
@@ -100,10 +101,11 @@ public class IslandDetail {
 		islandDetailsWindow.getContentPane().add(lblBSell);
 
 		JLabel lblNewLabel = new JLabel(
-				"To be able to buy or sell items you must be in the island! Lets go sailing! Visit each Island store from the main window!");
+				"To be able to buy or sell items you must be in the island! Let's go sailing!!");
+		lblNewLabel.setForeground(new Color(255, 102, 51));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 12));
-		lblNewLabel.setBounds(42, 438, 657, 42);
+		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 14));
+		lblNewLabel.setBounds(10, 438, 707, 42);
 		islandDetailsWindow.getContentPane().add(lblNewLabel);
 	}
 

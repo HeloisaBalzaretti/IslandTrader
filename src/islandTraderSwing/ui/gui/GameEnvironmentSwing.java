@@ -25,6 +25,7 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	private ArrayList<Ship> ships = new ArrayList<>();
 	private Island selectedIsland;
 	private Ship ship;
+	private MainWindow mainWindow;
 
 	public GameEnvironmentSwing() {
 		ShipRepository shipRepository = new ShipRepository();
@@ -36,12 +37,21 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	}
 
 	public void launchMainScreen(Trader trader) {
-		MainWindow mainWindow = new MainWindow(this);
+		mainWindow = new MainWindow(this);
 	}
 
 	public void closeMainScreen(MainWindow mainWindow) {
 		mainWindow.closeWindow();
 
+	}
+
+	public MainWindow getMainScreen() {
+		return mainWindow;
+
+	}
+
+	public void closeMainScreen() {
+		mainWindow.finishedWindow();
 	}
 
 	public void launchSetupScreen() {
@@ -82,6 +92,9 @@ public class GameEnvironmentSwing extends GameEnvironment {
 		lblToChangeTxt.setText("" + slider.getValue());
 	}
 
+	public void updateLblTraderInfo(JLabel lblTraderInfo) {
+		lblTraderInfo.setText(trader.toString());
+	}
 	/**
 	 * @return the trader
 	 */
@@ -214,6 +227,10 @@ public class GameEnvironmentSwing extends GameEnvironment {
 
 	public void makeBtnInvisible(JButton btnToChange) {
 		btnToChange.setVisible(false);
+	}
+
+	public void changeLabelText(JLabel labelToChangeTxt, String text) {
+		labelToChangeTxt.setText(text);
 	}
 
 	public static void main(String[] args) {

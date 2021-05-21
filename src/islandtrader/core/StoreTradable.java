@@ -37,7 +37,7 @@ public class StoreTradable extends Entity implements Cloneable {
 	/**
 	 * a template for the toString method message.
 	 */
-	private String template = "%s - %s ->%.2f$ | %d available";
+	private String template = "%s - %s ->%.2f$ | n/a | %d ";
 
 	/**
 	 * A new StoreTradable Object using parameters from Super(Entity).
@@ -156,6 +156,11 @@ public class StoreTradable extends Entity implements Cloneable {
 	 */
 	@Override
 	public String toString() {
+		String templateItem = "%s - %s ->%.2f$ | %.2f kgs | %d ";
+		if (tradable instanceof Item) {
+			return String.format(templateItem, this.name, this.description, this.price, ((Item) tradable).getWeight(),
+					this.quantity);
+		}
 		return String.format(template, this.name, this.description, this.price, this.quantity);
 	}
 }

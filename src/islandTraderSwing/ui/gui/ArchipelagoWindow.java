@@ -111,5 +111,35 @@ public class ArchipelagoWindow {
 				new ImageIcon(ArchipelagoWindow.class.getResource("/islandTraderSwing/ui/gui/images/island5Sml.png")));
 		btnIslandFive.setBounds(696, 147, 235, 191);
 		frmArchipelagoMap.getContentPane().add(btnIslandFive);
+
+		JLabel lblPhuket = new JLabel("Phuket Island");
+		lblPhuket.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPhuket.setFont(new Font("Serif", Font.BOLD, 14));
+		lblPhuket.setBounds(410, 241, 167, 31);
+		frmArchipelagoMap.getContentPane().add(lblPhuket);
+
+		JLabel lblAztecs = new JLabel("Aztecs Island");
+		lblAztecs.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAztecs.setFont(new Font("Serif", Font.BOLD, 14));
+		lblAztecs.setBounds(52, 368, 167, 31);
+		frmArchipelagoMap.getContentPane().add(lblAztecs);
+
+		JLabel lblShetland = new JLabel("Shetland Islands");
+		lblShetland.setHorizontalAlignment(SwingConstants.CENTER);
+		lblShetland.setFont(new Font("Serif", Font.BOLD, 14));
+		lblShetland.setBounds(216, 587, 167, 30);
+		frmArchipelagoMap.getContentPane().add(lblShetland);
+
+		JLabel lblBermuda = new JLabel("Bermuda Triangle");
+		lblBermuda.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBermuda.setFont(new Font("Serif", Font.BOLD, 14));
+		lblBermuda.setBounds(591, 587, 167, 31);
+		frmArchipelagoMap.getContentPane().add(lblBermuda);
+
+		JLabel lblTrazmoz = new JLabel("Trazmoz");
+		lblTrazmoz.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTrazmoz.setFont(new Font("Serif", Font.BOLD, 14));
+		lblTrazmoz.setBounds(737, 331, 167, 31);
+		frmArchipelagoMap.getContentPane().add(lblTrazmoz);
 	}
 }

@@ -40,7 +40,7 @@ public class CargoAllStoreTradablesWindow {
 		cargoAllItemsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		cargoAllItemsWindow.getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("All goods purchased:");
+		JLabel lblNewLabel = new JLabel("You current goods available for trade");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 18));
 		lblNewLabel.setBounds(244, 10, 342, 30);
@@ -58,33 +58,24 @@ public class CargoAllStoreTradablesWindow {
 		cargoAllItemsWindow.getContentPane().add(lblNewLabel_2);
 		DefaultListModel<StoreTradable> tradablesListModel = new DefaultListModel<StoreTradable>();
 
-		// Add the existing items to the ListModel
 		tradablesListModel.addAll(game.getTrader().getShipOwned().getCurrentCargoTradables());
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(281, 104, 581, 113);
+		scrollPane.setBounds(274, 131, 581, 210);
 		cargoAllItemsWindow.getContentPane().add(scrollPane);
 
 		JList<StoreTradable> list_CurrentGoods = new JList<StoreTradable>(tradablesListModel);
 		scrollPane.setViewportView(list_CurrentGoods);
 		list_CurrentGoods.setFont(new Font("Serif", Font.PLAIN, 12));
 
-		JLabel lblNewLabel_2_1 = new JLabel("Sold goods:");
-		lblNewLabel_2_1.setFont(new Font("Serif", Font.BOLD, 14));
-		lblNewLabel_2_1.setBounds(281, 227, 263, 31);
-		cargoAllItemsWindow.getContentPane().add(lblNewLabel_2_1);
+		JLabel lblNameDescriptionPrice = new JLabel("Name | Description | Price | Weight | Quantity");
+		lblNameDescriptionPrice.setFont(new Font("Serif", Font.BOLD, 14));
+		lblNameDescriptionPrice.setBounds(275, 109, 343, 24);
+		cargoAllItemsWindow.getContentPane().add(lblNameDescriptionPrice);
 
 		DefaultListModel<StoreTradable> tradablesSoldListModel = new DefaultListModel<StoreTradable>();
 
 		tradablesSoldListModel.addAll(game.getTrader().getShipOwned().getSoldCargoTradables());
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(281, 256, 581, 125);
-		cargoAllItemsWindow.getContentPane().add(scrollPane_1);
-
-		JList<StoreTradable> list_SoldGoods = new JList<StoreTradable>(tradablesSoldListModel);
-		scrollPane_1.setViewportView(list_SoldGoods);
-		list_SoldGoods.setFont(new Font("Serif", Font.PLAIN, 12));
 	}
 
 }

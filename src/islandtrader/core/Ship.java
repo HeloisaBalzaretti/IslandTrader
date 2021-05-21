@@ -420,7 +420,7 @@ public class Ship extends Entity {
 	 */
 	@Override
 	public String toString() {
-		String shipInfoTemplate = "%s: %s |  %s |  %s |  %s |  %s";
+		String shipInfoTemplate = "Ship name: %s |Sail speed: %s |Cargo Capacity: %s |Endurance: %s |Sneakiness: %s |Crew: %s";
 		return String.format(shipInfoTemplate, name, sailSpeed, cargoCapacity, endurance, sneakiness, numberOfCrew);
 
 	}
