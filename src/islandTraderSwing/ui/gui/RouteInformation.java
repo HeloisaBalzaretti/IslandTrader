@@ -118,8 +118,8 @@ public class RouteInformation {
 
 			if (route != null) {
 				routesToString += "Route " + getCurrentRoutes()[routeIndex].getIdNumber();
-				int durationDays = game.getCurrentIsland().distanceToInDays(routeIndex);
-				int distanceKms = game.getCurrentIsland().distanceToInKm(routeIndex);
+				int durationDays = game.getCurrentIsland().getDistanceToAnotherIslandInDays(routeIndex);
+				int distanceKms = game.getCurrentIsland().getDistanceToAnotherIslandInKm(routeIndex);
 
 				double totalCostCrewToSail = trader.getShipOwned().getCrewCostToSailByTotalDays(durationDays);
 				routesToString += String.format(ROUTE_MENU_LINE_MESSAGE, route.getName(), durationDays, distanceKms,

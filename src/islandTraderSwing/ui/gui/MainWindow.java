@@ -17,6 +17,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import islandtrader.core.Island;
 import islandtrader.core.Pirate;
@@ -98,25 +100,15 @@ public class MainWindow {
 		lblTraderImg.setBounds(0, 10, 130, 90);
 		mainWindowTraderAdventure.getContentPane().add(lblTraderImg);
 
-		JLabel lblTraderName = new JLabel(game.getTrader().getName() + game.getTrader().getDescription());
-		lblTraderName.setFont(new Font("Serif", Font.BOLD, 14));
-		lblTraderName.setBounds(158, 7, 326, 24);
-		mainWindowTraderAdventure.getContentPane().add(lblTraderName);
-
-		JLabel lblValueTraderAccount = new JLabel(String.format("%.2f$", game.getTrader().getTraderAccountBalance()));
-		lblValueTraderAccount.setFont(new Font("Serif", Font.BOLD, 14));
-		lblValueTraderAccount.setBounds(321, 39, 85, 19);
-		mainWindowTraderAdventure.getContentPane().add(lblValueTraderAccount);
-
-		JLabel lblNewLabel_1 = new JLabel("Current account balance: ");
-		lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(158, 42, 171, 13);
-		mainWindowTraderAdventure.getContentPane().add(lblNewLabel_1);
+		JLabel lblTraderInfo = new JLabel(game.getTrader().toString());
+		lblTraderInfo.setFont(new Font("Serif", Font.BOLD, 14));
+		lblTraderInfo.setBounds(158, 7, 497, 24);
+		mainWindowTraderAdventure.getContentPane().add(lblTraderInfo);
 
 		JLabel lblShip = new JLabel("Ship: " + game.getTrader().getShipOwned().getName());
 		lblShip.setVerticalAlignment(SwingConstants.TOP);
 		lblShip.setFont(new Font("Serif", Font.BOLD, 14));
-		lblShip.setBounds(158, 62, 105, 22);
+		lblShip.setBounds(140, 39, 105, 22);
 		mainWindowTraderAdventure.getContentPane().add(lblShip);
 
 		JLabel lblShipProp = new JLabel(game.getTrader().getShipOwned().getDescription());
@@ -124,7 +116,7 @@ public class MainWindow {
 		lblShipProp.setIcon(null);
 		lblShipProp.setVerticalAlignment(SwingConstants.TOP);
 		lblShipProp.setFont(new Font("Serif", Font.BOLD, 14));
-		lblShipProp.setBounds(260, 62, 558, 24);
+		lblShipProp.setBounds(140, 62, 678, 24);
 		mainWindowTraderAdventure.getContentPane().add(lblShipProp);
 
 		JLabel lblIslandImg = new JLabel("");
@@ -134,8 +126,9 @@ public class MainWindow {
 		mainWindowTraderAdventure.getContentPane().add(lblIslandImg);
 
 		JLabel lblCurrentDocked = new JLabel("Currently docket at " + game.getCurrentIsland().getName());
+		lblCurrentDocked.setForeground(new Color(51, 153, 204));
 		lblCurrentDocked.setFont(new Font("Serif", Font.BOLD, 14));
-		lblCurrentDocked.setBounds(10, 110, 336, 24);
+		lblCurrentDocked.setBounds(30, 126, 336, 24);
 		mainWindowTraderAdventure.getContentPane().add(lblCurrentDocked);
 
 		JButton btnViewMyItems = new JButton("View my cargo items");
@@ -149,7 +142,7 @@ public class MainWindow {
 		btnViewMyItems.setForeground(new Color(51, 51, 102));
 		btnViewMyItems.setFont(new Font("Serif", Font.BOLD, 14));
 		btnViewMyItems.setBackground(Color.WHITE);
-		btnViewMyItems.setBounds(486, 10, 169, 35);
+		btnViewMyItems.setBounds(649, 96, 169, 24);
 		mainWindowTraderAdventure.getContentPane().add(btnViewMyItems);
 
 		JLabel lbCurrentlIslandDescription = new JLabel(game.getCurrentIsland().getDescription());
@@ -175,12 +168,12 @@ public class MainWindow {
 		JProgressBar progressBarShipHealth = new JProgressBar();
 		progressBarShipHealth.setForeground(new Color(102, 255, 51));
 		progressBarShipHealth.setValue((int) game.getTrader().getShipOwned().getCurrentHealthStatus());
-		progressBarShipHealth.setBounds(236, 87, 130, 16);
+		progressBarShipHealth.setBounds(221, 100, 130, 16);
 		mainWindowTraderAdventure.getContentPane().add(progressBarShipHealth);
 
 		JLabel lblShipHealth = new JLabel("Ship Health");
 		lblShipHealth.setFont(new Font("Serif", Font.BOLD, 14));
-		lblShipHealth.setBounds(158, 86, 85, 19);
+		lblShipHealth.setBounds(141, 96, 85, 19);
 		mainWindowTraderAdventure.getContentPane().add(lblShipHealth);
 
 		JButton btnViewArchipelagoMap = new JButton("View Archipelago Map Information");
@@ -224,12 +217,20 @@ public class MainWindow {
 		mainWindowTraderAdventure.getContentPane().add(scrollPane);
 
 		JList<Island> islandsList = new JList<Island>(islandListModel);
+		islandsList.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				game.getTrader().getShipOwned().setAbleToSail(true);
+			}
+		});
 		scrollPane.setViewportView(islandsList);
 		islandsList.setFont(new Font("Serif", Font.PLAIN, 14));
 
 		islandsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JButton btnFixShip = new JButton("Repair Ship");
+		btnFixShip.setForeground(new Color(0, 153, 153));
+		btnFixShip.setBackground(Color.WHITE);
 		btnFixShip.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -237,6 +238,7 @@ public class MainWindow {
 				Ship traderShip = trader.getShipOwned();
 				double shipHealth = traderShip.getCurrentHealthStatus();
 				double totalDiscount = 100 - shipHealth;
+				totalDiscount = totalDiscount * 10;
 				String shipFullHealthMessage = "Your ship " + traderShip.getName()
 						+ " is at full health.\nYou do not need to fix it now!";
 				String messageTemplate = "Repairing ship. Its current health is %.2f. It will cost you %.2f $ to repair.\n";
@@ -254,17 +256,18 @@ public class MainWindow {
 					trader.removeAmountFromBalance(totalDiscount);
 					progressBarShipHealth.setValue((int) traderShip.getCurrentHealthStatus());
 					isAbleToSail = true;
+					traderShip.setAbleToSail(true);
 
 				}
 				JOptionPane.showMessageDialog(new JFrame(), String.format(messageTemplate, shipHealth, totalDiscount),
-						"Repairing Ship", JOptionPane.INFORMATION_MESSAGE);
+						"Repairing Ship", JOptionPane.YES_NO_CANCEL_OPTION);
 
 				mainWindowTraderAdventure.dispose();
 				game.launchMainScreen(trader);
 			}
 		});
 		btnFixShip.setFont(new Font("Serif", Font.BOLD, 12));
-		btnFixShip.setBounds(376, 82, 108, 21);
+		btnFixShip.setBounds(361, 95, 108, 21);
 		mainWindowTraderAdventure.getContentPane().add(btnFixShip);
 
 		JButton btnSail = new JButton("Sail!");
@@ -284,28 +287,31 @@ public class MainWindow {
 				}
 				Trader trader = game.getTrader();
 				game.setSelectedIsland(islandsList.getSelectedValue());
+
+				Ship traderShip = game.getTrader().getShipOwned();
 				Island islandToGo = game.getSelectedIsland();
-				int daysNeededToTravel = game.getCurrentIsland().distanceToInDays(islandToGo.getIdNumber() - 1);
+				int daysNeededToTravel = game.getCurrentIsland()
+						.getDistanceToAnotherIslandInDays(islandToGo.getIdNumber() - 1);
 
 				int daysRemaining = game.getDaysRemaining();
 				int daysElapsed = game.getDaysElapsed();
-				double shipHealth = trader.getShipOwned().getCurrentHealthStatus();
-				double costToSail = trader.getShipOwned().getCrewCostToSailByTotalDays(daysNeededToTravel);
+				double shipHealth = traderShip.getCurrentHealthStatus();
+				double costToSail = traderShip.getCrewCostToSailByTotalDays(daysNeededToTravel);
 
 				if (shipHealth < 100) {
-					isAbleToSail = false;
+					traderShip.setAbleToSail(false);
 					errors += "You must repair you ship before you sail again!\n";
 				}
 				if (trader.getTraderAccountBalance() < costToSail) {
-					isAbleToSail = false;
+					traderShip.setAbleToSail(false);
 					errors += "You do not have enough money to afford this many days sailing!\n";
 				}
 				if (daysNeededToTravel > daysRemaining) {
-					isAbleToSail = false;
+					traderShip.setAbleToSail(false);
 					errors += "You do not have enough days remaining go this far!\n";
 				}
 
-				if (isAbleToSail) {
+				if (traderShip.isAbleToSail()) {
 					errorMessageTemplate = "You sailed during %d days to %s \nThe travel cost you: %.2f $\n";
 
 					JOptionPane.showMessageDialog(new JFrame(),
@@ -313,7 +319,7 @@ public class MainWindow {
 									game.getSelectedIsland().getName(), costToSail),
 							"Sailing...", JOptionPane.INFORMATION_MESSAGE);
 
-					randomEventHappenedHelper(game.getSelectedIsland().getIdNumber() - 1);
+					randomEventHappenedHelper(game.getSelectedIsland().getIdNumber() - 1, btnSail);
 					trader.removeAmountFromBalance(costToSail);
 					game.setCurrentIsland(islandToGo);
 					game.setDaysElapsed(daysElapsed + daysNeededToTravel);
@@ -332,25 +338,10 @@ public class MainWindow {
 		btnSail.setBackground(Color.WHITE);
 		btnSail.setBounds(544, 445, 85, 35);
 		mainWindowTraderAdventure.getContentPane().add(btnSail);
-		btnSail.setVisible(isAbleToSail);
 
 	}
 
-	/**
-	 * @return the isAbleToSail
-	 */
-	public boolean isAbleToSail() {
-		return isAbleToSail;
-	}
-
-	/**
-	 * @param isAbleToSail the isAbleToSail to set
-	 */
-	public void setAbleToSail(boolean isAbleToSail) {
-		this.isAbleToSail = isAbleToSail;
-	}
-
-	private void randomEventHappenedHelper(int selectedIslandIndex) {
+	private void randomEventHappenedHelper(int selectedIslandIndex, JButton btnSail) {
 		String eventEncounterMessage = "";
 		String eventResultOfEncounterMessage = "";
 		RandomEvent randomEvent = game.getEventFromListOfPossibleEvents(
@@ -364,7 +355,7 @@ public class MainWindow {
 					JOptionPane.WARNING_MESSAGE);
 
 			if (randomEvent instanceof Pirate) {
-				randomEventIsPirateHelper(randomEvent);
+				randomEventIsPirateHelper(randomEvent, btnSail);
 			} else {
 				eventResultOfEncounterMessage += randomEvent.resultOfEncounterMessage() + "\n";
 				JOptionPane.showMessageDialog(new JFrame(), eventResultOfEncounterMessage, randomEvent.getName(),
@@ -377,7 +368,7 @@ public class MainWindow {
 		}
 	}
 
-	private void randomEventIsPirateHelper(RandomEvent randomEvent) {
+	private void randomEventIsPirateHelper(RandomEvent randomEvent, JButton btnSail) {
 
 		Pirate pirate = (Pirate) randomEvent;
 
@@ -391,24 +382,16 @@ public class MainWindow {
 					JOptionPane.INFORMATION_MESSAGE);
 
 			if (pirate.isPirateHappy()) {
-				isAbleToSail = true;
+				game.getTrader().getShipOwned().setAbleToSail(true);
 
 				JOptionPane.showMessageDialog(new JFrame(), pirate.getMessagePirateHappy(), pirate.getName(),
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
 
-				pirateMadeTraderWalkThePlank(pirate);
-				mainWindowTraderAdventure.dispose();
+				game.pirateMadeTraderWalkThePlank(pirate, btnSail);
+
 			}
 		}
-	}
-
-	private void pirateMadeTraderWalkThePlank(Pirate pirate) {
-		JOptionPane.showMessageDialog(new JFrame(), pirate.getMessageWalkPlank(), "Walk the plank",
-				JOptionPane.OK_OPTION);
-
-		isAbleToSail = false;
-
 	}
 
 	public String changeIslandImg() {

@@ -1,3 +1,7 @@
+/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
 package islandtrader.core;
 
 /**
@@ -5,24 +9,31 @@ package islandtrader.core;
  * encounters they are rewarded with a monetary amount, that will vary depending
  * on the number of Rescued Sailors they save.
  *
- * @author Maria
+ * @author Maria Heloisa Balzaretti
  *
  */
 public class RescuedSailor extends RandomEvent {
+
 	/**
-	 * quantityOfSailorsToRescue represents how many sailors need rescue, and
-	 * monetary reward is the amount to be awarded to the Trader, these two
-	 * properties are used to implement the super method randomEventSpecificAction()
-	 * from RandomEvent, they are multiplied to give the final amount of money the
-	 * Trader shall receive as a reward (totalMonetaryReward).
+	 * Represents how many sailors need rescue
 	 */
 	private int quantityOfSailorsToRescue;
+
+	/**
+	 * the amount to be awarded to the Trader
+	 */
 	private double monetaryRewardPerSailor;
+
+	/**
+	 * Multiplies quantityOfSailorsToRescue and monetaryRewardPerSailor to give the
+	 * final amount of money the Trader shall receive as a reward.
+	 */
 	private double totalMonetaryReward = 0;
 
 	/**
 	 * Creates a new RescuedSailor event of type RandomEvent
 	 *
+	 * @param idNumber
 	 * @param name
 	 * @param description
 	 * @param quantityOfSailorsToRescue
@@ -37,7 +48,7 @@ public class RescuedSailor extends RandomEvent {
 	}
 
 	/**
-	 * Quantity of sailors to be rescued
+	 * Gets the quantity of sailors to be rescued
 	 *
 	 * @return This number of Sailors to be rescued
 	 */
@@ -91,23 +102,32 @@ public class RescuedSailor extends RandomEvent {
 	 * From super RandomEvent class, this method gives the Trader a monetary reward.
 	 */
 	@Override
-	public void randomEventSpecificAction(Trader myTrader) {
-		myTrader.addAmountToBalance(getTotalMonetaryReward());
+	public void randomEventSpecificAction(Trader trader) {
+		trader.addAmountToBalance(getTotalMonetaryReward());
 	}
 
+	/**
+	 * Overrides the super encounterMessage from RandomEvent class to the
+	 * RescuedSailor encounter event
+	 */
 	@Override
 	public String encounterMessage() {
 		return "You encountered " + this.name + "! " + this.description;
 	}
 
+	/**
+	 * Overrides the super resultOfEncounterMessage from RandomEvent class to the
+	 * RescuedSailor encounter event
+	 */
 	@Override
 	public String resultOfEncounterMessage() {
-
 		String messageTemplate = "As you were very kind and rescued a crew of %d sailors, they are gifting you with $ %.2f!";
 		return String.format(messageTemplate, quantityOfSailorsToRescue, this.totalMonetaryReward);
-
 	}
 
+	/**
+	 * Used to personalize the game when applying the randomEvents to the routes.
+	 */
 	@Override
 	public String getEventSpecificName() {
 		return "Rescued Sailor";

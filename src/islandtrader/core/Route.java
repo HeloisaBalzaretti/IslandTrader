@@ -1,30 +1,64 @@
 /**
- *
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
  */
 package islandtrader.core;
 
 import java.util.ArrayList;
 
 /**
- * @author maria
+ *
+ * Routes represents the routes that connect the Islands, each Route has 3
+ * possible random events that could happen, or nothing happening is also
+ * possibility
+ *
+ * @author Maria Heloisa Balzaretti
  *
  */
 public class Route extends Entity {
 
+	/**
+	 * A collection of connected Islands
+	 */
 	private ArrayList<Island> connectIslands;
+
+	/**
+	 * A collection of the possible events for each route
+	 */
 	private ArrayList<RandomEvent> possibleEvents;
 
+	/**
+	 * A template for this Route name
+	 */
 	private final String ROUTE_NAME_TEMPLATE = "to %s";
+
+	/**
+	 * A template used when informing the Trader of the possible randomEvents in
+	 * this route
+	 */
 	private static final String PROBABILITY_RANDOM_EVENT_MESSAGE = "\nThe possible random encounters you may have if you take this route are:"
 			+ "<br>\n => %s %s (Chance of encounter: %.0f%%)<br>\n => %s %s (Chance of encounter: %.0f%%)<br>\n => %s %s (Chance of encounter: %.0f%%)";
 
+	/**
+	 * A Route object created with the possible randomEvents.
+	 *
+	 * @param idNumber
+	 * @param possibleEvents
+	 */
 	public Route(int idNumber, ArrayList<RandomEvent> possibleEvents) {
 		super(idNumber, "", "");
 		this.possibleEvents = possibleEvents;
-		this.description = GetDescription(possibleEvents);
+		this.description = getDescription(possibleEvents);
 	}
 
-	private static String GetDescription(ArrayList<RandomEvent> possibleEvents) {
+	/**
+	 * Return a description with all the possible random events that may happen in
+	 * the Route and the probability of happening
+	 *
+	 * @param possibleEvents
+	 * @return
+	 */
+	private static String getDescription(ArrayList<RandomEvent> possibleEvents) {
 		RandomEvent firstEvent = possibleEvents.get(0);
 		RandomEvent secondEvent = possibleEvents.get(1);
 		RandomEvent thirdEvent = possibleEvents.get(2);
@@ -36,6 +70,11 @@ public class Route extends Entity {
 
 	}
 
+	/**
+	 * Set the name according to the islands it connects
+	 *
+	 * @param islandName
+	 */
 	public void setRouteNameByIslandName(String islandName) {
 		this.name = String.format(ROUTE_NAME_TEMPLATE, islandName);
 	}
@@ -66,17 +105,30 @@ public class Route extends Entity {
 	 */
 	public void setPossibleEvents(ArrayList<RandomEvent> possibleEvents) {
 		this.possibleEvents = possibleEvents;
-		this.description = Route.GetDescription(possibleEvents);
+		this.description = Route.getDescription(possibleEvents);
 	}
 
+	/**
+	 * Adds the possible event to the Route
+	 *
+	 * @param newEvent
+	 */
 	public void addPossibleEventToRoute(RandomEvent newEvent) {
 		possibleEvents.add(newEvent);
 	}
 
-	public void removeEventFromRoute(RandomEvent newEvent) {
-		possibleEvents.remove(newEvent);
+	/**
+	 * Removes the event from Route
+	 *
+	 * @param newEvent
+	 */
+	public void removeEventFromRoute(RandomEvent event) {
+		possibleEvents.remove(event);
 	}
 
+	/**
+	 * @override the default toString method to return information about the route.
+	 */
 	@Override
 	public String toString() {
 		return this.name + " - " + this.description;

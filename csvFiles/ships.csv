@@ -1,5 +1,5 @@
 idNumber|name|description|sailSpeed|cargoCapacity(kg)|numberOfCrew|endurance|sneakiness
 1|Karvi|The smallest vessel. General purpose ship mainly used for fishin and trade.|20|300|16|50|1
 2|Snekkja|A ship with at least 20 rowing benches. One of the most common types of ship.|15|400|41|75|2
-3|Skeid|Meaning 'speeder', 30 rowing benches. The largest ship. Build for war.|20|1000|70|100|4
+3|Skeid|Meaning 'speeder', 30 rowing benches. The largest ship. Build for war.|20|1000|70|93|4
 4|Drakkar|Most unusual, elegant. Skeid-like charasteristics.|18|800|60|85|3

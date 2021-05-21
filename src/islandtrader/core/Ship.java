@@ -1,3 +1,7 @@
+/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
 package islandtrader.core;
 
 import java.util.ArrayList;
@@ -5,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Class that models a Ship.
  *
- * @author Sebastian
+ * @author Maria Heloisa Balzaretti
  *
  */
 public class Ship extends Entity {
@@ -18,10 +22,7 @@ public class Ship extends Entity {
 	 * cargoCapacity of the Ship in Kg.
 	 */
 	private double cargoCapacity;
-	/**
-	 * numberOfCrew that the Ship takes.
-	 */
-	private int numberOfCrew;
+
 	/**
 	 * endurance / resistance capacity of the Ship.
 	 */
@@ -31,15 +32,47 @@ public class Ship extends Entity {
 	 */
 	private int sneakiness;
 
+	/**
+	 * numberOfCrew that the Ship takes.
+	 */
+	private int numberOfCrew;
+
+	/**
+	 * Crew cost to sail per day per crew member, 3.90 dollars were a lot of money
+	 * some time ago...
+	 */
+	private final double CREW_COST_TO_SAIL = 3.90;
+
+	/**
+	 * Helper boolean property to the Ship Health and game play.
+	 */
 	private boolean ableToSail = true;
+
+	/**
+	 * A collection of current StoreTradable carried by the Ship and available for
+	 * trade
+	 */
 	private ArrayList<StoreTradable> currentCargoTradables;
+
+	/**
+	 * A collection to keep track of the StoreTradable traded.
+	 */
 	private ArrayList<StoreTradable> soldCargoTradables = new ArrayList<StoreTradable>();
+
+	/**
+	 * The current Health Status of the Ship, varies when Ship takes random amount
+	 * of damage from RandomEvent UnfortunateWeather
+	 */
 	private double currentHealthStatus = 100;
-	private final double CREW_COST_TO_SAIL = 2.90;
+
+	/**
+	 * The constant full health value used to calculate and set full health of the
+	 * Ship.
+	 */
 	private final double FULL_HEALTH = 100;
 
 	/**
-	 * Constructor of the class. Creates and object Ship with the given parameters.
+	 * Creates a Ship object
 	 *
 	 * @param idNumber      id number
 	 * @param name          name
@@ -61,11 +94,96 @@ public class Ship extends Entity {
 	}
 
 	/**
+	 * Gets the number of crew that this ship takes.
+	 *
+	 * @return number of crew
+	 */
+	public int getNumberOfCrew() {
+		return numberOfCrew;
+	}
+
+	/**
+	 * Gets the crew cost to sail daily, the Trader needs to pay the crew wages
+	 * before sailing.
+	 *
+	 * @return
+	 */
+	public double getCrewCostToSailDaily() {
+		return numberOfCrew * CREW_COST_TO_SAIL;
+	}
+
+	/**
+	 * gets the Crew cost to Sail by the total days needed to get to the Island
+	 *
+	 * @param days
+	 * @return
+	 */
+	public double getCrewCostToSailByTotalDays(int days) {
+		return getCrewCostToSailDaily() * days;
+	}
+
+	/**
+	 * Gets the Current Health status of the Ship. if it is less than 100% the ship
+	 * must be fixed before it can sail again, also used to calculate the cost to
+	 * fix the Ship.
+	 *
+	 * @return
+	 */
+	public double getCurrentHealthStatus() {
+		return currentHealthStatus;
+	}
+
+	/**
+	 * Applies damage from RandomEvent Unfortunate Weather to the Ship
+	 *
+	 * @param amountDamage
+	 */
+	public void applyDamageToCurrentHealthStatus(double amountDamage) {
+		this.currentHealthStatus -= Math.max(0, amountDamage);
+	}
+
+	/**
+	 * Apply the damage from RandomEvent UnfortunateWeather to the Ship
+	 *
+	 * @param damage
+	 */
+	public void applyDamageToShip(double damage) {
+		currentHealthStatus -= damage;
+		if (currentHealthStatus < FULL_HEALTH) {
+			this.ableToSail = false;
+		}
+	}
+
+	/**
+	 * Repairs the Ship by setting the currentHealthStatus to 100%
+	 */
+	public void repair() {
+		this.currentHealthStatus = FULL_HEALTH;
+	}
+
+	/**
+	 * Checks that the Ship is able to sail
+	 *
+	 * @return
+	 */
+	public boolean isAbleToSail() {
+		return ableToSail;
+	}
+
+	/**
+	 * Sets the Ship ability to sail, when the ships takes damage it is set to false
+	 *
+	 * @param ableToSail
+	 */
+	public void setAbleToSail(boolean ableToSail) {
+		this.ableToSail = ableToSail;
+	}
+
+	/**
 	 * Gets the sail speed of this ship.
 	 *
 	 * @return sail speed
 	 */
-
 	public double getSailSpeed() {
 		return sailSpeed;
 	}
@@ -79,16 +197,24 @@ public class Ship extends Entity {
 		this.sailSpeed = sailSpeed;
 	}
 
+	/**
+	 * Increases the ship speed by the given amount Applied when a relevant upgrade
+	 * is bought
+	 *
+	 * @param increaseBy
+	 */
 	public void increaseSpeed(int increaseBy) {
 		this.sailSpeed += increaseBy;
 	}
 
+	/**
+	 * Decreases speed to remove any upgrades that the Trader has and wishes to sell
+	 * back.
+	 *
+	 * @param decreaseBy
+	 */
 	public void decreaseSpeed(int decreaseBy) {
 		this.sailSpeed -= decreaseBy;
-	}
-
-	public void increaseCargoHoldCapacity(double increaseBy) {
-		this.cargoCapacity += increaseBy;
 	}
 
 	/**
@@ -111,6 +237,35 @@ public class Ship extends Entity {
 	}
 
 	/**
+	 * Increases the amount of Kgs the Ship cargo can carry, when Trader buys a
+	 * relevant upgrade
+	 *
+	 * @param increaseBy
+	 */
+	public void increaseCargoHoldCapacity(double increaseBy) {
+		this.cargoCapacity += increaseBy;
+	}
+
+	/**
+	 * Used to calculate the capacity in use with the current goods.
+	 *
+	 * @param amountToDecrease
+	 */
+	public void decreaseCargoHoldCapacity(double amountToDecrease) {
+		this.cargoCapacity -= amountToDecrease;
+	}
+
+	/**
+	 * Trader can see the amount applied before buying an upgrade
+	 *
+	 * @param amountUpgrade
+	 * @return
+	 */
+	public double getNewCargoHoldCapacity(double amountUpgrade) {
+		return cargoCapacity + amountUpgrade;
+	}
+
+	/**
 	 * Gets the endurance / resistance capacity of this ship.
 	 *
 	 * @return endurance
@@ -130,12 +285,32 @@ public class Ship extends Entity {
 	}
 
 	/**
-	 * Gets the number of crew that this ship takes.
+	 * Increase endurance of Ship when Trader buys a relevant upgrade to the Ship
 	 *
-	 * @return number of crew
+	 * @param amountEndurance
 	 */
-	public int getNumberOfCrew() {
-		return numberOfCrew;
+	public void increaseEndurance(int amountEndurance) {
+		endurance += amountEndurance;
+	}
+
+	/**
+	 * Decreases the amount of endurance when Trader decides to sell the upgrade
+	 * back.
+	 *
+	 * @param amountEndurance
+	 */
+	public void decreaseEndurance(int amountEndurance) {
+		endurance -= amountEndurance;
+	}
+
+	/**
+	 * The trader can see the new Endurance before buying the upgrade
+	 *
+	 * @param amountEndurance
+	 * @return
+	 */
+	public int getNewEndurance(int amountEndurance) {
+		return endurance += amountEndurance;
 	}
 
 	/**
@@ -166,112 +341,88 @@ public class Ship extends Entity {
 		this.sneakiness += increaseBy;
 	}
 
+	/**
+	 * Decrease sneakiness of Ship when Trader sells some upgrade that previously
+	 * increased the Sneakiness of the Ship
+	 *
+	 * @param decreaseBy
+	 */
 	public void decreaseSneakiness(int decreaseBy) {
 		this.sneakiness -= decreaseBy;
 	}
 
 	/**
-	 * Overrides the toString() method to return a more meaningful description.
-	 */
-
-	@Override
-	public String toString() {
-		// return "You have selected " + name + " ship for this journey. Description: "
-		// + description + " Sail speed: "
-		// + sailSpeed + " km/h...MODIFY!!!";
-		String shipInfoTemplate = this.name + ": " + sailSpeed + " | " + cargoCapacity + " Kgs | " + endurance + " | "
-				+ sneakiness + " | " + numberOfCrew;
-
-		return shipInfoTemplate;
-	}
-
-	public double getCrewCostToSailDaily() {
-		return numberOfCrew * CREW_COST_TO_SAIL;
-	}
-
-	public double getCrewCostToSailByTotalDays(int days) {
-		return getCrewCostToSailDaily() * days;
-	}
-
-	public boolean isAbleToSail() {
-		return ableToSail;
-	}
-
-	public void setAbleToSail(boolean ableToSail) {
-		this.ableToSail = ableToSail;
-	}
-
-	public double getCurrentHealthStatus() {
-		return currentHealthStatus;
-	}
-
-	public void applyDamageToCurrentHealthStatus(double amountDamage) {
-		this.currentHealthStatus -= Math.max(0, amountDamage);
-	}
-
-	public void decreaseCargoHoldCapacity(double amountToDecrease) {
-		this.cargoCapacity -= amountToDecrease;
-	}
-
-	/**
-	 * Trader can see the amount applied before buying
+	 * A collection with all the current StoreTradables available to trade
 	 *
-	 * @param amountUpgrade
 	 * @return
 	 */
-	public double getNewCargoHoldCapacity(double amountUpgrade) {
-		return cargoCapacity + amountUpgrade;
-	}
-
 	public ArrayList<StoreTradable> getCurrentCargoTradables() {
 		return currentCargoTradables;
 	}
 
+	/**
+	 * Sets this cargo StoreTradables
+	 *
+	 * @param cargoTradables
+	 */
 	public void setCurrentCargoTradables(ArrayList<StoreTradable> cargoTradables) {
 		this.currentCargoTradables = cargoTradables;
 	}
 
-	public ArrayList<StoreTradable> getSoldCargoTradables() {
-		return soldCargoTradables;
-	}
-
-	public void setSoldCargoTradables(ArrayList<StoreTradable> allCargoTradables) {
-		this.soldCargoTradables = allCargoTradables;
-	}
-
+	/**
+	 * adds StoreTradable to the collection of current StoreTradables available for
+	 * trade.
+	 *
+	 * @param tradable
+	 */
 	public void addTradable(StoreTradable tradable) {
 		this.currentCargoTradables.add(tradable);
 	}
 
+	/**
+	 * removes the StoreTradable from the collection of current StoreTradables when
+	 * Trader sells it.
+	 *
+	 * @param tradable
+	 */
 	public void removeTradable(StoreTradable tradable) {
 		this.currentCargoTradables.remove(tradable);
 	}
 
+	/**
+	 * Removes all StoreTradables from the collection of current StoreTradables when
+	 * a RandomEvent Pirate takes all Trader goods.
+	 */
 	public void removeAllCargoTradables() {
 		this.currentCargoTradables.clear();
 	}
 
-	public void increaseEndurance(int amountEndurance) {
-		endurance += amountEndurance;
+	/**
+	 * Gets the StoreTradables sold
+	 *
+	 * @return
+	 */
+	public ArrayList<StoreTradable> getSoldCargoTradables() {
+		return soldCargoTradables;
 	}
 
-	public void decreaseEndurance(int amountEndurance) {
-		endurance -= amountEndurance;
+	/**
+	 * Sets the sold storeTradables
+	 *
+	 * @param soldCargoTradables
+	 */
+	public void setSoldCargoTradables(ArrayList<StoreTradable> soldCargoTradables) {
+		this.soldCargoTradables = soldCargoTradables;
 	}
 
-	public int getNewEndurance(int amountEndurance) {
-		return endurance += amountEndurance;
-	}
+	/**
+	 * Overrides the toString() method to return a more meaningful description.
+	 */
+	@Override
+	public String toString() {
+		String shipInfoTemplate = "%s: %s |  %s |  %s |  %s |  %s";
+		return String.format(shipInfoTemplate, name, sailSpeed, cargoCapacity, endurance, sneakiness, numberOfCrew);
 
-	public void damage(double damage) {
-		currentHealthStatus -= damage;
-		if (currentHealthStatus < FULL_HEALTH) {
-			this.ableToSail = false;
-		}
-	}
-
-	public void repair() {
-		this.currentHealthStatus = FULL_HEALTH;
 	}
 
 }

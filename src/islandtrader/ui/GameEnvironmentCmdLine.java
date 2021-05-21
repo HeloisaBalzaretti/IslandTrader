@@ -317,7 +317,7 @@ public class GameEnvironmentCmdLine extends GameEnvironment {
 	 */
 	private void setSailHelper(int selectedIslandIndex) {
 		Island selectedIsland = availableIslands.get(selectedIslandIndex);
-		int days = currentIsland.distanceToInDays(selectedIslandIndex);
+		int days = currentIsland.getDistanceToAnotherIslandInDays(selectedIslandIndex);
 		double shipHealth = trader.getShipOwned().getCurrentHealthStatus();
 		double costToSail = trader.getShipOwned().getCrewCostToSailByTotalDays(days);
 		if (shipHealth < 100) {
@@ -466,7 +466,7 @@ public class GameEnvironmentCmdLine extends GameEnvironment {
 			Route route = currentIsland.getRoutes()[routeIndex];
 			routesToString += availableIslands.get(routeIndex).getIdNumber();
 			if (route != null) {
-				int durationDays = currentIsland.distanceToInDays(routeIndex);
+				int durationDays = currentIsland.getDistanceToAnotherIslandInDays(routeIndex);
 				double totalCostCrewToSail = trader.getShipOwned().getCrewCostToSailByTotalDays(durationDays);
 				routesToString += String.format(ROUTE_MENU_LINE_MESSAGE, durationDays, totalCostCrewToSail, route);
 			} else {

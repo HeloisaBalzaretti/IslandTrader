@@ -2,11 +2,15 @@ package islandTraderSwing.ui.gui;
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 
 import islandtrader.core.GameEnvironment;
 import islandtrader.core.Island;
+import islandtrader.core.Pirate;
 import islandtrader.core.Route;
 import islandtrader.core.Ship;
 import islandtrader.core.Trader;
@@ -197,6 +201,19 @@ public class GameEnvironmentSwing extends GameEnvironment {
 
 	public void startMainWindowPanel() {
 
+	}
+
+	protected void pirateMadeTraderWalkThePlank(Pirate pirate, JButton btnToChange) {
+		isGameOver = true;
+		JOptionPane.showMessageDialog(new JFrame(), pirate.getMessageWalkPlank(), "Walk the plank",
+				JOptionPane.OK_OPTION);
+		getTrader().getShipOwned().setAbleToSail(false);
+		makeBtnInvisible(btnToChange);
+
+	}
+
+	public void makeBtnInvisible(JButton btnToChange) {
+		btnToChange.setVisible(false);
 	}
 
 	public static void main(String[] args) {

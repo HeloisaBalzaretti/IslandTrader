@@ -201,7 +201,7 @@ public class SetupTrader extends JFrame {
 
 				if (areFieldsValid) {
 					String name = textTraderName.getText().trim();
-					Trader trader = new Trader(name, ", a Very Brave Captain!", getChoosenShip(list_ShipToChoose));
+					Trader trader = new Trader(name, "a very Brave Captain!", getChoosenShip(list_ShipToChoose));
 					game.setTrader(trader);
 					game.setDurationChosenInDays(sliderDurationDays.getValue());
 					game.launchMainScreen(trader);

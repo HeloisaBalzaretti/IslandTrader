@@ -1,15 +1,16 @@
 /**
- *
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
  */
 package islandtrader.core;
 
 /**
  * Represents the Random Events that the Trader may encounter while sailing. The
- * Trader can encounter Pirates, Bad Weather or Sailors to rescue. each will
- * have a different action in the game. These are allocated randomly to the
+ * Trader can encounter Pirates, Unfortunate Weather or Sailors to rescue. Each
+ * will have a different action in the game. These are allocated randomly to the
  * Routes of each Island.
  *
- * @author Maria
+ * @author Maria Heloisa Balzaretti
  *
  */
 
@@ -19,6 +20,7 @@ public abstract class RandomEvent extends Entity implements Cloneable {
 	/**
 	 * Creates a new RandomEvent
 	 *
+	 * @param idNumbe
 	 * @param name
 	 * @param description
 	 * @param percentageChanceOfEncounter
@@ -27,13 +29,17 @@ public abstract class RandomEvent extends Entity implements Cloneable {
 		super(idNumber, name, description);
 	}
 
+	/**
+	 * To be able to use the event with different properties.
+	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
 
 	/**
-	 * i.e. percentage in the format 0.2 to represent 20%.
+	 * Used to set the chance of the random encounter for each route. i.e.
+	 * percentage in the format 0.2 to represent 20%.
 	 *
 	 * @return the percentage of chance of a given RandomEvent happening.
 	 */
@@ -57,19 +63,34 @@ public abstract class RandomEvent extends Entity implements Cloneable {
 	 */
 	@Override
 	public String toString() {
-		// fix it ***************************************
 		return name + description;
 	}
 
 	/**
-	 * This method is to be implemented depending on each RandomEvent action.
+	 * This method is to be implemented depending on each RandomEvent specific
+	 * context.
 	 */
 	public abstract void randomEventSpecificAction(Trader myTrader);
 
+	/**
+	 * A message used to inform the Trader of the encounter.
+	 *
+	 * @return string to be set in each specific event
+	 */
 	public abstract String encounterMessage();
 
+	/**
+	 * A message used to inform the Trader of the outcome of the RandomEvent
+	 *
+	 * @return string to be set in each specific event
+	 */
 	public abstract String resultOfEncounterMessage();
 
+	/**
+	 * Gets the event specific name: Pirate, UnfortunateWeather or RescuedSailor
+	 *
+	 * @return string to be set in each specific event
+	 */
 	public abstract String getEventSpecificName();
 
 }

@@ -11,24 +11,24 @@ package islandtrader.core;
  */
 public class Island extends Entity {
 
-	/*
-	 * Distance list. idNumber of the islands are used to access the index of the
-	 * array to get the distance to other/s island/s. distance list corresponding to
-	 * distanceMatrix[idNumber] from IslandRepository. Each index corresponds to
-	 * distance in days to each Island idNumber.
+	/**
+	 * A matrix used to set the distance between Islands in days.
 	 */
-
 	private int[] distancesInDays;
-
+	/**
+	 * The Store of this Island
+	 */
 	private Store store;
 
+	/**
+	 * The routes available from this Island
+	 */
 	private Route[] routes;
 
 	/**
 	 * Constructor of the class. Creates an object island with the given parameters.
 	 *
-	 * @param islandIdNumber     idNumber of the Island. Also index of the
-	 *                           islandDistanceList.
+	 * @param islandIdNumber     idNumber of the Island.
 	 * @param islandName         Name of the Island.
 	 * @param islandDescription  Description of the Island.
 	 * @param islandDistanceList Distance (in days at 20km/h) list to other Islands.
@@ -41,6 +41,20 @@ public class Island extends Entity {
 	}
 
 	/**
+	 * @return this Island's Store
+	 */
+	public Store getStore() {
+		return store;
+	}
+
+	/**
+	 * @param store the Store to set
+	 */
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
+	/**
 	 * Gets the distance list to other islands (distance in days at 20km/h).
 	 *
 	 * @return distances list in days at 20km/h.
@@ -49,37 +63,43 @@ public class Island extends Entity {
 		return distancesInDays;
 	}
 
+	/**
+	 * Gets the list of routes.
+	 *
+	 * @return
+	 */
 	public Route[] getRoutes() {
 		return routes;
 	}
 
 	/**
+	 * @param routes the routes to set
+	 */
+	public void setRoutes(Route[] routes) {
+		this.routes = routes;
+	}
+
+	/**
 	 * Takes the idNumber of another Island as a parameter to return the distance in
-	 * km to this.
+	 * km from this Island. distances[x] is in days * 24hs * 20km/h average =
+	 * distance in Kms.
 	 *
 	 * @param islandNumber idNumber of the destiny.
 	 * @return distance in Km
 	 */
-	public int distanceToInKm(int islandNumber) {
-		return distancesInDays[islandNumber] * 24 * 20; // distances[x] is in days * 24hs * 20km/h avg = distance in km
-	}
-
-	public int distanceToInDays(int islandNumber) {
-		return distancesInDays[islandNumber];
+	public int getDistanceToAnotherIslandInKm(int islandNumber) {
+		return distancesInDays[islandNumber] * 24 * 20;
 	}
 
 	/**
-	 * Overrides the method toString() to return a meaningful string.
+	 * Takes the idNumber of another Island as a parameter to return the distance in
+	 * days from this Island.
+	 *
+	 * @param islandNumber
+	 * @return distance in days
 	 */
-	@Override
-	public String toString() {
-		return name + ": " + description;
-		/**
-		 * + "\n Distance to Island: " + "\n Phuket - " + distanceToInKm(0) + "km \n
-		 * Island of the Aztecs - " + distanceToInKm(1) + "km \n Shetland Islands - " +
-		 * distanceToInKm(2) + "km \n Bermuda Triangle - " + distanceToInKm(3) + "km \n
-		 * Trasmoz - " + distanceToInKm(4) + "km \n";
-		 */
+	public int getDistanceToAnotherIslandInDays(int islandNumber) {
+		return distancesInDays[islandNumber];
 	}
 
 	/**
@@ -90,29 +110,16 @@ public class Island extends Entity {
 	 * @param distances list of distances.
 	 * @return distance to source.
 	 */
-	public int distanceTo(int i, int[] distances) {
+	public int getDistanceToIslandFromMatrix(int i, int[] distances) {
 		return distances[i];
 	}
 
 	/**
-	 * @return the store
+	 * Overrides the method toString() to return a meaningful string.
 	 */
-	public Store getStore() {
-		return store;
-	}
-
-	/**
-	 * @param store the store to set
-	 */
-	public void setStore(Store store) {
-		this.store = store;
-	}
-
-	/**
-	 * @param routes2 the routes to set
-	 */
-	public void setRoutes(Route[] routes) {
-		this.routes = routes;
+	@Override
+	public String toString() {
+		return String.format("%s: %s", name, description);
 	}
 
 }

@@ -1,5 +1,6 @@
 /**
- *
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
  */
 package islandtrader.core;
 
@@ -11,32 +12,45 @@ import java.util.Random;
  * the Trader's Ship, the Ship may endure more if it has any upgrades to help
  * it. The repair cost is based on the amount of damage
  *
- * @author Maria
+ * @author Maria Heloisa Balzaretti
  *
  */
 public class UnfortunateWeather extends RandomEvent {
 	/**
-	 * amountOfDamageToShip will be used to reduce ship endurance.
+	 * amountOfDamageToShip used to reduce ship Health.
 	 */
 	private float randomAmountOfDamage = 0;
+
+	/**
+	 * Template message used when Trader encounters UnfortunateWeather RandomEvent
+	 */
 	private final String MESSAGE_ENCOUNTER = "Ohh...How unfortunate! A %s approaches...%s";
+
+	/**
+	 * Template message used to inform Trader of the amount of damage.
+	 */
 	private final String MESSAGE_AMOUNT_OF_DAMAGE = "The %s was too strong. Lucky you, your ship endured."
 			+ " However it took %.2f%% of damage!";
+
+	/**
+	 * The maximum amount of damage the Ship can take. Based on 100% ship health.
+	 */
 	private final double MAX_PERCENT_OF_DAMAGE = 100;
 
 	/**
 	 * A new Unfortunate Weather of type RandomEvent.
 	 *
+	 * @param idNumber
 	 * @param name
 	 * @param description
 	 */
 	public UnfortunateWeather(int idNumber, String name, String description) {
 		super(idNumber, name, description);
-
 	}
 
 	/**
-	 * Apply damage to the Ship Health, based on endurance of Ship.
+	 * The randomEvent specific action will apply damage to the Ship Health, based
+	 * on endurance of Ship.
 	 */
 	@Override
 	public void randomEventSpecificAction(Trader myTrader) {
@@ -50,21 +64,29 @@ public class UnfortunateWeather extends RandomEvent {
 		myTrader.getShipOwned().setAbleToSail(false);
 	}
 
+	/**
+	 * Overrides the super encounterMessage from RandomEvent class to the
+	 * UnfortunateWeather encounter event
+	 */
 	@Override
 	public String encounterMessage() {
 		return String.format(MESSAGE_ENCOUNTER, this.name, this.description);
 	}
 
+	/**
+	 * Overrides the super resultOfEncounterMessage from RandomEvent class to the
+	 * UnfortunateWeather encounter event
+	 */
 	@Override
 	public String resultOfEncounterMessage() {
 		return String.format(MESSAGE_AMOUNT_OF_DAMAGE, this.name, (this.randomAmountOfDamage * MAX_PERCENT_OF_DAMAGE));
 	}
 
 	/**
-	 * The method generate a random number from 0.1 to 0.9, which represents a
-	 * percentage that will be used to incur damage to the Ship, based on the Ship
-	 * endurance and upgrades. It is between 0.1 to give a minimum damage of 10% and
-	 * a maximum damage of 90%. We don't want the Ship to sink!
+	 * Generates a random number from 0.1 to 0.9, which represents a percentage that
+	 * will be used to incur damage to the Ship, based on the Ship endurance and
+	 * upgrades. It is between 0.1 to give a minimum damage of 10% and a maximum
+	 * damage of 90%. We don't want the Ship to sink!
 	 *
 	 * @param amountOfDamageToShip the amountOfDamageToShip to set
 	 */
@@ -75,6 +97,9 @@ public class UnfortunateWeather extends RandomEvent {
 		return randomDamage;
 	}
 
+	/**
+	 * Used to personalize the game when applying the randomEvents to the routes.
+	 */
 	@Override
 	public String getEventSpecificName() {
 		return "Unfortunate Weather";
