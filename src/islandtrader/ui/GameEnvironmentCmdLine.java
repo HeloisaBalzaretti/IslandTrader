@@ -477,21 +477,4 @@ public class GameEnvironmentCmdLine extends GameEnvironment {
 		return routesToString;
 	}
 
-	public static void main(String args[]) {
-		GameEnvironmentCmdLine game = new GameEnvironmentCmdLine();
-
-		ShipRepository shipRepository = new ShipRepository();
-		ArrayList<Ship> ships = shipRepository.getList();
-
-		Ship selectedShip = ships.get(0);
-		Trader trader = new Trader("testName", "Very Brave Sailer", selectedShip);
-		game.trader = trader;
-
-		IslandRepository islandRepository = new IslandRepository();
-		game.availableIslands = islandRepository.getList();
-		game.durationChosenInDays = 20;
-		game.currentIsland = game.availableIslands.get(0);
-		game.showMainMenu();
-	}
-
 }

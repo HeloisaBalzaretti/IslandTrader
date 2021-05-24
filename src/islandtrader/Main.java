@@ -2,8 +2,7 @@
 
 package islandtrader;
 
-import islandtrader.core.GameEnvironment;
-import islandtrader.ui.GameEnvironmentCmdLine;
+import islandTraderSwing.ui.gui.GameEnvironmentSwing;
 
 //import islandtrader.core.Trader; //Maybe another class??
 /**
@@ -41,7 +40,7 @@ public class Main {
 //
 //
 //		}
-		GameEnvironment game = new GameEnvironmentCmdLine();
+		GameEnvironmentSwing game = new GameEnvironmentSwing();
 		game.startGame();
 	}
 

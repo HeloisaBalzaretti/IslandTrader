@@ -5,8 +5,9 @@ import java.util.Scanner;
 public class GameEnvironmentMessageHelper {
 	public String readInput(String message) {
 		printMessage(message);
-		Scanner sc = new Scanner(System.in);
-		return sc.next();
+		try (Scanner sc = new Scanner(System.in)) {
+			return sc.next();
+		}
 	}
 
 	public void printMessage(String message) {

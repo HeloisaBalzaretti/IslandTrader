@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import islandtrader.core.RescuedSailor;
-import islandtrader.core.Ship;
-import islandtrader.core.Trader;
 
 /**
  * @author Maria
@@ -42,24 +40,6 @@ public class SailorRepository extends BaseRepository {
 			rescuedSailorsArray.add(newSailor);
 		}
 		return rescuedSailorsArray;
-	}
-
-	public static void main(String[] args) {
-
-		SailorRepository sailorRepository = new SailorRepository();
-		ArrayList<RescuedSailor> sailors = sailorRepository.getList();
-		Ship barco = new Ship(1, "Karvi",
-				"The smallest vessel. General purpose ship mainly used for fishin and trade, but occasionally for military use.",
-				20, 300, 16, 50, 2);
-		Trader myTrader = new Trader("Heloisa", "Very Brave Sailer", barco);
-
-		for (RescuedSailor sailor : sailors) {
-			System.out.println(myTrader.getTraderAccountBalance());
-			System.out.println(sailor.encounterMessage());
-			sailor.randomEventSpecificAction(myTrader);
-			System.out.println(sailor.resultOfEncounterMessage());
-			System.out.println(myTrader.getTraderAccountBalance());
-		}
 	}
 
 }

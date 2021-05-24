@@ -143,18 +143,6 @@ public class Ship extends Entity {
 	}
 
 	/**
-	 * Apply the damage from RandomEvent UnfortunateWeather to the Ship
-	 *
-	 * @param damage
-	 */
-	public void applyDamageToShip(double damage) {
-		currentHealthStatus -= damage;
-		if (currentHealthStatus < FULL_HEALTH) {
-			this.ableToSail = false;
-		}
-	}
-
-	/**
 	 * Repairs the Ship by setting the currentHealthStatus to 100%
 	 */
 	public void repair() {

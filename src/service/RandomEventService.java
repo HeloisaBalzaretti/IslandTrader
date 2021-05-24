@@ -8,9 +8,6 @@ import islandtrader.core.Pirate;
 import islandtrader.core.RandomEvent;
 import islandtrader.core.RescuedSailor;
 import islandtrader.core.UnfortunateWeather;
-import repository.PirateRepository;
-import repository.SailorRepository;
-import repository.UnfortunateWeatherRepository;
 
 public class RandomEventService {
 
@@ -88,21 +85,5 @@ public class RandomEventService {
 
 	private int getRandomNumberFromMinToMax(int min, int max) {
 		return new Random().nextInt(max - min + 1) + min;
-	}
-
-	public static void main(String args[]) {
-		PirateRepository pirateRepository = new PirateRepository();
-		ArrayList<Pirate> pirates = pirateRepository.getList();
-
-		UnfortunateWeatherRepository weatherRepository = new UnfortunateWeatherRepository();
-		ArrayList<UnfortunateWeather> weatherList = weatherRepository.getList();
-
-		SailorRepository sailorRepository = new SailorRepository();
-		ArrayList<RescuedSailor> sailors = sailorRepository.getList();
-		RandomEventService res = new RandomEventService(pirates, sailors, weatherList);
-		ArrayList<RandomEvent> list = res.getRandomEventsForRoute();
-		for (RandomEvent randomEvent : list) {
-			System.out.println(randomEvent);
-		}
 	}
 }

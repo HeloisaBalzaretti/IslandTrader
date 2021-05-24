@@ -95,6 +95,7 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	public void updateLblTraderInfo(JLabel lblTraderInfo) {
 		lblTraderInfo.setText(trader.toString());
 	}
+
 	/**
 	 * @return the trader
 	 */
@@ -231,12 +232,6 @@ public class GameEnvironmentSwing extends GameEnvironment {
 
 	public void changeLabelText(JLabel labelToChangeTxt, String text) {
 		labelToChangeTxt.setText(text);
-	}
-
-	public static void main(String[] args) {
-
-		GameEnvironmentSwing manager = new GameEnvironmentSwing();
-		manager.launchSetupScreen();
 	}
 
 }
