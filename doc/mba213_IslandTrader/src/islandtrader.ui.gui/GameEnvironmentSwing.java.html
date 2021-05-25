@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GameEnvironmentSwing.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.gui</a> &gt; <span class="el_source">GameEnvironmentSwing.java</span></div><h1>GameEnvironmentSwing.java</h1><pre class="source lang-java linenums">/**
+ * Package with the gui interface application
+ */
+package islandtrader.ui.gui;
+
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JSlider;
+
+import islandtrader.core.GameEnvironment;
+import islandtrader.core.Island;
+import islandtrader.core.Pirate;
+import islandtrader.core.Route;
+import islandtrader.core.Ship;
+import islandtrader.core.Trader;
+import repository.IslandRepository;
+import repository.ShipRepository;
+
+/**
+ * Creates the GUI interface application
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+@SuppressWarnings(&quot;unused&quot;)
+public class GameEnvironmentSwing extends GameEnvironment {
+
+<span class="nc" id="L32">	private ArrayList&lt;Island&gt; islands = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L33">	private ArrayList&lt;Route&gt; routesArray = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L34">	private ArrayList&lt;Ship&gt; ships = new ArrayList&lt;&gt;();</span>
+	private Island selectedIsland;
+	private Ship ship;
+	private MainWindow mainWindow;
+
+	/**
+	 * Creates a new game using gui interface application
+	 */
+<span class="nc" id="L42">	public GameEnvironmentSwing() {</span>
+<span class="nc" id="L43">		ShipRepository shipRepository = new ShipRepository();</span>
+<span class="nc" id="L44">		this.ships = shipRepository.getList();</span>
+<span class="nc" id="L45">		IslandRepository islandRepository = new IslandRepository();</span>
+<span class="nc" id="L46">		islands = islandRepository.getList();</span>
+<span class="nc" id="L47">		currentIsland = islands.get(0);</span>
+
+<span class="nc" id="L49">	}</span>
+
+	/**
+	 * Launches the main window
+	 *
+	 * @param trader the Trader
+	 */
+	public void launchMainScreen(Trader trader) {
+<span class="nc" id="L57">		mainWindow = new MainWindow(this);</span>
+<span class="nc" id="L58">	}</span>
+
+	/**
+	 * Closes the main window
+	 *
+	 * @param mainWindow to be closed
+	 */
+	public void closeMainScreen(MainWindow mainWindow) {
+<span class="nc" id="L66">		mainWindow.closeWindow();</span>
+
+<span class="nc" id="L68">	}</span>
+
+	/**
+	 * Gets the main window
+	 *
+	 * @return mainWindow
+	 */
+	public MainWindow getMainScreen() {
+<span class="nc" id="L76">		return mainWindow;</span>
+
+	}
+
+	/**
+	 * Closes the main window
+	 */
+	public void closeMainScreen() {
+<span class="nc" id="L84">		mainWindow.finishedWindow();</span>
+<span class="nc" id="L85">	}</span>
+
+	/**
+	 * Launch set up window
+	 */
+	public void launchSetupScreen() {
+<span class="nc" id="L91">		SetupTraderWindow setupWindow = new SetupTraderWindow(this);</span>
+<span class="nc" id="L92">	}</span>
+
+	/**
+	 * Closes the set up screen
+	 *
+	 * @param setupScreen to be closed
+	 */
+	public void closeSetupScreen(SetupTraderWindow setupScreen) {
+<span class="nc" id="L100">		setupScreen.closeWindow();</span>
+
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Launches Routes information window
+	 */
+	public void launchRoutesInformation() {
+<span class="nc" id="L108">		RouteInformationWindow routesInformation = new RouteInformationWindow(this, trader);</span>
+<span class="nc" id="L109">	}</span>
+
+	/**
+	 * close routes information window
+	 *
+	 * @param routesInformationwindow to be closed
+	 */
+	public void closeRoutesInformation(RouteInformationWindow routesInformationwindow) {
+<span class="nc" id="L117">		routesInformationwindow.closeWindow();</span>
+
+<span class="nc" id="L119">	}</span>
+
+	/**
+	 * Launch the Archipelago window that represents a map
+	 */
+	public void launchArchipelagoWindow() {
+<span class="nc" id="L125">		ArchipelagoWindow archipelagoWindowWindow = new ArchipelagoWindow(this);</span>
+<span class="nc" id="L126">	}</span>
+
+	/**
+	 * Launches the window with the details about the selected Island from the
+	 * Archipelago window.
+	 *
+	 * @param island the Island which to show the information
+	 */
+	public void launchIslandDetail(Island island) {
+<span class="nc" id="L135">		IslandDetailWindow islandDetailWindow = new IslandDetailWindow(island);</span>
+<span class="nc" id="L136">	}</span>
+
+	/**
+	 * Launches the Store window
+	 */
+	public void launchIslandStore() {
+<span class="nc" id="L142">		IslandStoreWindow islandStore = new IslandStoreWindow(this);</span>
+<span class="nc" id="L143">	}</span>
+
+	/**
+	 * Launches the current Cargo tradables window
+	 */
+	public void launchCargoStoreTradablesWindow() {
+<span class="nc" id="L149">		CargoCurrentGoodsWindow cargoWindow = new CargoCurrentGoodsWindow(this);</span>
+<span class="nc" id="L150">	}</span>
+
+	/**
+	 * Shows the slider value in the label
+	 *
+	 * @param slider         to take the value from
+	 * @param lblToChangeTxt the label that shows the value
+	 */
+	public void showSliderValue(JSlider slider, JLabel lblToChangeTxt) {
+<span class="nc" id="L159">		lblToChangeTxt.setText(&quot;&quot; + slider.getValue());</span>
+<span class="nc" id="L160">	}</span>
+
+	/**
+	 * Updates the information about the trader in the main window
+	 *
+	 * @param lblTraderInfo label to be updated
+	 */
+	public void updateLblTraderInfo(JLabel lblTraderInfo) {
+<span class="nc" id="L168">		lblTraderInfo.setText(trader.toString());</span>
+<span class="nc" id="L169">	}</span>
+
+	/**
+	 * @return the trader
+	 */
+	public Trader getTrader() {
+<span class="nc" id="L175">		return trader;</span>
+	}
+
+	/**
+	 * @param trader the trader to set
+	 */
+	public void setTrader(Trader trader) {
+
+<span class="nc" id="L183">		this.trader = trader;</span>
+<span class="nc" id="L184">	}</span>
+
+	/**
+	 * @return the ships
+	 */
+	public ArrayList&lt;Ship&gt; getShips() {
+<span class="nc" id="L190">		return ships;</span>
+	}
+
+	/**
+	 * @param ships the ships to set
+	 */
+	public void setShips(ArrayList&lt;Ship&gt; ships) {
+<span class="nc" id="L197">		this.ships = ships;</span>
+<span class="nc" id="L198">	}</span>
+
+	/**
+	 * Get Ship used in the game
+	 *
+	 * @return ship
+	 */
+	public Ship getShip() {
+<span class="nc" id="L206">		return ship;</span>
+	}
+
+	/**
+	 * Set the ship to the game
+	 *
+	 * @param ship to be captained by Trader
+	 */
+	public void setShip(Ship ship) {
+<span class="nc" id="L215">		this.ship = ship;</span>
+<span class="nc" id="L216">	}</span>
+
+	/**
+	 * @param selectedIsland the selectedIsland to set
+	 */
+
+	public void setSelectedIsland(Island selectedIsland) {
+<span class="nc" id="L223">		this.selectedIsland = selectedIsland;</span>
+<span class="nc" id="L224">	}</span>
+
+	/**
+	 * @return the selectedIsland
+	 */
+	public Island getSelectedIsland() {
+<span class="nc" id="L230">		return selectedIsland;</span>
+	}
+
+	/**
+	 * @return the islands
+	 */
+	public ArrayList&lt;Island&gt; getIslands() {
+<span class="nc" id="L237">		return islands;</span>
+	}
+
+	/**
+	 * @param islands the islands to set
+	 */
+	public void setIslands(ArrayList&lt;Island&gt; islands) {
+<span class="nc" id="L244">		this.islands = islands;</span>
+<span class="nc" id="L245">	}</span>
+
+	/**
+	 * @return the routes
+	 */
+	public ArrayList&lt;Route&gt; getRoutes() {
+<span class="nc" id="L251">		return routesArray;</span>
+	}
+
+	/**
+	 * @param routes the routes to set
+	 */
+	public void setRoutes(ArrayList&lt;Route&gt; routes) {
+
+<span class="nc" id="L259">		this.routesArray = routes;</span>
+<span class="nc" id="L260">	}</span>
+
+	/**
+	 * @return the currentIsland
+	 */
+	public Island getCurrentIsland() {
+<span class="nc" id="L266">		return currentIsland;</span>
+	}
+
+	/**
+	 * @param currentIsland the currentIsland to set
+	 */
+	public void setCurrentIsland(Island currentIsland) {
+
+<span class="nc" id="L274">		this.currentIsland = currentIsland;</span>
+<span class="nc" id="L275">	}</span>
+
+	/**
+	 * currentIsland the currentIsland to set
+	 */
+	public void setCurrentIsland() {
+<span class="nc" id="L281">		setCurrentIsland(getIslands().get(0));</span>
+
+<span class="nc" id="L283">	}</span>
+
+	/**
+	 * Sets the duration for the game
+	 *
+	 * @param durationSelected the number of days to play the game
+	 */
+	public void setDurationChosenInDays(int durationSelected) {
+<span class="nc" id="L291">		durationChosenInDays = durationSelected;</span>
+<span class="nc" id="L292">	}</span>
+
+	/**
+	 * the chosen duration for the game
+	 *
+	 * @return durationChosenInDays
+	 */
+	public int getDurationChosenInDays() {
+<span class="nc" id="L300">		return durationChosenInDays;</span>
+	}
+
+	/**
+	 * Entry point to Start the game in the gui interface
+	 */
+	@Override
+	public void startGame() {
+<span class="nc" id="L308">		launchSetupScreen();</span>
+
+<span class="nc" id="L310">	}</span>
+
+	/**
+	 * Starts the main window
+	 */
+	public void startMainWindowPanel() {
+<span class="nc" id="L316">		launchMainScreen(trader);</span>
+
+<span class="nc" id="L318">	}</span>
+
+	/**
+	 * Helper method for the Sail button, when the random event is Pirate and it
+	 * makes the Trader walk the plank
+	 *
+	 * @param pirate
+	 * @param btnToChange
+	 */
+	protected void pirateMadeTraderWalkThePlank(Pirate pirate, JButton btnToChange) {
+<span class="nc" id="L328">		isGameOver = true;</span>
+<span class="nc" id="L329">		JOptionPane.showMessageDialog(new JFrame(), pirate.getMessageWalkPlank(), &quot;Walk the plank&quot;,</span>
+<span class="nc" id="L330">				JOptionPane.OK_OPTION);</span>
+<span class="nc" id="L331">		getTrader().getShipOwned().setAbleToSail(false);</span>
+<span class="nc" id="L332">		makeBtnInvisible(btnToChange);</span>
+<span class="nc" id="L333">	}</span>
+
+	/**
+	 * Helper method to change button visibility
+	 *
+	 * @param btnToChange the button to be set invisible
+	 */
+	public void makeBtnInvisible(JButton btnToChange) {
+<span class="nc" id="L341">		btnToChange.setVisible(false);</span>
+<span class="nc" id="L342">	}</span>
+
+	/**
+	 * Changes the labelToChangeTxt with the given text
+	 *
+	 * @param labelToChangeTxt label to change
+	 * @param text             to be used in the label
+	 */
+	public void changeLabelText(JLabel labelToChangeTxt, String text) {
+<span class="nc" id="L351">		labelToChangeTxt.setText(text);</span>
+<span class="nc" id="L352">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

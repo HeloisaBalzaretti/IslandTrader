@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GameEnvironment.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">GameEnvironment.java</span></div><h1>GameEnvironment.java</h1><pre class="source lang-java linenums">
+/**
+* Contains the basic classes to build the game.
+* For example:Trader, Ship, Route, RandomEvent, Island, Store
+*/
+package islandtrader.core;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+/**
+ * Abstract class with the main methods to allow the game to run only under the
+ * required conditions from project scope. The command line application and the
+ * GUI application will use the properties defined here along with their own
+ * other necessary properties and methods
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+
+<span class="nc" id="L21">public abstract class GameEnvironment {</span>
+	/**
+	 * The minimum duration of the game is 20 days
+	 */
+<span class="nc" id="L25">	protected final int MINIMUM_DURATION = 20;</span>
+
+	/**
+	 * The maximum duration of the game is 50 days
+	 */
+<span class="nc" id="L30">	protected final int MAXIMUM_DURATION = 50;</span>
+
+	/**
+	 * The duration of the game that the player has chosen between the minimum and
+	 * maximum values.
+	 */
+	protected int durationChosenInDays;
+
+	/**
+	 * The total of days already elapsed in the game
+	 */
+	protected int daysElapsed;
+
+	/**
+	 * To help terminate the game when certain conditions are met.
+	 */
+<span class="nc" id="L46">	protected boolean isGameOver = false;</span>
+
+	/**
+	 * The Array of the Island objects available to be visited in the game
+	 */
+	protected ArrayList&lt;Island&gt; availableIslands;
+
+	/**
+	 * The current Island where the Trader is located at the moment
+	 */
+	protected Island currentIsland;
+
+	/**
+	 * The trader is the player of the game.
+	 */
+	protected Trader trader;
+
+	/**
+	 * Gets randomly a home Island for the Trader
+	 *
+	 * @return
+	 */
+	protected Island getRandomIsland() {
+<span class="nc" id="L69">		int min = 0;</span>
+<span class="nc" id="L70">		int max = availableIslands.size() - 1;</span>
+<span class="nc" id="L71">		return availableIslands.get(getRandomBetweenMinMax(min, max));</span>
+	}
+
+	/**
+	 * To know if the game can still happen. It checks for the number of elapsed
+	 * days and the isGameOver boolean property.
+	 *
+	 * @return
+	 */
+	protected boolean canStillPlay() {
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		return daysElapsed &lt; durationChosenInDays &amp;&amp; !isGameOver;</span>
+	}
+
+	/**
+	 * Gets the amount of remaining days available for the Trader to sail.
+	 *
+	 * @return
+	 */
+	public int getDaysRemaining() {
+<span class="nc" id="L90">		return durationChosenInDays - daysElapsed;</span>
+	}
+
+	/**
+	 * @return the amount of daysElapsed, the days already used sailing
+	 */
+	public int getDaysElapsed() {
+<span class="nc" id="L97">		return daysElapsed;</span>
+	}
+
+	/**
+	 * @param daysElapsed the daysElapsed to set
+	 */
+	public void setDaysElapsed(int daysElapsed) {
+<span class="nc" id="L104">		this.daysElapsed = daysElapsed;</span>
+<span class="nc" id="L105">	}</span>
+
+	/**
+	 * Gets a random event that happens when sailing
+	 *
+	 * @param randomEventList
+	 * @return
+	 */
+	public RandomEvent getEventFromListOfPossibleEvents(ArrayList&lt;RandomEvent&gt; randomEventList) {
+<span class="nc" id="L114">		int randomValue = getRandomBetweenMinMax(0, 100);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (RandomEvent randEve : randomEventList) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (randomValue &lt;= randEve.getPercentageChanceOfEncounter()) {</span>
+<span class="nc" id="L117">				return randEve;</span>
+			}
+		}
+<span class="nc" id="L120">		return null;</span>
+	}
+
+	/**
+	 * Gets a number randomly to help the random events to be chosen for the route
+	 *
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	protected int getRandomBetweenMinMax(int min, int max) {
+<span class="nc" id="L131">		return new Random().nextInt(max - min + 1) + min;</span>
+	}
+
+	/**
+	 * The entry point to start the game in each application.
+	 */
+	public abstract void startGame();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

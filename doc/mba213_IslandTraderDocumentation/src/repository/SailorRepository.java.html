@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SailorRepository.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">repository</a> &gt; <span class="el_source">SailorRepository.java</span></div><h1>SailorRepository.java</h1><pre class="source lang-java linenums">/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
+package repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import islandtrader.core.RescuedSailor;
+
+/**
+ * Represents a database for the RescuedSailor RandomEvent, it is used to create
+ * an ArrayList of type RescuedSailor, with information from RescuedSailor.csv.
+ * Each constant property represents a property located at the index of the
+ * sublist that will be used to build the RescuedSailor object.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+<span class="nc" id="L21">public class SailorRepository extends BaseRepository {</span>
+
+	/**
+	 * this RescuedSailor Quantity of sailors to rescue is at index 3 of the sublist
+	 * of the rescuedSailorList
+	 */
+<span class="nc" id="L27">	private final int QUANTITY_OF_SAILORS_TO_RESCUE = 3;</span>
+
+	/**
+	 * this RescuedSailor monetary reward per sailor is at index 4 of the sublist of
+	 * the rescuedSailorList
+	 */
+<span class="nc" id="L33">	private final int MONETARY_REWARD_PER_SAILOR = 4;</span>
+
+	/**
+	 * The file path to the sailors CSV file with the information about all the
+	 * Rescued sailors met in the game.
+	 */
+<span class="nc" id="L39">	private final String SAILORS_CSV_FILEPATH = &quot;csvFiles/sailors.csv&quot;;</span>
+
+	/**
+	 * This method is a helper method to the getSailors(List&lt;List&lt;String&gt;&gt;
+	 * rescuedSailorList) and used to get the list of sublists of Strings that
+	 * represent the properties for the RescuedSailor. It removes the first line
+	 * that contains the headers/names of properties.
+	 */
+	@Override
+	public ArrayList&lt;RescuedSailor&gt; getList() {
+<span class="nc" id="L49">		List&lt;List&lt;String&gt;&gt; rescuedSailorList = getResultListfromFile(SAILORS_CSV_FILEPATH);</span>
+<span class="nc" id="L50">		rescuedSailorList.remove(0);</span>
+<span class="nc" id="L51">		return getSailors(rescuedSailorList);</span>
+	}
+
+	/**
+	 * This method is used to convert the String List rescuedSailorList to the
+	 * RescuedSailor type, creating a new instance of RescuedSailor for each sublist
+	 * and adding it to the ArrayList and so creates the RescuedSailor database for
+	 * the project. It uses the previously set constants to set the right properties
+	 * for each instance of RescuedSailor.
+	 *
+	 * @param rescuedSailorList
+	 * @return
+	 */
+	private ArrayList&lt;RescuedSailor&gt; getSailors(List&lt;List&lt;String&gt;&gt; rescuedSailorList) {
+<span class="nc" id="L65">		ArrayList&lt;RescuedSailor&gt; rescuedSailorsArray = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (List&lt;String&gt; sailor : rescuedSailorList) {</span>
+<span class="nc" id="L67">			int idNumber = Integer.parseInt(sailor.get(ID_NUMBER));</span>
+<span class="nc" id="L68">			String name = sailor.get(NAME);</span>
+<span class="nc" id="L69">			String description = sailor.get(DESCRIPTION);</span>
+<span class="nc" id="L70">			int quantitySailorsToRescue = Integer.parseInt(sailor.get(QUANTITY_OF_SAILORS_TO_RESCUE));</span>
+<span class="nc" id="L71">			float rewardPerSailor = Float.parseFloat(sailor.get(MONETARY_REWARD_PER_SAILOR));</span>
+<span class="nc" id="L72">			RescuedSailor newSailor = new RescuedSailor(idNumber, name, description, quantitySailorsToRescue,</span>
+<span class="nc" id="L73">					rewardPerSailor);</span>
+<span class="nc" id="L74">			rescuedSailorsArray.add(newSailor);</span>
+		}
+<span class="nc" id="L76">		return rescuedSailorsArray;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

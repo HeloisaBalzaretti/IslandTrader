@@ -25,10 +25,9 @@ public abstract class RandomEvent extends Entity implements Cloneable {
 	/**
 	 * Creates a new RandomEvent
 	 *
-	 * @param idNumbe
-	 * @param name
-	 * @param description
-	 * @param percentageChanceOfEncounter
+	 * @param idNumber    this RandomEvent id number
+	 * @param name        this RandomEvent name
+	 * @param description this RandomEvent description
 	 */
 	public RandomEvent(int idNumber, String name, String description) {
 		super(idNumber, name, description);
@@ -74,6 +73,8 @@ public abstract class RandomEvent extends Entity implements Cloneable {
 	/**
 	 * This method is to be implemented depending on each RandomEvent specific
 	 * context.
+	 *
+	 * @param myTrader will endure the actions from the random events
 	 */
 	public abstract void randomEventSpecificAction(Trader myTrader);
 

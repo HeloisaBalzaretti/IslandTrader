@@ -41,6 +41,10 @@ public class StoreTradable extends Entity implements Cloneable {
 
 	/**
 	 * A new StoreTradable Object using parameters from Super(Entity).
+	 *
+	 * @param tradable the item or upgrade
+	 * @param idNumber the unique identifier
+	 * @param quantity available to buy or sell
 	 */
 	public StoreTradable(Tradable tradable, int idNumber, int quantity) {
 		super(idNumber, tradable.getName(), tradable.getDescription());
@@ -67,7 +71,7 @@ public class StoreTradable extends Entity implements Cloneable {
 	/**
 	 * Sets the Item or Upgrade that will be allocated to the Store
 	 *
-	 * @param tradable
+	 * @param tradable the tradable to be set
 	 */
 	public void setTradable(Tradable tradable) {
 		this.tradable = tradable;
@@ -86,7 +90,7 @@ public class StoreTradable extends Entity implements Cloneable {
 	 * Sets the new price of Item or Upgrade depending on the Store is is being
 	 * allocated to.
 	 *
-	 * @param price
+	 * @param price this StoreTradable price
 	 */
 	public void setPrice(float price) {
 		this.price = price;
@@ -96,7 +100,7 @@ public class StoreTradable extends Entity implements Cloneable {
 	 * Increases the price to Tradables to be sold, as each Store will make a
 	 * different profit margin
 	 *
-	 * @param price
+	 * @param price the amount to be increased
 	 */
 	public void increasePrice(float price) {
 		this.price += price;
@@ -107,7 +111,7 @@ public class StoreTradable extends Entity implements Cloneable {
 	 * Trader will have to go somewhere else to make a profit, and not at the same
 	 * place where the Trader got the tradables
 	 *
-	 * @param price
+	 * @param price the amount to be decreased
 	 */
 	public void decreasePrice(float price) {
 		this.price -= price;
@@ -125,7 +129,7 @@ public class StoreTradable extends Entity implements Cloneable {
 	/**
 	 * When the item is traded the quantity available will decrease in the Store.
 	 *
-	 * @param quantity
+	 * @param quantity amount to decrease the quantity available for selling
 	 */
 	public void decreaseQuantity(int quantity) {
 		this.quantity -= quantity;
@@ -135,7 +139,7 @@ public class StoreTradable extends Entity implements Cloneable {
 	 * defines the quantity of each Item or Upgrade that the store wishes to buy or
 	 * sell
 	 *
-	 * @param quantity
+	 * @param quantity to be traded
 	 */
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
@@ -144,15 +148,15 @@ public class StoreTradable extends Entity implements Cloneable {
 	/**
 	 * Increases the quantity available of each Tradable in Store
 	 *
-	 * @param quantity
+	 * @param quantity amount to increase the quantity available for selling
 	 */
 	public void increaseQuantity(int quantity) {
 		this.quantity += quantity;
 	}
 
 	/**
-	 * @Override the toString method to give more relevant information about the
-	 *           Tradable for each Store
+	 * The toString method to give more relevant information about the Tradable for
+	 * each Store
 	 */
 	@Override
 	public String toString() {

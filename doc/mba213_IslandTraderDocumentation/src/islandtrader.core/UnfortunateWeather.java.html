@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UnfortunateWeather.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">UnfortunateWeather.java</span></div><h1>UnfortunateWeather.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+import java.util.Random;
+
+/**
+ * Represents the RandomEvent &quot;Unfortunate Weather, this could be a Thunder
+ * storm, very Strong Winds etc and will give some random amount of damage to
+ * the Trader's Ship, the Ship may endure more if it has any upgrades to help
+ * it. The repair cost is based on the amount of damage
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class UnfortunateWeather extends RandomEvent {
+	/**
+	 * amountOfDamageToShip used to reduce ship Health.
+	 */
+<span class="fc" id="L22">	private float randomAmountOfDamage = 0;</span>
+
+	/**
+	 * Template message used when Trader encounters UnfortunateWeather RandomEvent
+	 */
+<span class="fc" id="L27">	private final String MESSAGE_ENCOUNTER = &quot;Ohh...How unfortunate! A %s approaches...%s&quot;;</span>
+
+	/**
+	 * Template message used to inform Trader of the amount of damage.
+	 */
+<span class="fc" id="L32">	private final String MESSAGE_AMOUNT_OF_DAMAGE = &quot;The %s was too strong. Lucky you, your ship endured.&quot;</span>
+			+ &quot; However it took %.2f%% of damage!&quot;;
+
+	/**
+	 * The maximum amount of damage the Ship can take. Based on 100% ship health.
+	 */
+<span class="fc" id="L38">	private final double MAX_PERCENT_OF_DAMAGE = 100;</span>
+
+	/**
+	 * A new Unfortunate Weather of type RandomEvent.
+	 *
+	 * @param idNumber
+	 * @param name
+	 * @param description
+	 */
+	public UnfortunateWeather(int idNumber, String name, String description) {
+<span class="fc" id="L48">		super(idNumber, name, description);</span>
+<span class="fc" id="L49">	}</span>
+
+	/**
+	 * The randomEvent specific action will apply damage to the Ship Health, based
+	 * on endurance of Ship.
+	 */
+	@Override
+	public void randomEventSpecificAction(Trader myTrader) {
+
+<span class="fc" id="L58">		this.randomAmountOfDamage = generateRandomAmountOfDamage();</span>
+<span class="fc" id="L59">		double currentHealth = myTrader.getShipOwned().getCurrentHealthStatus();</span>
+<span class="fc" id="L60">		double currentEndurance = myTrader.getShipOwned().getEndurance() / 100;</span>
+<span class="fc" id="L61">		double totalDamage = randomAmountOfDamage - currentEndurance;</span>
+<span class="fc" id="L62">		double newHealth = currentHealth - (currentHealth * (1 - totalDamage));</span>
+<span class="fc" id="L63">		myTrader.getShipOwned().applyDamageToCurrentHealthStatus(Math.round(newHealth));</span>
+<span class="fc" id="L64">		myTrader.getShipOwned().setAbleToSail(false);</span>
+<span class="fc" id="L65">	}</span>
+
+	/**
+	 * Overrides the super encounterMessage from RandomEvent class to the
+	 * UnfortunateWeather encounter event
+	 */
+	@Override
+	public String encounterMessage() {
+<span class="nc" id="L73">		return String.format(MESSAGE_ENCOUNTER, this.name, this.description);</span>
+	}
+
+	/**
+	 * Overrides the super resultOfEncounterMessage from RandomEvent class to the
+	 * UnfortunateWeather encounter event
+	 */
+	@Override
+	public String resultOfEncounterMessage() {
+<span class="nc" id="L82">		return String.format(MESSAGE_AMOUNT_OF_DAMAGE, this.name, (this.randomAmountOfDamage * MAX_PERCENT_OF_DAMAGE));</span>
+	}
+
+	/**
+	 * Generates a random number from 0.1 to 0.9, which represents a percentage that
+	 * will be used to incur damage to the Ship, based on the Ship endurance and
+	 * upgrades. It is between 0.1 to give a minimum damage of 10% and a maximum
+	 * damage of 90%. We don't want the Ship to sink!
+	 *
+	 * @param amountOfDamageToShip the amountOfDamageToShip to set
+	 */
+	private float generateRandomAmountOfDamage() {
+<span class="fc" id="L94">		Random random = new Random();</span>
+<span class="fc" id="L95">		float randomDamage = random.nextInt(9) + 1;</span>
+<span class="fc" id="L96">		randomDamage = randomDamage / 10;</span>
+<span class="fc" id="L97">		return randomDamage;</span>
+	}
+
+	/**
+	 * Used to personalize the game when applying the randomEvents to the routes.
+	 */
+	@Override
+	public String getEventSpecificName() {
+<span class="nc" id="L105">		return &quot;Unfortunate Weather&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

@@ -53,10 +53,9 @@ public class ShipRepository extends BaseRepository {
 	private final String SHIP_CSV_FILEPATH = "csvFiles/ships.csv";
 
 	/**
-	 * This method is a helper method to the getShips(List<List<String>> shipsList)
-	 * and used to get the list of sublists of Strings that represent the properties
-	 * for the Ship. It removes the first line that contains the headers/names of
-	 * properties.
+	 * This method is a helper method to the getShips(shipsList) and used to get the
+	 * list of sublists of Strings that represent the properties for the Ship. It
+	 * removes the first line that contains the headers/names of properties.
 	 */
 	@Override
 	public ArrayList<Ship> getList() {

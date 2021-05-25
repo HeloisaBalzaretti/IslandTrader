@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Upgrade.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Upgrade.java</span></div><h1>Upgrade.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+/**
+ * Represents an upgrade that the Trader can buy to equip their ship. The trader
+ * can also sell the upgrade to any store willing to buy it, in case the Trader
+ * needs more money.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class Upgrade extends Tradable {
+	/**
+	 * the Upgrade properties represent: - - - increaseSneakiness: the amount of
+	 * sneakiness to be added to the ship and help it escape from pirates. -
+	 * increaseCargoCapacity: the amount of Cargo space to be added to the ship,
+	 * allowing more items to be carried. -
+	 */
+
+	/**
+	 * increaseSpeed: the amount of speed to be added to the ship.
+	 */
+<span class="nc" id="L26">	private int increaseSpeed = 0;</span>
+
+	/**
+	 * increaseSneakiness: the amount of sneakiness to be added to the ship and help
+	 * it escape from pirates.
+	 */
+<span class="nc" id="L32">	private int increaseSneakiness = 0;</span>
+
+	/**
+	 * increaseCargoCapacity: the amount of Cargo space to be added to the ship
+	 */
+<span class="nc" id="L37">	private int increaseCargoCapacity = 0;</span>
+
+	/**
+	 * increaseEndurance: the amount of endurance to be added to the ship and help
+	 * it endure bad weather while out sailing.
+	 */
+<span class="nc" id="L43">	private int increaseEndurance = 0;</span>
+
+	/**
+	 * Creates a new Upgrade Object of type Tradable
+	 */
+	/**
+	 *
+	 * @param name                  this Upgrade name
+	 * @param description           this Upgrade description
+	 * @param priceToBuy            this Upgrade price to buy
+	 * @param priceToSell           this Upgrade price to sell
+	 * @param idNumber              this Upgrade id number
+	 * @param increaseEndurance     this Upgrade amount to increase in the Ship
+	 *                              endurance
+	 * @param increaseSneakiness    this Upgrade amount to increase in the Ship
+	 *                              sneakiness
+	 * @param increaseCargoCapacity this Upgrade amount to increase in the Ship
+	 *                              cargo capacity
+	 * @param increaseSpeed         this Upgrade amount to increase in the Ship
+	 *                              speed
+	 */
+	public Upgrade(String name, String description, float priceToBuy, float priceToSell, int idNumber,
+			int increaseEndurance, int increaseSneakiness, int increaseCargoCapacity, int increaseSpeed) {
+<span class="nc" id="L66">		super(name, description, priceToBuy, priceToSell, idNumber);</span>
+<span class="nc" id="L67">		this.increaseEndurance = increaseEndurance;</span>
+<span class="nc" id="L68">		this.increaseSneakiness = increaseSneakiness;</span>
+<span class="nc" id="L69">		this.increaseCargoCapacity = increaseCargoCapacity;</span>
+<span class="nc" id="L70">		this.increaseSpeed = increaseSpeed;</span>
+<span class="nc" id="L71">	}</span>
+
+	/**
+	 * Gets the amount of Speed that Upgrade will increase in the Ship.
+	 *
+	 * @return this Upgrade's increaseSpeed amount
+	 */
+	public int getIncreaseSpeed() {
+<span class="nc" id="L79">		return increaseSpeed;</span>
+	}
+
+	/**
+	 * Changes the amount of increaseSpeed of this Upgrade
+	 *
+	 * @param increaseSpeed This Upgrade new amount of increaseSpeed
+	 */
+	public void setIncreaseSpeed(int increaseSpeed) {
+<span class="nc" id="L88">		this.increaseSpeed = increaseSpeed;</span>
+<span class="nc" id="L89">	}</span>
+
+	/**
+	 * Gets the amount of Sneakiness that Upgrade will increase in the Ship.
+	 *
+	 * @return this Upgrade's increaseSneakiness amount
+	 */
+	public int getIncreaseSneakiness() {
+<span class="nc" id="L97">		return increaseSneakiness;</span>
+	}
+
+	/**
+	 * Changes the amount of increaseSneakiness of this Upgrade
+	 *
+	 * @param increaseSneakiness This Upgrade new amount of increaseSneakiness
+	 */
+	public void setIncreaseSneakiness(int increaseSneakiness) {
+<span class="nc" id="L106">		this.increaseSneakiness = increaseSneakiness;</span>
+<span class="nc" id="L107">	}</span>
+
+	/**
+	 * Gets the amount of CargoCapacity that Upgrade will increase in the Ship.
+	 *
+	 * @return this Upgrade's increaseCargoCapacity amount
+	 */
+	public int getIncreaseCargoCapacity() {
+<span class="nc" id="L115">		return increaseCargoCapacity;</span>
+	}
+
+	/**
+	 * Changes the amount of increaseCargoCapacity of this Upgrade
+	 *
+	 * @param increaseCargoCapacity This Upgrade new amount of increaseCargoCapacity
+	 */
+	public void setIncreaseCargoCapacity(int increaseCargoCapacity) {
+<span class="nc" id="L124">		this.increaseCargoCapacity = increaseCargoCapacity;</span>
+<span class="nc" id="L125">	}</span>
+
+	/**
+	 * Gets the amount of Endurance that Upgrade will increase in the Ship.
+	 *
+	 * @return this Upgrade's increaseEndurance amount
+	 */
+	public int getIncreaseEndurance() {
+<span class="nc" id="L133">		return increaseEndurance;</span>
+	}
+
+	/**
+	 * Changes the amount of increaseEndurance of this Upgrade
+	 *
+	 * @param increaseEndurance This Upgrade new amount of increaseEndurance
+	 */
+	public void setIncreaseEndurance(int increaseEndurance) {
+<span class="nc" id="L142">		this.increaseEndurance = increaseEndurance;</span>
+<span class="nc" id="L143">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

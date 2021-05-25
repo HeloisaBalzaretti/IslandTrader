@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Island.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Island.java</span></div><h1>Island.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+/**
+ * Class that models an Island Object.
+ *
+ * @author Maria Heloisa Balzaretti
+ */
+public class Island extends Entity {
+
+	/**
+	 * A matrix used to set the distance between Islands in days.
+	 */
+	private int[] distancesInDays;
+	/**
+	 * The Store of this Island
+	 */
+	private Store store;
+
+	/**
+	 * The routes available from this Island
+	 */
+	private Route[] routes;
+
+	/**
+	 * Constructor of the class. Creates an object island with the given parameters.
+	 *
+	 *
+	 * @param idNumber       idNumber of the Island.
+	 * @param name           Name of the Island.
+	 * @param description    Description of the Island.
+	 * @param distanceInDays Distance (in days at 20km/h) list to other Islands.
+	 *                       Distance to this island is 0.
+	 * @param store          this Island Store
+	 */
+	public Island(int idNumber, String name, String description, int[] distanceInDays, Store store) {
+<span class="fc" id="L40">		super(idNumber, name, description);</span>
+<span class="fc" id="L41">		this.distancesInDays = distanceInDays;</span>
+<span class="fc" id="L42">		this.store = store;</span>
+<span class="fc" id="L43">	}</span>
+
+	/**
+	 * @return this Island's Store
+	 */
+	public Store getStore() {
+<span class="nc" id="L49">		return store;</span>
+	}
+
+	/**
+	 * @param store the Store to set
+	 */
+	public void setStore(Store store) {
+<span class="nc" id="L56">		this.store = store;</span>
+<span class="nc" id="L57">	}</span>
+
+	/**
+	 * Gets the distance list to other islands (distance in days at 20km/h).
+	 *
+	 * @return distances list in days at 20km/h.
+	 */
+	public int[] getDistancesInDays() {
+<span class="nc" id="L65">		return distancesInDays;</span>
+	}
+
+	/**
+	 * Gets the list of routes.
+	 *
+	 * @return routes
+	 */
+	public Route[] getRoutes() {
+<span class="nc" id="L74">		return routes;</span>
+	}
+
+	/**
+	 * @param routes the routes to set
+	 */
+	public void setRoutes(Route[] routes) {
+<span class="nc" id="L81">		this.routes = routes;</span>
+<span class="nc" id="L82">	}</span>
+
+	/**
+	 * Takes the idNumber of another Island as a parameter to return the distance in
+	 * km from this Island. distances[x] is in days * 24hs * 20km/h average =
+	 * distance in Kms.
+	 *
+	 * @param islandNumber idNumber of the destiny.
+	 * @return distance in Km
+	 */
+	public int getDistanceToAnotherIslandInKm(int islandNumber) {
+<span class="fc" id="L93">		return distancesInDays[islandNumber] * 24 * 20;</span>
+	}
+
+	/**
+	 * Takes the idNumber of another Island as a parameter to return the distance in
+	 * days from this Island.
+	 *
+	 * @param islandNumber the island to get the distance in days.
+	 * @return distance in days
+	 */
+	public int getDistanceToAnotherIslandInDays(int islandNumber) {
+<span class="fc" id="L104">		return distancesInDays[islandNumber];</span>
+	}
+
+	/**
+	 * Overrides the method toString() to return a meaningful string.
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L112">		return String.format(&quot;%s: %s&quot;, name, description);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

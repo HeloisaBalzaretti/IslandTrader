@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RandomEvent.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">RandomEvent.java</span></div><h1>RandomEvent.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+/**
+ * Represents the Random Events that the Trader may encounter while sailing. The
+ * Trader can encounter Pirates, Unfortunate Weather or Sailors to rescue. Each
+ * will have a different action in the game. These are allocated randomly to the
+ * Routes of each Island.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+
+public abstract class RandomEvent extends Entity implements Cloneable {
+
+	/**
+	 * Percentage chance of encounter is used to calculate the chance of the
+	 * RandomEvent happening in the route.
+	 */
+	protected float percentageChanceOfEncounter;
+
+	/**
+	 * Creates a new RandomEvent
+	 *
+	 * @param idNumbe
+	 * @param name
+	 * @param description
+	 * @param percentageChanceOfEncounter
+	 */
+	public RandomEvent(int idNumber, String name, String description) {
+<span class="fc" id="L34">		super(idNumber, name, description);</span>
+<span class="fc" id="L35">	}</span>
+
+	/**
+	 * To be able to use the event with different properties.
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+<span class="fc" id="L42">		return super.clone();</span>
+	}
+
+	/**
+	 * Used to set the chance of the random encounter for each route. i.e.
+	 * percentage in the format 0.2 to represent 20%.
+	 *
+	 * @return the percentage of chance of a given RandomEvent happening.
+	 */
+	public float getPercentageChanceOfEncounter() {
+<span class="nc" id="L52">		return percentageChanceOfEncounter;</span>
+	}
+
+	/**
+	 * Sets the percentage chance of a given RandomEvent happening. i.e. percentage
+	 * in the format 0.2 to represent 20%.
+	 *
+	 * @param percentageChanceOfEncounter is the new percentage chance for the
+	 *                                    event.
+	 */
+	public void setPercentageChanceOfEncounter(float percentageChanceOfEncounter) {
+<span class="fc" id="L63">		this.percentageChanceOfEncounter = percentageChanceOfEncounter;</span>
+<span class="fc" id="L64">	}</span>
+
+	/**
+	 * Override toString method to give a background about the RandomEvent.
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L71">		return name + description;</span>
+	}
+
+	/**
+	 * This method is to be implemented depending on each RandomEvent specific
+	 * context.
+	 */
+	public abstract void randomEventSpecificAction(Trader myTrader);
+
+	/**
+	 * A message used to inform the Trader of the encounter.
+	 *
+	 * @return string to be set in each specific event
+	 */
+	public abstract String encounterMessage();
+
+	/**
+	 * A message used to inform the Trader of the outcome of the RandomEvent
+	 *
+	 * @return string to be set in each specific event
+	 */
+	public abstract String resultOfEncounterMessage();
+
+	/**
+	 * Gets the event specific name: Pirate, UnfortunateWeather or RescuedSailor
+	 *
+	 * @return string to be set in each specific event
+	 */
+	public abstract String getEventSpecificName();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

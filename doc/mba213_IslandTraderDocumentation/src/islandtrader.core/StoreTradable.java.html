@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>StoreTradable.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">StoreTradable.java</span></div><h1>StoreTradable.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+/**
+ * Represents the Store Tradable Relationship, also of type Entity as each
+ * store-tradable will have its own relationship to be identified, which will be
+ * used to relate the Tradables to the Stores and the quantity of each Tradable
+ * that the Store buys/sells. This class is mainly used in the StoreRepository
+ * class- Repository package.
+ *
+ * @author Maria Heloisa Balzaretti
+ */
+public class StoreTradable extends Entity implements Cloneable {
+	/**
+	 * tradable of type Tradable represents the Item or Upgrade to be traded in a
+	 * Store. price represents the pertinent price(selling or buying price where the
+	 * store fee will be applied, it is separated because then we can update only
+	 * the relevant Tradable if its buying or selling- or both. quantity sets a
+	 * quantity of each tradable that the store has available to sell or wishes to
+	 * buy from Trader.
+	 */
+	private Tradable tradable;
+
+	/**
+	 * the price selling or buying price where the store fee will be applied.
+	 */
+	private float price;
+
+	/**
+	 * The quantity available to be traded
+	 */
+	private int quantity;
+
+	/**
+	 * a template for the toString method message.
+	 */
+<span class="fc" id="L40">	private String template = &quot;%s - %s -&gt;%.2f$ | n/a | %d &quot;;</span>
+
+	/**
+	 * A new StoreTradable Object using parameters from Super(Entity).
+	 */
+	public StoreTradable(Tradable tradable, int idNumber, int quantity) {
+<span class="fc" id="L46">		super(idNumber, tradable.getName(), tradable.getDescription());</span>
+<span class="fc" id="L47">		this.tradable = tradable;</span>
+<span class="fc" id="L48">		this.quantity = quantity;</span>
+<span class="fc" id="L49">	}</span>
+
+	/**
+	 * To copy the object without affecting the original, to be added to the Ship
+	 * cargo tradables.
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+<span class="nc" id="L57">		return super.clone();</span>
+	}
+
+	/**
+	 * @return the Item or Upgrade that will be allocated to the Store
+	 */
+	public Tradable getTradable() {
+<span class="fc" id="L64">		return tradable;</span>
+	}
+
+	/**
+	 * Sets the Item or Upgrade that will be allocated to the Store
+	 *
+	 * @param tradable
+	 */
+	public void setTradable(Tradable tradable) {
+<span class="nc" id="L73">		this.tradable = tradable;</span>
+<span class="nc" id="L74">	}</span>
+
+	/**
+	 *
+	 * @return the price of Item or Upgrade, updated using the default Tradable
+	 *         prices and the Fee of each Store
+	 */
+	public float getPrice() {
+<span class="fc" id="L82">		return price;</span>
+	}
+
+	/**
+	 * Sets the new price of Item or Upgrade depending on the Store is is being
+	 * allocated to.
+	 *
+	 * @param price
+	 */
+	public void setPrice(float price) {
+<span class="fc" id="L92">		this.price = price;</span>
+<span class="fc" id="L93">	}</span>
+
+	/**
+	 * Increases the price to Tradables to be sold, as each Store will make a
+	 * different profit margin
+	 *
+	 * @param price
+	 */
+	public void increasePrice(float price) {
+<span class="nc" id="L102">		this.price += price;</span>
+<span class="nc" id="L103">	}</span>
+
+	/**
+	 * Decreases the price for Tradables that the Store is willing to buy - So the
+	 * Trader will have to go somewhere else to make a profit, and not at the same
+	 * place where the Trader got the tradables
+	 *
+	 * @param price
+	 */
+	public void decreasePrice(float price) {
+<span class="nc" id="L113">		this.price -= price;</span>
+<span class="nc" id="L114">	}</span>
+
+	/**
+	 *
+	 * @return the quantity of the Item or Upgrade that the Store is buying or
+	 *         selling
+	 */
+	public int getQuantity() {
+<span class="nc" id="L122">		return quantity;</span>
+	}
+
+	/**
+	 * When the item is traded the quantity available will decrease in the Store.
+	 *
+	 * @param quantity
+	 */
+	public void decreaseQuantity(int quantity) {
+<span class="nc" id="L131">		this.quantity -= quantity;</span>
+<span class="nc" id="L132">	}</span>
+
+	/**
+	 * defines the quantity of each Item or Upgrade that the store wishes to buy or
+	 * sell
+	 *
+	 * @param quantity
+	 */
+	public void setQuantity(int quantity) {
+<span class="nc" id="L141">		this.quantity = quantity;</span>
+<span class="nc" id="L142">	}</span>
+
+	/**
+	 * Increases the quantity available of each Tradable in Store
+	 *
+	 * @param quantity
+	 */
+	public void increaseQuantity(int quantity) {
+<span class="nc" id="L150">		this.quantity += quantity;</span>
+<span class="nc" id="L151">	}</span>
+
+	/**
+	 * @Override the toString method to give more relevant information about the
+	 *           Tradable for each Store
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L159">		String templateItem = &quot;%s - %s -&gt;%.2f$ | %.2f kgs | %d &quot;;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (tradable instanceof Item) {</span>
+<span class="nc" id="L161">			return String.format(templateItem, this.name, this.description, this.price, ((Item) tradable).getWeight(),</span>
+<span class="nc" id="L162">					this.quantity);</span>
+		}
+<span class="nc" id="L164">		return String.format(template, this.name, this.description, this.price, this.quantity);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

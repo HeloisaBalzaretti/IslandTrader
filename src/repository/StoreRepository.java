@@ -96,10 +96,9 @@ public class StoreRepository extends BaseRepository {
 	private final String STORE_ITEM_UPGRADE_CSV_FILEPATH = "csvFiles/storeRelationshipItemUpgrade.csv";
 
 	/**
-	 * This method is a helper method to the getStores(List<List<String>>
-	 * storesList) and used to get the list of sublists of Strings that represent
-	 * the properties for the Store. It removes the first line that contains the
-	 * headers/name of properties.
+	 * This method is a helper method to the getStores(storesList) and used to get
+	 * the list of sublists of Strings that represent the properties for the Store.
+	 * It removes the first line that contains the headers/name of properties.
 	 */
 	@Override
 	public ArrayList<Store> getList() {
@@ -135,9 +134,9 @@ public class StoreRepository extends BaseRepository {
 	 * ArrayList of StoreTradables to buy or to the ArrayList of StoreTradables to
 	 * sell.
 	 *
-	 * @param stores
-	 * @param items
-	 * @param upgrades
+	 * @param stores   the stores to receive the Tradables
+	 * @param items    the goods for the store to trade
+	 * @param upgrades the upgrades for the store to trade
 	 */
 	public void SetStoresTradables(List<Store> stores, List<Item> items, List<Upgrade> upgrades) {
 		List<Tradable> tradablesList = getTradablesList(items, upgrades);
@@ -182,15 +181,15 @@ public class StoreRepository extends BaseRepository {
 	 * creates the StoreTradable, and insert it in the relevant Store array(to buy
 	 * or to sell)
 	 *
-	 * @param tradablesList
-	 * @param toBuy
-	 * @param toSell
-	 * @param idStoreTradable
-	 * @param itemOrUpgradeIdNumber
-	 * @param buysFromTrader
-	 * @param sellsToTrader
-	 * @param quantityBuy
-	 * @param quantitySell
+	 * @param tradablesList         list of tradables
+	 * @param toBuy                 StoreTradable to buy
+	 * @param toSell                StoreTradable to sell
+	 * @param idStoreTradable       id relationship between store and Tradable
+	 * @param itemOrUpgradeIdNumber the good to be traded
+	 * @param buysFromTrader        0 or 1 to say tre or false
+	 * @param sellsToTrader         0 or 1 to say tre or false
+	 * @param quantityBuy           the amount to buy
+	 * @param quantitySell          the amount to sell
 	 */
 	private void addTradableToStoreStorages(List<Tradable> tradablesList, ArrayList<StoreTradable> toBuy,
 			ArrayList<StoreTradable> toSell, int idStoreTradable, int itemOrUpgradeIdNumber, int buysFromTrader,
@@ -210,8 +209,8 @@ public class StoreRepository extends BaseRepository {
 	 * Helper method to SetStoresTradables(...) it joins the Items and the Upgrades
 	 * that the Store can trade.
 	 *
-	 * @param items    - list of Item
-	 * @param upgrades - list of Upgrade
+	 * @param items    list of Item
+	 * @param upgrades list of Upgrade
 	 * @return a list of Tradables.
 	 */
 	private List<Tradable> getTradablesList(List<Item> items, List<Upgrade> upgrades) {
@@ -223,8 +222,8 @@ public class StoreRepository extends BaseRepository {
 	/**
 	 * Helper to the addTradableToStoreStorages
 	 *
-	 * @param idNumber
-	 * @param tradables
+	 * @param idNumber  tradable id number
+	 * @param tradables list of tradables
 	 * @return get the relevant Tradable by looking for its Identifier in a list of
 	 *         Tradables
 	 */
@@ -241,8 +240,8 @@ public class StoreRepository extends BaseRepository {
 	 * Helper method to the SetStoresTradables. To add the Tradable to the correct
 	 * store.
 	 *
-	 * @param idNumber
-	 * @param stores
+	 * @param idNumber the store id number
+	 * @param stores   the list of Stores
 	 * @return the correct Store identifier that will have the Tradable allocated to
 	 *         it.
 	 */

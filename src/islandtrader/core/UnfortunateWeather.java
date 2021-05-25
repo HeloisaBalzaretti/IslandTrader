@@ -40,9 +40,9 @@ public class UnfortunateWeather extends RandomEvent {
 	/**
 	 * A new Unfortunate Weather of type RandomEvent.
 	 *
-	 * @param idNumber
-	 * @param name
-	 * @param description
+	 * @param idNumber    this UnfortunateWeather id number
+	 * @param name        this UnfortunateWeather name
+	 * @param description this UnfortunateWeather description
 	 */
 	public UnfortunateWeather(int idNumber, String name, String description) {
 		super(idNumber, name, description);

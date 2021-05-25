@@ -42,8 +42,8 @@ public class Route extends Entity {
 	/**
 	 * A Route object created with the possible randomEvents.
 	 *
-	 * @param idNumber
-	 * @param possibleEvents
+	 * @param idNumber       this Route id number
+	 * @param possibleEvents array of RandomEvent possible for the Route
 	 */
 	public Route(int idNumber, ArrayList<RandomEvent> possibleEvents) {
 		super(idNumber, "", "");
@@ -56,7 +56,7 @@ public class Route extends Entity {
 	 * the Route and the probability of happening
 	 *
 	 * @param possibleEvents
-	 * @return
+	 * @return a summary description of the random events for the route
 	 */
 	private static String getDescription(ArrayList<RandomEvent> possibleEvents) {
 		RandomEvent firstEvent = possibleEvents.get(0);
@@ -73,7 +73,7 @@ public class Route extends Entity {
 	/**
 	 * Set the name according to the islands it connects
 	 *
-	 * @param islandName
+	 * @param islandName this island name to be appended to the route name.
 	 */
 	public void setRouteNameByIslandName(String islandName) {
 		this.name = String.format(ROUTE_NAME_TEMPLATE, islandName);
@@ -111,7 +111,7 @@ public class Route extends Entity {
 	/**
 	 * Adds the possible event to the Route
 	 *
-	 * @param newEvent
+	 * @param newEvent to be added to route
 	 */
 	public void addPossibleEventToRoute(RandomEvent newEvent) {
 		possibleEvents.add(newEvent);
@@ -120,14 +120,14 @@ public class Route extends Entity {
 	/**
 	 * Removes the event from Route
 	 *
-	 * @param newEvent
+	 * @param event to be removed from route
 	 */
 	public void removeEventFromRoute(RandomEvent event) {
 		possibleEvents.remove(event);
 	}
 
 	/**
-	 * @override the default toString method to return information about the route.
+	 * the default toString method to return information about the route.
 	 */
 	@Override
 	public String toString() {

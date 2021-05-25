@@ -31,9 +31,9 @@ public class Trader extends Entity {
 	/**
 	 * Trader object to represent the player.
 	 *
-	 * @param name
-	 * @param description
-	 * @param shipOwned
+	 * @param name        this Trader name, chosen by the player name
+	 * @param description this Trader description, set by default
+	 * @param shipOwned   the ship chosen by the player to captain
 	 */
 	public Trader(String name, String description, Ship shipOwned) {
 		super(1, name, description);
@@ -65,7 +65,7 @@ public class Trader extends Entity {
 	/**
 	 * Add amount to Trader AccountBalance when Trader sells goods.
 	 *
-	 * @param amount
+	 * @param amount to add to balance
 	 */
 	public void addAmountToBalance(double amount) {
 		this.traderAccountBalance += amount;
@@ -74,7 +74,7 @@ public class Trader extends Entity {
 	/**
 	 * Remove amount from Trader AccountBalance when Trader buys goods and upgrades.
 	 *
-	 * @param amount
+	 * @param amount to remove from balance
 	 */
 	public void removeAmountFromBalance(double amount) {
 		traderAccountBalance -= amount;

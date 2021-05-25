@@ -28,6 +28,13 @@ import islandtrader.core.RandomEvent;
 import islandtrader.core.Ship;
 import islandtrader.core.Trader;
 
+/**
+ * Creates the Main window from where the Trader can access the Store, view Ship
+ * properties and set Sail.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
 public class MainWindow {
 
 	private JFrame mainWindowTraderAdventure;
@@ -35,7 +42,9 @@ public class MainWindow {
 	private String currentIslandDescription;
 
 	/**
-	 * Create the application.
+	 * Creates new Main window application
+	 *
+	 * @param incomingGame the current game
 	 */
 	public MainWindow(GameEnvironmentSwing incomingGame) {
 		game = incomingGame;
@@ -45,10 +54,16 @@ public class MainWindow {
 
 	}
 
+	/**
+	 * closes the main window
+	 */
 	public void closeWindow() {
 		mainWindowTraderAdventure.dispose();
 	}
 
+	/**
+	 * finishes the main window
+	 */
 	public void finishedWindow() {
 		game.closeMainScreen(this);
 	}
@@ -144,7 +159,7 @@ public class MainWindow {
 		lbCurrentlIslandDescription.setHorizontalAlignment(SwingConstants.LEFT);
 		lbCurrentlIslandDescription.setVerticalAlignment(SwingConstants.TOP);
 		lbCurrentlIslandDescription.setFont(new Font("Serif", Font.PLAIN, 17));
-		lbCurrentlIslandDescription.setBounds(289, 291, 545, 37);
+		lbCurrentlIslandDescription.setBounds(289, 291, 632, 37);
 		mainWindowTraderAdventure.getContentPane().add(lbCurrentlIslandDescription);
 
 		JButton btnViewCurrentStore = new JButton("Visit Island Store");
@@ -330,12 +345,12 @@ public class MainWindow {
 		btnSail.setBounds(649, 505, 85, 35);
 		mainWindowTraderAdventure.getContentPane().add(btnSail);
 
-		JLabel lblDdd = new JLabel(game.getTrader().getShipOwned().toString());
-		lblDdd.setVerticalAlignment(SwingConstants.TOP);
-		lblDdd.setFont(new Font("Serif", Font.BOLD, 14));
-		lblDdd.setBackground(Color.WHITE);
-		lblDdd.setBounds(140, 76, 678, 24);
-		mainWindowTraderAdventure.getContentPane().add(lblDdd);
+		JLabel lblShipInfoProperties = new JLabel(game.getTrader().getShipOwned().toString());
+		lblShipInfoProperties.setVerticalAlignment(SwingConstants.TOP);
+		lblShipInfoProperties.setFont(new Font("Serif", Font.BOLD, 14));
+		lblShipInfoProperties.setBackground(Color.WHITE);
+		lblShipInfoProperties.setBounds(140, 76, 678, 24);
+		mainWindowTraderAdventure.getContentPane().add(lblShipInfoProperties);
 
 		JLabel lblShipProperties = new JLabel((String) null);
 		lblShipProperties.setVerticalAlignment(SwingConstants.TOP);
@@ -358,6 +373,12 @@ public class MainWindow {
 
 	}
 
+	/**
+	 * Helper for the sail method when the random event happens
+	 *
+	 * @param selectedIslandIndex selects the island
+	 * @param btnSail             btn to be set invisible
+	 */
 	private void randomEventHappenedHelper(int selectedIslandIndex, JButton btnSail) {
 		String eventEncounterMessage = "";
 		String eventResultOfEncounterMessage = "";
@@ -385,6 +406,12 @@ public class MainWindow {
 		}
 	}
 
+	/**
+	 * Helper for when the random event happening is of type Pirate
+	 *
+	 * @param randomEvent the event Pirate
+	 * @param btnSail     btn to be set invisible
+	 */
 	private void randomEventIsPirateHelper(RandomEvent randomEvent, JButton btnSail) {
 
 		Pirate pirate = (Pirate) randomEvent;
@@ -410,6 +437,11 @@ public class MainWindow {
 		}
 	}
 
+	/**
+	 * to help change the image of the island according with current island
+	 *
+	 * @return current Island image file path
+	 */
 	public String changeIslandImg() {
 		String sourcePath;
 		int indexIsland = game.getCurrentIsland().getIdNumber() - 1;

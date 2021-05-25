@@ -39,10 +39,10 @@ public class SailorRepository extends BaseRepository {
 	private final String SAILORS_CSV_FILEPATH = "csvFiles/sailors.csv";
 
 	/**
-	 * This method is a helper method to the getSailors(List<List<String>>
-	 * rescuedSailorList) and used to get the list of sublists of Strings that
-	 * represent the properties for the RescuedSailor. It removes the first line
-	 * that contains the headers/names of properties.
+	 * This method is a helper method to the getSailors(rescuedSailorList) and used
+	 * to get the list of sublists of Strings that represent the properties for the
+	 * RescuedSailor. It removes the first line that contains the headers/names of
+	 * properties.
 	 */
 	@Override
 	public ArrayList<RescuedSailor> getList() {

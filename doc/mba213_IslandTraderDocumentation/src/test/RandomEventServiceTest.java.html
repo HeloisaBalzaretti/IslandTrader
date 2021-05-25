@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RandomEventServiceTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">RandomEventServiceTest.java</span></div><h1>RandomEventServiceTest.java</h1><pre class="source lang-java linenums">package test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+import islandtrader.core.Pirate;
+import islandtrader.core.RandomEvent;
+import islandtrader.core.RescuedSailor;
+import islandtrader.core.UnfortunateWeather;
+import service.RandomEventService;
+
+<span class="fc" id="L15">class RandomEventServiceTest {</span>
+
+	@Test
+	public void getRandomEventsForRouteTest() {
+<span class="fc" id="L19">		RescuedSailor sailor = new RescuedSailor(10, &quot;test&quot;, &quot;test&quot;, 10, (float) 10.0);</span>
+<span class="fc" id="L20">		UnfortunateWeather weather = new UnfortunateWeather(10, &quot;test&quot;, &quot;test&quot;);</span>
+<span class="fc" id="L21">		Pirate pirate = new Pirate(10, &quot;test&quot;, &quot;test&quot;, 2, 5);</span>
+<span class="fc" id="L22">		ArrayList&lt;Pirate&gt; pirates = new ArrayList&lt;Pirate&gt;();</span>
+<span class="fc" id="L23">		pirates.add(pirate);</span>
+<span class="fc" id="L24">		ArrayList&lt;UnfortunateWeather&gt; weatherList = new ArrayList&lt;UnfortunateWeather&gt;();</span>
+<span class="fc" id="L25">		weatherList.add(weather);</span>
+<span class="fc" id="L26">		ArrayList&lt;RescuedSailor&gt; sailors = new ArrayList&lt;RescuedSailor&gt;();</span>
+<span class="fc" id="L27">		sailors.add(sailor);</span>
+
+<span class="fc" id="L29">		RandomEventService service = new RandomEventService(pirates, sailors, weatherList);</span>
+<span class="fc" id="L30">		ArrayList&lt;RandomEvent&gt; randomEvents = service.getRandomEventsForRoute();</span>
+
+<span class="fc" id="L32">		assertEquals(3, randomEvents.size());</span>
+<span class="fc" id="L33">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

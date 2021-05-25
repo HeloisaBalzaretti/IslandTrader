@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Ship.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Ship.java</span></div><h1>Ship.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+import java.util.ArrayList;
+
+/**
+ * Class that models a Ship.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class Ship extends Entity {
+
+	/**
+	 * sail Speed of the Ship.
+	 */
+	private double sailSpeed;
+	/**
+	 * cargoCapacity of the Ship in Kg.
+	 */
+	private double cargoCapacity;
+
+	/**
+	 * endurance / resistance capacity of the Ship.
+	 */
+	private int endurance;
+	/**
+	 * sneakiness of the Ship. Improves the chances to escape pirates attacks.
+	 */
+	private int sneakiness;
+
+	/**
+	 * numberOfCrew that the Ship takes.
+	 */
+	private int numberOfCrew;
+
+	/**
+	 * Crew cost to sail per day per crew member, 3.90 dollars were a lot of money
+	 * some time ago...
+	 */
+<span class="fc" id="L44">	private final double CREW_COST_TO_SAIL = 3.90;</span>
+
+	/**
+	 * Helper boolean property to the Ship Health and game play.
+	 */
+<span class="fc" id="L49">	private boolean ableToSail = true;</span>
+
+	/**
+	 * A collection of current StoreTradable carried by the Ship and available for
+	 * trade
+	 */
+	private ArrayList&lt;StoreTradable&gt; currentCargoTradables;
+
+	/**
+	 * A collection to keep track of the StoreTradable traded.
+	 */
+<span class="fc" id="L60">	private ArrayList&lt;StoreTradable&gt; soldCargoTradables = new ArrayList&lt;StoreTradable&gt;();</span>
+
+	/**
+	 * The current Health Status of the Ship, varies when Ship takes random amount
+	 * of damage from RandomEvent UnfortunateWeather
+	 */
+<span class="fc" id="L66">	private double currentHealthStatus = 100;</span>
+
+	/**
+	 * The constant full health value used to calculate and set full health of the
+	 * Ship.
+	 */
+<span class="fc" id="L72">	private final double FULL_HEALTH = 100;</span>
+
+	/**
+	 * Creates a Ship object
+	 *
+	 * @param idNumber      id number
+	 * @param name          name
+	 * @param description   description
+	 * @param sailSpeed     sail speed
+	 * @param cargoCapacity cargo capacity in Kg
+	 * @param numberOfCrew  number of crew the ship takes
+	 * @param endurance     endurance / resistance capacity of the ship
+	 * @param sneakiness    Suppose to help escape from pirates
+	 */
+	public Ship(int idNumber, String name, String description, double sailSpeed, double cargoCapacity, int numberOfCrew,
+			int endurance, int sneakiness) {
+<span class="fc" id="L88">		super(idNumber, name, description);</span>
+<span class="fc" id="L89">		this.sailSpeed = sailSpeed;</span>
+<span class="fc" id="L90">		this.cargoCapacity = cargoCapacity;</span>
+<span class="fc" id="L91">		this.numberOfCrew = numberOfCrew;</span>
+<span class="fc" id="L92">		this.endurance = endurance;</span>
+<span class="fc" id="L93">		this.sneakiness = sneakiness;</span>
+<span class="fc" id="L94">		this.currentCargoTradables = new ArrayList&lt;StoreTradable&gt;();</span>
+<span class="fc" id="L95">	}</span>
+
+	/**
+	 * Gets the number of crew that this ship takes.
+	 *
+	 * @return number of crew
+	 */
+	public int getNumberOfCrew() {
+<span class="nc" id="L103">		return numberOfCrew;</span>
+	}
+
+	/**
+	 * Gets the crew cost to sail daily, the Trader needs to pay the crew wages
+	 * before sailing.
+	 *
+	 * @return the number of crew times the individual crew cost
+	 */
+	public double getCrewCostToSailDaily() {
+<span class="fc" id="L113">		return numberOfCrew * CREW_COST_TO_SAIL;</span>
+	}
+
+	/**
+	 * gets the Crew cost to Sail by the total days needed to get to the Island
+	 *
+	 * @param days sailing
+	 * @return crew cost daily times the number of days in the route
+	 */
+	public double getCrewCostToSailByTotalDays(int days) {
+<span class="nc" id="L123">		return getCrewCostToSailDaily() * days;</span>
+	}
+
+	/**
+	 * Gets the Current Health status of the Ship. if it is less than 100% the ship
+	 * must be fixed before it can sail again, also used to calculate the cost to
+	 * fix the Ship.
+	 *
+	 * @return currentHealthStatus
+	 */
+	public double getCurrentHealthStatus() {
+<span class="fc" id="L134">		return currentHealthStatus;</span>
+	}
+
+	/**
+	 * Applies damage from RandomEvent Unfortunate Weather to the Ship
+	 *
+	 * @param amountDamage applied to ship health
+	 */
+	public void applyDamageToCurrentHealthStatus(double amountDamage) {
+<span class="fc" id="L143">		this.currentHealthStatus -= Math.max(0, amountDamage);</span>
+<span class="fc" id="L144">	}</span>
+
+	/**
+	 * Repairs the Ship by setting the currentHealthStatus to 100%
+	 */
+	public void repair() {
+<span class="fc" id="L150">		this.currentHealthStatus = FULL_HEALTH;</span>
+<span class="fc" id="L151">	}</span>
+
+	/**
+	 * Checks that the Ship is able to sail
+	 *
+	 * @return ableToSail
+	 */
+	public boolean isAbleToSail() {
+<span class="fc" id="L159">		return ableToSail;</span>
+	}
+
+	/**
+	 * Sets the Ship ability to sail, when the ships takes damage it is set to false
+	 *
+	 * @param ableToSail true or false
+	 */
+	public void setAbleToSail(boolean ableToSail) {
+<span class="fc" id="L168">		this.ableToSail = ableToSail;</span>
+<span class="fc" id="L169">	}</span>
+
+	/**
+	 * Gets the sail speed of this ship.
+	 *
+	 * @return sail speed
+	 */
+	public double getSailSpeed() {
+<span class="nc" id="L177">		return sailSpeed;</span>
+	}
+
+	/**
+	 * Sets the sail speed of this ship.
+	 *
+	 * @param sailSpeed this ship speed
+	 */
+	public void setSailSpeed(double sailSpeed) {
+<span class="nc" id="L186">		this.sailSpeed = sailSpeed;</span>
+<span class="nc" id="L187">	}</span>
+
+	/**
+	 * Increases the ship speed by the given amount Applied when a relevant upgrade
+	 * is bought
+	 *
+	 * @param increaseBy the amount to increase the ship speed
+	 */
+	public void increaseSpeed(int increaseBy) {
+<span class="nc" id="L196">		this.sailSpeed += increaseBy;</span>
+<span class="nc" id="L197">	}</span>
+
+	/**
+	 * Decreases speed to remove any upgrades that the Trader has and wishes to sell
+	 * back.
+	 *
+	 * @param decreaseBy the amount to decrease the ship speed
+	 */
+	public void decreaseSpeed(int decreaseBy) {
+<span class="nc" id="L206">		this.sailSpeed -= decreaseBy;</span>
+<span class="nc" id="L207">	}</span>
+
+	/**
+	 * Gets the cargo capacity in Kg of this ship.
+	 *
+	 * @return cargo capacity
+	 */
+	public double getCargoCapacity() {
+<span class="nc" id="L215">		return cargoCapacity;</span>
+	}
+
+	/**
+	 * Sets the cargo capacity of this ship to the given parameter. Used under
+	 * upgrades in store.
+	 *
+	 * @param cargoCapacity cargo capacity increase to:
+	 */
+	public void setCargoCapacity(double cargoCapacity) {
+<span class="nc" id="L225">		this.cargoCapacity = cargoCapacity;</span>
+<span class="nc" id="L226">	}</span>
+
+	/**
+	 * Increases the amount of Kgs the Ship cargo can carry, when Trader buys a
+	 * relevant upgrade
+	 *
+	 * @param increaseBy the amount to increase of cargo capacity
+	 */
+	public void increaseCargoHoldCapacity(double increaseBy) {
+<span class="nc" id="L235">		this.cargoCapacity += increaseBy;</span>
+<span class="nc" id="L236">	}</span>
+
+	/**
+	 * Used to calculate the capacity in use with the current goods.
+	 *
+	 * @param amountToDecrease the amount to decrease of cargo capacity
+	 */
+	public void decreaseCargoHoldCapacity(double amountToDecrease) {
+<span class="nc" id="L244">		this.cargoCapacity -= amountToDecrease;</span>
+<span class="nc" id="L245">	}</span>
+
+	/**
+	 * Trader can see the amount applied before buying an upgrade
+	 *
+	 * @param amountUpgrade the amount of the new cargo capacity
+	 * @return the new cargo capacity if upgrade is applied
+	 */
+	public double getNewCargoHoldCapacity(double amountUpgrade) {
+<span class="nc" id="L254">		return cargoCapacity + amountUpgrade;</span>
+	}
+
+	/**
+	 * Gets the endurance / resistance capacity of this ship.
+	 *
+	 * @return endurance
+	 */
+	public int getEndurance() {
+<span class="fc" id="L263">		return endurance;</span>
+	}
+
+	/**
+	 * Sets the endurance of this ship to the given parameter. Used under upgrades
+	 * in the store.
+	 *
+	 * @param endurance this endurance to be set
+	 */
+	public void setEndurance(int endurance) {
+<span class="nc" id="L273">		this.endurance = endurance;</span>
+<span class="nc" id="L274">	}</span>
+
+	/**
+	 * Increase endurance of Ship when Trader buys a relevant upgrade to the Ship
+	 *
+	 * @param amountEndurance the amount to increase of endurance
+	 */
+	public void increaseEndurance(int amountEndurance) {
+<span class="nc" id="L282">		endurance += amountEndurance;</span>
+<span class="nc" id="L283">	}</span>
+
+	/**
+	 * Decreases the amount of endurance when Trader decides to sell the upgrade
+	 * back.
+	 *
+	 * @param amountEndurance the amount to decrease of endurance
+	 */
+	public void decreaseEndurance(int amountEndurance) {
+<span class="nc" id="L292">		endurance -= amountEndurance;</span>
+<span class="nc" id="L293">	}</span>
+
+	/**
+	 * The trader can see the new Endurance before buying the upgrade
+	 *
+	 * @param amountEndurance the amount to upgrade endurance
+	 * @return endurance updated with the amountEndurance
+	 */
+	public int getNewEndurance(int amountEndurance) {
+<span class="nc" id="L302">		return endurance += amountEndurance;</span>
+	}
+
+	/**
+	 * Gets the sneakiness of this ship.
+	 *
+	 * @return sneakiness
+	 */
+	public int getSneakiness() {
+<span class="nc" id="L311">		return sneakiness;</span>
+	}
+
+	/**
+	 * Sets this ship sneakiness to the given parameter.
+	 *
+	 * @param sneakiness this sneakiness to set
+	 */
+	public void setSneakiness(int sneakiness) {
+<span class="nc" id="L320">		this.sneakiness = sneakiness;</span>
+<span class="nc" id="L321">	}</span>
+
+	/**
+	 * Increase sneakiness of this ship by the given parameter. Decreases if the
+	 * given parameter is negative.
+	 *
+	 * @param increaseBy the amount to increase the sneakiness
+	 */
+	public void increaseSneakiness(int increaseBy) {
+<span class="nc" id="L330">		this.sneakiness += increaseBy;</span>
+<span class="nc" id="L331">	}</span>
+
+	/**
+	 * Decrease sneakiness of Ship when Trader sells some upgrade that previously
+	 * increased the Sneakiness of the Ship
+	 *
+	 * @param decreaseBy amount to decrease the sneakiness
+	 */
+	public void decreaseSneakiness(int decreaseBy) {
+<span class="nc" id="L340">		this.sneakiness -= decreaseBy;</span>
+<span class="nc" id="L341">	}</span>
+
+	/**
+	 * A collection with all the current StoreTradables available to trade
+	 *
+	 * @return currentCargoTradables
+	 */
+	public ArrayList&lt;StoreTradable&gt; getCurrentCargoTradables() {
+<span class="nc" id="L349">		return currentCargoTradables;</span>
+	}
+
+	/**
+	 * Sets this cargo StoreTradables
+	 *
+	 * @param cargoTradables the collection of cargo StoreTradable
+	 */
+	public void setCurrentCargoTradables(ArrayList&lt;StoreTradable&gt; cargoTradables) {
+<span class="nc" id="L358">		this.currentCargoTradables = cargoTradables;</span>
+<span class="nc" id="L359">	}</span>
+
+	/**
+	 * adds StoreTradable to the collection of current StoreTradables available for
+	 * trade.
+	 *
+	 * @param tradable to be added to current goods
+	 */
+	public void addTradable(StoreTradable tradable) {
+<span class="nc" id="L368">		this.currentCargoTradables.add(tradable);</span>
+<span class="nc" id="L369">	}</span>
+
+	/**
+	 * removes the StoreTradable from the collection of current StoreTradables when
+	 * Trader sells it.
+	 *
+	 * @param tradable to be removed from current goods
+	 */
+	public void removeTradable(StoreTradable tradable) {
+<span class="nc" id="L378">		this.currentCargoTradables.remove(tradable);</span>
+<span class="nc" id="L379">	}</span>
+
+	/**
+	 * Removes all StoreTradables from the collection of current StoreTradables when
+	 * a RandomEvent Pirate takes all Trader goods.
+	 */
+	public void removeAllCargoTradables() {
+<span class="nc" id="L386">		this.currentCargoTradables.clear();</span>
+<span class="nc" id="L387">	}</span>
+
+	/**
+	 * Gets the StoreTradables sold
+	 *
+	 * @return soldCargoTradables
+	 */
+	public ArrayList&lt;StoreTradable&gt; getSoldCargoTradables() {
+<span class="nc" id="L395">		return soldCargoTradables;</span>
+	}
+
+	/**
+	 * Sets the sold storeTradables
+	 *
+	 * @param soldCargoTradables the Array of sold cargo tradables to set
+	 */
+	public void setSoldCargoTradables(ArrayList&lt;StoreTradable&gt; soldCargoTradables) {
+<span class="nc" id="L404">		this.soldCargoTradables = soldCargoTradables;</span>
+<span class="nc" id="L405">	}</span>
+
+	/**
+	 * Overrides the toString() method to return a more meaningful description.
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L412">		String shipInfoTemplate = &quot;Ship name: %s |Sail speed: %s |Cargo Capacity: %s |Endurance: %s |Sneakiness: %s |Crew: %s&quot;;</span>
+<span class="nc" id="L413">		return String.format(shipInfoTemplate, name, sailSpeed, cargoCapacity, endurance, sneakiness, numberOfCrew);</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

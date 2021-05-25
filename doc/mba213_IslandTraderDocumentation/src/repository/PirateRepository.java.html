@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>PirateRepository.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">repository</a> &gt; <span class="el_source">PirateRepository.java</span></div><h1>PirateRepository.java</h1><pre class="source lang-java linenums">/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
+package repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import islandtrader.core.Pirate;
+
+/**
+ * Represents a database for the PirateRepository RandomEvent, it is used to
+ * create an ArrayList of type PirateRepository, with information from
+ * pirates.csv. Each constant property represents a property located at the
+ * index of the sublist that will be used to build the Pirate object.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+<span class="nc" id="L21">public class PirateRepository extends BaseRepository {</span>
+
+	/**
+	 * this number needed to escape from pirate is at index 3 of the sublist of the
+	 * piratesList
+	 */
+<span class="nc" id="L27">	private final int NUMBER_NEEDED_TO_SCAPE_THIS_PIRATE = 3;</span>
+
+	/**
+	 * this number is the pirate level of happiness and is is at index 4 of the
+	 * sublist of the piratesList
+	 */
+<span class="nc" id="L33">	private final int PIRATE_LEVEL_OF_HAPPINESS = 4;</span>
+
+	/**
+	 * The file path to the pirates.csv file with the information about all the
+	 * Pirates met in the game.
+	 */
+<span class="nc" id="L39">	private final String PIRATES_CSV_FILEPATH = &quot;csvFiles/pirates.csv&quot;;</span>
+
+	/**
+	 * This method is a helper method to the getPirates(List&lt;List&lt;String&gt;&gt;
+	 * piratesList) and used to get the list of sublists of Strings that represent
+	 * the properties for the Pirate. It removes the first line that contains the
+	 * headers/names of properties.
+	 */
+	@Override
+	public ArrayList&lt;Pirate&gt; getList() {
+<span class="nc" id="L49">		List&lt;List&lt;String&gt;&gt; piratesList = getResultListfromFile(PIRATES_CSV_FILEPATH);</span>
+<span class="nc" id="L50">		piratesList.remove(0);</span>
+<span class="nc" id="L51">		return getPirates(piratesList);</span>
+	}
+
+	/**
+	 * This method is used to convert the String List piratesList to the Pirate
+	 * type, creating a new instance of Pirate for each sublist and adding it to the
+	 * ArrayList and so creates the Pirate database for the project. It uses the
+	 * previously set constants to set the right properties for each instance of
+	 * Pirate.
+	 *
+	 * @param piratesList
+	 * @return ArrayList of Pirates
+	 */
+	private ArrayList&lt;Pirate&gt; getPirates(List&lt;List&lt;String&gt;&gt; piratesList) {
+<span class="nc" id="L65">		ArrayList&lt;Pirate&gt; piratesArray = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (List&lt;String&gt; pirate : piratesList) {</span>
+<span class="nc" id="L67">			int idNumber = Integer.parseInt(pirate.get(ID_NUMBER));</span>
+<span class="nc" id="L68">			String name = pirate.get(NAME);</span>
+<span class="nc" id="L69">			String description = pirate.get(DESCRIPTION);</span>
+<span class="nc" id="L70">			int numberNeededTodefendPirate = Integer.parseInt(pirate.get(NUMBER_NEEDED_TO_SCAPE_THIS_PIRATE));</span>
+<span class="nc" id="L71">			int pirateHapinessLevel = Integer.parseInt(pirate.get(PIRATE_LEVEL_OF_HAPPINESS));</span>
+
+<span class="nc" id="L73">			Pirate newpirate = new Pirate(idNumber, name, description, numberNeededTodefendPirate, pirateHapinessLevel);</span>
+<span class="nc" id="L74">			piratesArray.add(newpirate);</span>
+		}
+<span class="nc" id="L76">		return piratesArray;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

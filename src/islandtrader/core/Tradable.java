@@ -23,8 +23,13 @@ public abstract class Tradable extends Entity {
 	private float priceToSell;
 
 	/**
-	 * Creates a new Tradable Object. includes the super(idNumber, name,
-	 * description) from Entity.
+	 * Creates a new Tradable Object.
+	 *
+	 * @param name        this Tradable name
+	 * @param description this Tradable description
+	 * @param priceToBuy  this Tradable priceToBuy
+	 * @param priceToSell this Tradable priceToSell
+	 * @param idNumber    this Tradable idNumber
 	 */
 	public Tradable(String name, String description, float priceToBuy, float priceToSell, int idNumber) {
 		super(idNumber, name, description);
@@ -65,8 +70,8 @@ public abstract class Tradable extends Entity {
 	/**
 	 * Changes the priceToSell of this Tradable.
 	 *
-	 * @set The price that store will accept to receive from trader to sell the item
-	 *      or upgrade to the trader
+	 * The price that store will accept to receive from trader to sell the item or
+	 * upgrade to the trader
 	 *
 	 * @param priceToSell This Tradable's new priceToSell.
 	 */
@@ -77,8 +82,8 @@ public abstract class Tradable extends Entity {
 	/**
 	 * Changes the toString method of this Tradable.
 	 *
-	 * @return information about the item or upgrade
-	 * @Override the default toString method
+	 * @return information about the item or upgrade changes the default toString
+	 *         method
 	 */
 	@Override
 	public String toString() {

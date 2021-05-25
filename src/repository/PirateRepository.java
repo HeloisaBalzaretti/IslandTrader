@@ -39,10 +39,10 @@ public class PirateRepository extends BaseRepository {
 	private final String PIRATES_CSV_FILEPATH = "csvFiles/pirates.csv";
 
 	/**
-	 * This method is a helper method to the getPirates(List<List<String>>
-	 * piratesList) and used to get the list of sublists of Strings that represent
-	 * the properties for the Pirate. It removes the first line that contains the
-	 * headers/names of properties.
+	 * This method is a helper method to the getPirates( piratesList) and used to
+	 * get the list of sublists of Strings that represent the properties for the
+	 * Pirate. It removes the first line that contains the headers/names of
+	 * properties.
 	 */
 	@Override
 	public ArrayList<Pirate> getList() {

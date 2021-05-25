@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>IslandRepository.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">repository</a> &gt; <span class="el_source">IslandRepository.java</span></div><h1>IslandRepository.java</h1><pre class="source lang-java linenums">/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
+package repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import islandtrader.core.Island;
+import islandtrader.core.Item;
+import islandtrader.core.Pirate;
+import islandtrader.core.RescuedSailor;
+import islandtrader.core.Route;
+import islandtrader.core.Store;
+import islandtrader.core.UnfortunateWeather;
+import islandtrader.core.Upgrade;
+import service.RandomEventService;
+
+/**
+ * Represents a database of Islands, it is used to create an ArrayList of
+ * Islands, from islands.csv. Here we also add the the Stores, that are already
+ * populated with the StoreTradable objects(which are tradables that have the
+ * correct price and quantity according to the store where it is being traded)
+ * Therefore, the Islands will have their Stores ready to the trade of goods and
+ * upgrades. Also here the Islands have their available routes settled and with
+ * the random events also already defined. The random events will change every
+ * new game. but are still allocated randomly for each route.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+<span class="nc" id="L33">public class IslandRepository extends BaseRepository {</span>
+
+	/**
+	 * DISTANCE_MATRIX Matrix constant that stores the distances in days from one
+	 * island to another. It is is at index 3 of the sublist of the IslandsList
+	 */
+<span class="nc" id="L39">	private final int DISTANCE_MATRIX = 3;</span>
+
+	/**
+	 * ISLAND_CSV_FILEPATH constant that stores the information to build the islands
+	 * using the islands.csv file in the repository.
+	 */
+<span class="nc" id="L45">	private final String ISLAND_CSV_FILEPATH = &quot;csvFiles/islands.csv&quot;;</span>
+
+	/**
+	 * Returns an Array List of objects Island constructed in getIslands(islandList)
+	 * method from the given database.
+	 */
+	@Override
+	public ArrayList&lt;Island&gt; getList() {
+<span class="nc" id="L53">		List&lt;List&lt;String&gt;&gt; aList = getResultListfromFile(ISLAND_CSV_FILEPATH);</span>
+<span class="nc" id="L54">		aList.remove(0);</span>
+<span class="nc" id="L55">		return getIslands(aList);</span>
+	}
+
+	/**
+	 * Helper method for the function getList(). Receives a list of strings
+	 * constructed by getList() from the given database to returns a list of objects
+	 * Island. As this is the main method that creates the Island objects, it needs
+	 * to receive all other Arrays of objects to be able to build the Island with
+	 * the populated Store and the Route with the RandomEvents also in place to
+	 * happen. The randomEvents change every time the game starts. However it is
+	 * being allocated randomly to the Routes, with the probability of happening, to
+	 * meet the requirements.
+	 *
+	 *
+	 * @param a list of lists of strings
+	 * @return a list of objects Island.
+	 */
+
+	private ArrayList&lt;Island&gt; getIslands(List&lt;List&lt;String&gt;&gt; islandList) {
+
+<span class="nc" id="L75">		ArrayList&lt;Island&gt; islandsArray = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L77">		StoreRepository storeRepository = new StoreRepository();</span>
+<span class="nc" id="L78">		ArrayList&lt;Store&gt; stores = storeRepository.getList();</span>
+
+<span class="nc" id="L80">		ItemRepository itemRepository = new ItemRepository();</span>
+<span class="nc" id="L81">		ArrayList&lt;Item&gt; newItems = itemRepository.getList();</span>
+
+<span class="nc" id="L83">		UpgradeRepository upgradeRepository = new UpgradeRepository();</span>
+<span class="nc" id="L84">		ArrayList&lt;Upgrade&gt; newUpgrades = upgradeRepository.getList();</span>
+
+<span class="nc" id="L86">		PirateRepository pirateRepository = new PirateRepository();</span>
+<span class="nc" id="L87">		ArrayList&lt;Pirate&gt; pirates = pirateRepository.getList();</span>
+
+<span class="nc" id="L89">		UnfortunateWeatherRepository weatherRepository = new UnfortunateWeatherRepository();</span>
+<span class="nc" id="L90">		ArrayList&lt;UnfortunateWeather&gt; weatherList = weatherRepository.getList();</span>
+
+<span class="nc" id="L92">		SailorRepository sailorRepository = new SailorRepository();</span>
+<span class="nc" id="L93">		ArrayList&lt;RescuedSailor&gt; sailors = sailorRepository.getList();</span>
+
+<span class="nc" id="L95">		RandomEventService res = new RandomEventService(pirates, sailors, weatherList);</span>
+
+<span class="nc" id="L97">		storeRepository.SetStoresTradables(stores, newItems, newUpgrades);</span>
+<span class="nc" id="L98">		int storeIndex = 0;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (List&lt;String&gt; island : islandList) {</span>
+<span class="nc" id="L100">			int idNumber = Integer.parseInt(island.get(ID_NUMBER));</span>
+<span class="nc" id="L101">			String name = island.get(NAME);</span>
+<span class="nc" id="L102">			String description = island.get(DESCRIPTION);</span>
+
+<span class="nc" id="L104">			String[] distanceListString = island.get(DISTANCE_MATRIX).split(&quot;,&quot;);</span>
+
+<span class="nc" id="L106">			List&lt;Integer&gt; distanceList = new ArrayList&lt;Integer&gt;();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			for (String distance : distanceListString) {</span>
+<span class="nc" id="L108">				distanceList.add(Integer.parseInt(distance.trim()));</span>
+			}
+<span class="nc" id="L110">			int[] array = distanceList.stream().mapToInt(i -&gt; i).toArray();</span>
+
+<span class="nc" id="L112">			Island newIsland = new Island(idNumber, name, description, array, stores.get(storeIndex));</span>
+<span class="nc" id="L113">			newIsland.getStore().setDescription(String.format(newIsland.getStore().getDescription(), name));</span>
+<span class="nc" id="L114">			newIsland.setRoutes(getRoutesForIsland(newIsland, res));</span>
+<span class="nc" id="L115">			islandsArray.add(newIsland);</span>
+<span class="nc" id="L116">			storeIndex++;</span>
+		}
+<span class="nc" id="L118">		setRouteNames(islandsArray);</span>
+<span class="nc" id="L119">		return islandsArray;</span>
+	}
+
+	/**
+	 * We set the route names based on the islands it connects.
+	 *
+	 * @param islands
+	 */
+	private void setRouteNames(ArrayList&lt;Island&gt; islands) {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		for (Island island : islands) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			for (int index = 0; index &lt; island.getRoutes().length; index++) {</span>
+<span class="nc" id="L130">				Route route = island.getRoutes()[index];</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">				if (route != null) {</span>
+<span class="nc" id="L132">					route.setRouteNameByIslandName(islands.get(index).getName());</span>
+				}
+			}
+		}
+<span class="nc" id="L136">	}</span>
+
+	/**
+	 * Get the routes associated with the island, setting their random events
+	 *
+	 * @param newIsland
+	 * @param res
+	 * @return
+	 */
+	private Route[] getRoutesForIsland(Island newIsland, RandomEventService res) {
+<span class="nc" id="L146">		Route[] routes = new Route[newIsland.getDistancesInDays().length];</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		for (int distanceIndex = 0; distanceIndex &lt; newIsland.getDistancesInDays().length; distanceIndex++) {</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (newIsland.getDistancesInDays()[distanceIndex] != 0) {</span>
+<span class="nc" id="L149">				routes[distanceIndex] = new Route(distanceIndex + 1, res.getRandomEventsForRoute());</span>
+			}
+		}
+<span class="nc" id="L152">		return routes;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

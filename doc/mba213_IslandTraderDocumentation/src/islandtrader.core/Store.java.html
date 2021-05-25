@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Store.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Store.java</span></div><h1>Store.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+import java.util.ArrayList;
+
+/**
+ * Represents a Store of type Entity that will exist in every Island, to allow
+ * trade of Tradables between Store and Trader.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class Store extends Entity {
+
+	/**
+	 * itemsAndUpgradesToBuy the collection of Items and Upgrades that the Store
+	 * accepts buy from the Trader.
+	 */
+	private ArrayList&lt;StoreTradable&gt; itemsAndUpgradesToBuy;
+
+	/**
+	 * itemsAndUpgradesToSell the collection of Items and Upgrades that the Store
+	 * has to sell to the Trader.
+	 */
+	private ArrayList&lt;StoreTradable&gt; itemsAndUpgradesToSell;
+
+	/**
+	 * itemsAndUpgradesBought the collection to store all the StoreTradables bought
+	 * by the Trader in this Store.
+	 */
+	private ArrayList&lt;StoreTradable&gt; itemsAndUpgradesBought;
+
+	/**
+	 * itemsAndUpgradesBought the collection to store all the StoreTradables sold by
+	 * the Trader in this Store.
+	 */
+	private ArrayList&lt;StoreTradable&gt; itemsAndUpgradesSold;
+
+	/**
+	 * storePercentageFee: the Percentage fee is used to calculate and update the
+	 * price of StoreTradable that the Store has. It vary depending on each
+	 * Store-Island,i.e. 0.2 will increase price of Tradables that the Store is
+	 * selling by 20% and decrease 20% the prices of Tradables that the Store is
+	 * willing to buy from trader. (All Tradables have the default price, so we can
+	 * apply the fee)
+	 */
+	private float storePercentageFee;
+
+	/**
+	 * Creates a new Store using parameters from Super(Entity) and the particular
+	 * store properties.
+	 */
+	public Store(String name, String description, float storePercentageFee, int idNumber) {
+<span class="fc" id="L57">		super(idNumber, name, description);</span>
+<span class="fc" id="L58">		this.storePercentageFee = storePercentageFee;</span>
+<span class="fc" id="L59">		this.itemsAndUpgradesToBuy = new ArrayList&lt;StoreTradable&gt;();</span>
+<span class="fc" id="L60">		this.itemsAndUpgradesToSell = new ArrayList&lt;StoreTradable&gt;();</span>
+<span class="fc" id="L61">		itemsAndUpgradesBought = new ArrayList&lt;StoreTradable&gt;();</span>
+<span class="fc" id="L62">		itemsAndUpgradesSold = new ArrayList&lt;StoreTradable&gt;();</span>
+<span class="fc" id="L63">	}</span>
+
+	/**
+	 * Adds the storeTradable (Item or Upgrade) to the collection
+	 * itemsAndUpgradesBought
+	 *
+	 * @param storeTradable the Item or Upgrade to be stored
+	 */
+
+	public void addItemBoughtHistory(StoreTradable storeTradable) {
+<span class="fc" id="L73">		itemsAndUpgradesBought.add(storeTradable);</span>
+<span class="fc" id="L74">	}</span>
+
+	/**
+	 *
+	 * Adds the storeTradable (Item or Upgrade) to the collection
+	 * itemsAndUpgradesSold
+	 *
+	 * @param storeTradable the Item or Upgrade to be stored
+	 */
+	public void addItemSoldHistory(StoreTradable storeTradable) {
+<span class="fc" id="L84">		itemsAndUpgradesSold.add(storeTradable);</span>
+<span class="fc" id="L85">	}</span>
+
+	/**
+	 * Gets the collection of storeTradable (Item or Upgrade) bought in this Store
+	 *
+	 * @return itemsAndUpgradesBought
+	 */
+	public ArrayList&lt;StoreTradable&gt; getItemsAndUpgradesBought() {
+<span class="fc" id="L93">		return itemsAndUpgradesBought;</span>
+	}
+
+	/**
+	 * Sets the collection of storeTradable (Item or Upgrade) bought in this Store
+	 *
+	 * @param itemsAndUpgradesBought the collection to be set
+	 */
+	public void setItemsAndUpgradesBought(ArrayList&lt;StoreTradable&gt; itemsAndUpgradesBought) {
+<span class="nc" id="L102">		this.itemsAndUpgradesBought = itemsAndUpgradesBought;</span>
+<span class="nc" id="L103">	}</span>
+
+	/**
+	 * Gets the collection of storeTradable (Item or Upgrade) sold in this Store
+	 *
+	 * @return itemsAndUpgradesSold
+	 */
+	public ArrayList&lt;StoreTradable&gt; getItemsAndUpgradesSold() {
+<span class="fc" id="L111">		return itemsAndUpgradesSold;</span>
+	}
+
+	/**
+	 * Sets the collection of storeTradable (Item or Upgrade) sold in this Store
+	 *
+	 * @param itemsAndUpgradesSold
+	 */
+	public void setItemsAndUpgradesSold(ArrayList&lt;StoreTradable&gt; itemsAndUpgradesSold) {
+<span class="nc" id="L120">		this.itemsAndUpgradesSold = itemsAndUpgradesSold;</span>
+<span class="nc" id="L121">	}</span>
+
+	/**
+	 * This method takes an ArrayList of type StoreTradable, which contains the
+	 * Tradables that the Store will accept Buy from Trader.It applies the
+	 * storePercentageFee to reduce the Tradables price. Then it will add the
+	 * Tradable with the correct price to the ArrayList itemsAndUpgradesToBuy which
+	 * is the Store's storage catalog for items to buy from the Trader.
+	 *
+	 * @param itemsAndUpgrades ArrayList of type StoreTradable, which contains
+	 *                         Tradables.
+	 *
+	 */
+	public void addStoreFeeToStoreTradablesPricesForBuying(ArrayList&lt;StoreTradable&gt; itemsAndUpgrades) {
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (StoreTradable storeTradable : itemsAndUpgrades) {</span>
+<span class="fc" id="L136">			float newPrice = storeTradable.getTradable().getPriceToBuy() * (1 - this.storePercentageFee);// reduce price</span>
+<span class="fc" id="L137">			storeTradable.setPrice(newPrice);</span>
+<span class="fc" id="L138">			this.itemsAndUpgradesToBuy.add(storeTradable);</span>
+		}
+<span class="fc" id="L140">	}</span>
+
+	/**
+	 * This method takes an ArrayList of type StoreTradable, which contains the
+	 * Tradables that the Store will have available to Sell to the Trader.It applies
+	 * the storePercentageFee to increase the Tradables price. Then it will add the
+	 * Tradable with the correct price to the ArrayList itemsAndUpgradesToSell which
+	 * is the Store's storage room with the items to Sell to the Trader.
+	 *
+	 * @param itemsAndUpgrades an ArrayList of type StoreTradable, which contains
+	 *                         Tradables.
+	 */
+	public void addStoreFeeToStoreTradablesPricesForSelling(ArrayList&lt;StoreTradable&gt; itemsAndUpgrades) {
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (StoreTradable storeTradable : itemsAndUpgrades) {</span>
+<span class="fc" id="L154">			float newPrice = storeTradable.getTradable().getPriceToSell() * (1 + this.storePercentageFee);</span>
+<span class="fc" id="L155">			storeTradable.setPrice(newPrice);</span>
+<span class="fc" id="L156">			this.itemsAndUpgradesToSell.add(storeTradable);</span>
+		}
+<span class="fc" id="L158">	}</span>
+
+	/**
+	 *
+	 * @return the ArrayList of Items and Upgrades that the Store accepts to Buy
+	 *         from Trader.
+	 */
+	public ArrayList&lt;StoreTradable&gt; getItemsAndUpgradesToBuy() {
+<span class="fc" id="L166">		return itemsAndUpgradesToBuy;</span>
+	}
+
+	/**
+	 *
+	 * @return the ArrayList of Items and Upgrades that the Store accepts to Sell to
+	 *         Trader.
+	 *
+	 */
+	public ArrayList&lt;StoreTradable&gt; getItemsAndUpgradesToSell() {
+<span class="fc" id="L176">		return itemsAndUpgradesToSell;</span>
+	}
+
+	/**
+	 *
+	 * @return the Store fee that the store applies to the Tradable prices.
+	 */
+	public float getStoreFee() {
+<span class="nc" id="L184">		return storePercentageFee;</span>
+	}
+
+	/**
+	 * @Override the toString method to return information about this Store. return
+	 *           name, description and the quantity of StoreTradables to sell and
+	 *           buy.
+	 */
+	@Override
+	public String toString() {
+
+<span class="nc" id="L195">		return String.format(</span>
+<span class="nc" id="L196">				&quot;%s Store, %s has a collection of %d items or upgrades for you to buy here and a collection of %d items or upgrades that the store would like to buy from you.&quot;,</span>
+<span class="nc" id="L197">				name, description, itemsAndUpgradesToSell.size(), itemsAndUpgradesToBuy.size());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UnfortunateWeatherRepository.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">repository</a> &gt; <span class="el_source">UnfortunateWeatherRepository.java</span></div><h1>UnfortunateWeatherRepository.java</h1><pre class="source lang-java linenums">/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
+package repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import islandtrader.core.UnfortunateWeather;
+
+/**
+ * Represents a database for the UnfortunateWeather RandomEvent, it is used to
+ * create an ArrayList of type UnfortunateWeather, with information from
+ * UnfortunateWeather.csv. Each constant property represents a property located
+ * at the index of the sublist that will be used to build the UnfortunateWeather
+ * object.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+<span class="nc" id="L22">public class UnfortunateWeatherRepository extends BaseRepository {</span>
+
+	/**
+	 * The file path to the Unfortunate Weather CSV file with the information about
+	 * all the unfortunate weather possible situations for the game
+	 */
+<span class="nc" id="L28">	private final String UNFORTUNATE_WEATHER_CSV_FILEPATH = &quot;csvFiles/unfortunateWeather.csv&quot;;</span>
+
+	/**
+	 * A helper method to the getUnfortunateWeather(List&lt;List&lt;String&gt;&gt;
+	 * unfortunateWeatherList) and used to get the list of sublists of Strings that
+	 * represent the properties for the UnfortunateWeather. It removes the first
+	 * line that contains the headers/names of properties.
+	 */
+	@Override
+	public ArrayList&lt;UnfortunateWeather&gt; getList() {
+<span class="nc" id="L38">		List&lt;List&lt;String&gt;&gt; unfortunateWeatherList = getResultListfromFile(UNFORTUNATE_WEATHER_CSV_FILEPATH);</span>
+<span class="nc" id="L39">		unfortunateWeatherList.remove(0);</span>
+<span class="nc" id="L40">		return getUnfortunateWeather(unfortunateWeatherList);</span>
+	}
+
+	/**
+	 * This method is used to convert the String List unfortunateWeatherList to the
+	 * UnfortunateWeather type, creating a new instance of UnfortunateWeather for
+	 * each sublist and adding it to the ArrayList and so creates the
+	 * UnfortunateWeather &quot;database&quot; for the project. uses the previously set
+	 * constants to set the right properties for each instance of
+	 * UnfortunateWeather.
+	 *
+	 * @param unfortunateWeatherList
+	 * @return ArrayList of UnfortunateWeather objects
+	 */
+	private ArrayList&lt;UnfortunateWeather&gt; getUnfortunateWeather(List&lt;List&lt;String&gt;&gt; unfortunateWeatherList) {
+<span class="nc" id="L55">		ArrayList&lt;UnfortunateWeather&gt; unfortunateWeather = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (List&lt;String&gt; weather : unfortunateWeatherList) {</span>
+<span class="nc" id="L57">			int idNumber = Integer.parseInt(weather.get(ID_NUMBER));</span>
+<span class="nc" id="L58">			String name = weather.get(NAME);</span>
+<span class="nc" id="L59">			String description = weather.get(DESCRIPTION);</span>
+
+<span class="nc" id="L61">			UnfortunateWeather newunfortunateWeather = new UnfortunateWeather(idNumber, name, description);</span>
+<span class="nc" id="L62">			unfortunateWeather.add(newunfortunateWeather);</span>
+		}
+<span class="nc" id="L64">		return unfortunateWeather;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

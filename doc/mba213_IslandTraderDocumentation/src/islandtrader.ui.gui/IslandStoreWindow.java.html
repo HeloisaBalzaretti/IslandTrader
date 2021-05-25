@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>IslandStoreWindow.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.gui</a> &gt; <span class="el_source">IslandStoreWindow.java</span></div><h1>IslandStoreWindow.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package islandtrader.ui.gui;</span>
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import islandtrader.core.Item;
+import islandtrader.core.Ship;
+import islandtrader.core.Store;
+import islandtrader.core.StoreTradable;
+import islandtrader.core.Trader;
+import islandtrader.core.Upgrade;
+
+public class IslandStoreWindow {
+
+	private JFrame storeWindow;
+	private GameEnvironmentSwing game;
+
+	/**
+	 * Create the application.
+	 */
+<span class="nc" id="L43">	public IslandStoreWindow(GameEnvironmentSwing incomingGame) {</span>
+<span class="nc" id="L44">		game = incomingGame;</span>
+<span class="nc" id="L45">		initialize();</span>
+<span class="nc" id="L46">		storeWindow.setVisible(true);</span>
+
+<span class="nc" id="L48">	}</span>
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L54">		storeWindow = new JFrame();</span>
+<span class="nc" id="L55">		storeWindow.addWindowListener(new WindowAdapter() {</span>
+			@Override
+			public void windowClosed(WindowEvent e) {
+<span class="nc" id="L58">				MainWindow mainWindow = game.getMainScreen();</span>
+<span class="nc" id="L59">				mainWindow.closeWindow();</span>
+<span class="nc" id="L60">				game.launchMainScreen(game.getTrader());</span>
+<span class="nc" id="L61">			}</span>
+		});
+<span class="nc" id="L63">		storeWindow.getContentPane().setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L64">		storeWindow.getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L66">		JLabel lblIslStore = new JLabel(game.getCurrentIsland().getName() + &quot;'s&quot;);</span>
+<span class="nc" id="L67">		lblIslStore.setForeground(new Color(0, 0, 51));</span>
+<span class="nc" id="L68">		lblIslStore.setFont(new Font(&quot;Stencil&quot;, Font.PLAIN, 20));</span>
+<span class="nc" id="L69">		lblIslStore.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L70">		lblIslStore.setBounds(198, 2, 393, 53);</span>
+<span class="nc" id="L71">		storeWindow.getContentPane().add(lblIslStore);</span>
+
+<span class="nc" id="L73">		JLabel lblStoreImg = new JLabel(&quot;&quot;);</span>
+<span class="nc" id="L74">		lblStoreImg.setIcon(new ImageIcon(IslandStoreWindow.class.getResource(&quot;/islandtrader/images/storeIsland.png&quot;)));</span>
+<span class="nc" id="L75">		lblStoreImg.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L76">		lblStoreImg.setBounds(296, 41, 192, 150);</span>
+<span class="nc" id="L77">		storeWindow.getContentPane().add(lblStoreImg);</span>
+
+<span class="nc" id="L79">		JLabel lblGoodsYouBuy = new JLabel(&quot;Goods you can buy here:&quot;);</span>
+<span class="nc" id="L80">		lblGoodsYouBuy.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 16));</span>
+<span class="nc" id="L81">		lblGoodsYouBuy.setBounds(10, 167, 192, 24);</span>
+<span class="nc" id="L82">		storeWindow.getContentPane().add(lblGoodsYouBuy);</span>
+
+<span class="nc" id="L84">		JLabel lblGoodsYouSell = new JLabel(&quot;Goods you can sell here:&quot;);</span>
+<span class="nc" id="L85">		lblGoodsYouSell.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="nc" id="L86">		lblGoodsYouSell.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 16));</span>
+<span class="nc" id="L87">		lblGoodsYouSell.setBounds(577, 167, 210, 24);</span>
+<span class="nc" id="L88">		storeWindow.getContentPane().add(lblGoodsYouSell);</span>
+
+<span class="nc" id="L90">		JLabel lblQtyBuy = new JLabel(&quot;0&quot;);</span>
+<span class="nc" id="L91">		lblQtyBuy.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L92">		lblQtyBuy.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L93">		lblQtyBuy.setBounds(289, 334, 53, 17);</span>
+<span class="nc" id="L94">		storeWindow.getContentPane().add(lblQtyBuy);</span>
+
+<span class="nc" id="L96">		JLabel lblQtySell = new JLabel(&quot;0&quot;);</span>
+<span class="nc" id="L97">		lblQtySell.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L98">		lblQtySell.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L99">		lblQtySell.setBounds(732, 332, 55, 21);</span>
+<span class="nc" id="L100">		storeWindow.getContentPane().add(lblQtySell);</span>
+
+<span class="nc" id="L102">		JLabel lblTraderBalance = new JLabel(</span>
+<span class="nc" id="L103">				String.format(&quot;You have $ %.2f available.&quot;, game.getTrader().getTraderAccountBalance()));</span>
+<span class="nc" id="L104">		lblTraderBalance.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L105">		lblTraderBalance.setBounds(10, 10, 168, 17);</span>
+<span class="nc" id="L106">		storeWindow.getContentPane().add(lblTraderBalance);</span>
+
+<span class="nc" id="L108">		JLabel lblYourShipCan = new JLabel(String.format(&quot;Your ship can still carry: %.2f kgs.&quot;,</span>
+<span class="nc" id="L109">				game.getTrader().getShipOwned().getCargoCapacity()));</span>
+<span class="nc" id="L110">		lblYourShipCan.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L111">		lblYourShipCan.setBounds(10, 38, 192, 17);</span>
+<span class="nc" id="L112">		storeWindow.getContentPane().add(lblYourShipCan);</span>
+
+<span class="nc" id="L114">		JSlider slider_QtyBuy = new JSlider();</span>
+<span class="nc" id="L115">		slider_QtyBuy.addChangeListener(new ChangeListener() {</span>
+			@Override
+			public void stateChanged(ChangeEvent e) {
+<span class="nc" id="L118">				game.showSliderValue(slider_QtyBuy, lblQtyBuy);</span>
+<span class="nc" id="L119">			}</span>
+		});
+<span class="nc" id="L121">		slider_QtyBuy.setBounds(105, 329, 175, 22);</span>
+<span class="nc" id="L122">		slider_QtyBuy.setMinimum(0);</span>
+<span class="nc" id="L123">		slider_QtyBuy.setMaximum(0);</span>
+<span class="nc" id="L124">		slider_QtyBuy.setValue(0);</span>
+
+<span class="nc" id="L126">		storeWindow.getContentPane().add(slider_QtyBuy);</span>
+
+<span class="nc" id="L128">		JSlider slider_QtySell = new JSlider();</span>
+<span class="nc" id="L129">		slider_QtySell.addChangeListener(new ChangeListener() {</span>
+			@Override
+			public void stateChanged(ChangeEvent e) {
+<span class="nc" id="L132">				game.showSliderValue(slider_QtySell, lblQtySell);</span>
+<span class="nc" id="L133">			}</span>
+		});
+<span class="nc" id="L135">		slider_QtySell.setBounds(557, 334, 168, 22);</span>
+<span class="nc" id="L136">		slider_QtySell.setMinimum(0);</span>
+<span class="nc" id="L137">		slider_QtySell.setMaximum(0);</span>
+<span class="nc" id="L138">		slider_QtySell.setValue(0);</span>
+
+<span class="nc" id="L140">		storeWindow.getContentPane().add(slider_QtySell);</span>
+<span class="nc" id="L141">		DefaultListModel&lt;StoreTradable&gt; tradablesBuyListModel = new DefaultListModel&lt;StoreTradable&gt;();</span>
+
+<span class="nc" id="L143">		DefaultListModel&lt;StoreTradable&gt; tradablesSellListModel = new DefaultListModel&lt;StoreTradable&gt;();</span>
+
+<span class="nc" id="L145">		tradablesBuyListModel.addAll(game.getCurrentIsland().getStore().getItemsAndUpgradesToSell());</span>
+
+<span class="nc" id="L147">		tradablesSellListModel.addAll(game.getCurrentIsland().getStore().getItemsAndUpgradesToBuy());</span>
+
+<span class="nc" id="L149">		JScrollPane scrollPane = new JScrollPane();</span>
+<span class="nc" id="L150">		scrollPane.setBounds(10, 224, 343, 96);</span>
+<span class="nc" id="L151">		storeWindow.getContentPane().add(scrollPane);</span>
+
+<span class="nc" id="L153">		JList&lt;StoreTradable&gt; list_TraderBuy = new JList&lt;StoreTradable&gt;(tradablesBuyListModel);</span>
+<span class="nc" id="L154">		scrollPane.setViewportView(list_TraderBuy);</span>
+<span class="nc" id="L155">		list_TraderBuy.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+<span class="nc" id="L156">		list_TraderBuy.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 12));</span>
+
+<span class="nc" id="L158">		list_TraderBuy.addListSelectionListener(new ListSelectionListener() {</span>
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+<span class="nc" id="L161">				slider_QtyBuy.setValue(0);</span>
+<span class="nc" id="L162">				game.showSliderValue(slider_QtyBuy, lblQtyBuy);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">				if (list_TraderBuy.getSelectedValue() != null) {</span>
+<span class="nc" id="L164">					slider_QtyBuy.setMaximum(list_TraderBuy.getSelectedValue().getQuantity());</span>
+				}
+<span class="nc" id="L166">			}</span>
+		});
+
+<span class="nc" id="L169">		JScrollPane scrollPane_1 = new JScrollPane();</span>
+<span class="nc" id="L170">		scrollPane_1.setBounds(462, 224, 343, 96);</span>
+<span class="nc" id="L171">		storeWindow.getContentPane().add(scrollPane_1);</span>
+
+<span class="nc" id="L173">		JList&lt;StoreTradable&gt; list_TraderSell = new JList&lt;StoreTradable&gt;(tradablesSellListModel);</span>
+<span class="nc" id="L174">		scrollPane_1.setViewportView(list_TraderSell);</span>
+<span class="nc" id="L175">		list_TraderSell.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+<span class="nc" id="L176">		list_TraderSell.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 12));</span>
+
+<span class="nc" id="L178">		list_TraderSell.addListSelectionListener(new ListSelectionListener() {</span>
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+<span class="nc" id="L181">				slider_QtySell.setValue(0);</span>
+<span class="nc" id="L182">				game.showSliderValue(slider_QtySell, lblQtySell);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">				if (list_TraderSell.getSelectedValue() != null) {</span>
+<span class="nc" id="L184">					slider_QtySell.setMaximum(list_TraderSell.getSelectedValue().getQuantity());</span>
+				}
+
+<span class="nc" id="L187">			}</span>
+		});
+
+<span class="nc" id="L190">		JLabel lblYourPurchaseHistory = new JLabel(&quot;Your trade history in this island:&quot;);</span>
+<span class="nc" id="L191">		lblYourPurchaseHistory.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L192">		lblYourPurchaseHistory.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L193">		lblYourPurchaseHistory.setBounds(292, 411, 217, 24);</span>
+<span class="nc" id="L194">		storeWindow.getContentPane().add(lblYourPurchaseHistory);</span>
+
+<span class="nc" id="L196">		JButton btnBuy = new JButton(&quot;Buy&quot;);</span>
+<span class="nc" id="L197">		btnBuy.setBackground(Color.WHITE);</span>
+<span class="nc" id="L198">		btnBuy.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L199">		btnBuy.setBounds(10, 330, 85, 21);</span>
+<span class="nc" id="L200">		storeWindow.getContentPane().add(btnBuy);</span>
+
+<span class="nc" id="L202">		JButton btnSell = new JButton(&quot;Sell&quot;);</span>
+<span class="nc" id="L203">		btnSell.setBackground(Color.WHITE);</span>
+<span class="nc" id="L204">		btnSell.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L205">		btnSell.setBounds(462, 332, 85, 21);</span>
+<span class="nc" id="L206">		storeWindow.getContentPane().add(btnSell);</span>
+
+<span class="nc" id="L208">		DefaultListModel&lt;StoreTradable&gt; boughtHistoryListModel = new DefaultListModel&lt;StoreTradable&gt;();</span>
+<span class="nc" id="L209">		boughtHistoryListModel.addAll(game.getCurrentIsland().getStore().getItemsAndUpgradesBought());</span>
+
+<span class="nc" id="L211">		JScrollPane scrollPane_2 = new JScrollPane();</span>
+<span class="nc" id="L212">		scrollPane_2.setBounds(12, 486, 341, 94);</span>
+<span class="nc" id="L213">		storeWindow.getContentPane().add(scrollPane_2);</span>
+
+<span class="nc" id="L215">		JList&lt;StoreTradable&gt; list_TraderHistoryBought = new JList&lt;StoreTradable&gt;(boughtHistoryListModel);</span>
+<span class="nc" id="L216">		scrollPane_2.setColumnHeaderView(list_TraderHistoryBought);</span>
+<span class="nc" id="L217">		list_TraderHistoryBought.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+<span class="nc" id="L218">		list_TraderHistoryBought.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 12));</span>
+
+<span class="nc" id="L220">		btnBuy.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L223">				int quantity = slider_QtyBuy.getValue();</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">				if (list_TraderBuy.getSelectedValue() == null) {</span>
+<span class="nc" id="L225">					JOptionPane.showMessageDialog(new JFrame(), &quot;Error: Select an item to buy!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L226">							JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L227">					return;</span>
+				}
+<span class="nc" id="L229">				StoreTradable storeTradable = getStoreTradableFromStoreTradableId(</span>
+<span class="nc" id="L230">						list_TraderBuy.getSelectedValue().getIdNumber(),</span>
+<span class="nc" id="L231">						game.getCurrentIsland().getStore().getItemsAndUpgradesToSell());</span>
+
+<span class="nc" id="L233">				float price = storeTradable.getPrice();</span>
+<span class="nc" id="L234">				float totalAmountToPay = quantity * price;</span>
+<span class="nc" id="L235">				Trader trader = game.getTrader();</span>
+
+<span class="nc bnc" id="L237" title="All 2 branches missed.">				if (canBuyTradable(trader, totalAmountToPay, storeTradable, quantity)) {</span>
+<span class="nc" id="L238">					storeTradable.decreaseQuantity(quantity);</span>
+<span class="nc" id="L239">					trader.removeAmountFromBalance(totalAmountToPay);</span>
+
+<span class="nc bnc" id="L241" title="All 2 branches missed.">					if (storeTradable.getTradable() instanceof Upgrade) {</span>
+<span class="nc" id="L242">						Upgrade upgrade = (Upgrade) storeTradable.getTradable();</span>
+<span class="nc" id="L243">						trader.getShipOwned().increaseSpeed(upgrade.getIncreaseSpeed() * quantity);</span>
+<span class="nc" id="L244">						trader.getShipOwned().increaseSneakiness(upgrade.getIncreaseSpeed() * quantity);</span>
+<span class="nc" id="L245">						trader.getShipOwned().increaseEndurance(upgrade.getIncreaseEndurance() * quantity);</span>
+<span class="nc" id="L246">						trader.getShipOwned().increaseCargoHoldCapacity(upgrade.getIncreaseCargoCapacity() * quantity);</span>
+<span class="nc" id="L247">					} else {</span>
+<span class="nc" id="L248">						Item item = (Item) storeTradable.getTradable();</span>
+<span class="nc" id="L249">						float totalWeight = quantity * item.getWeight();</span>
+<span class="nc" id="L250">						trader.getShipOwned().decreaseCargoHoldCapacity(totalWeight);</span>
+					}
+<span class="nc" id="L252">					lblYourShipCan.setText(String.format(&quot;Your ship can still carry: %.2f kgs.&quot;,</span>
+<span class="nc" id="L253">							game.getTrader().getShipOwned().getCargoCapacity()));</span>
+
+<span class="nc" id="L255">					lblTraderBalance.setText(</span>
+<span class="nc" id="L256">							String.format(&quot;You have $ %.2f available.&quot;, game.getTrader().getTraderAccountBalance()));</span>
+
+<span class="nc" id="L258">					addStoreTradableToShip(storeTradable, totalAmountToPay, quantity, trader.getShipOwned());</span>
+<span class="nc" id="L259">					addStoreTradableBoughtHistory(storeTradable, totalAmountToPay, quantity,</span>
+<span class="nc" id="L260">							game.getCurrentIsland().getStore());</span>
+
+<span class="nc" id="L262">					list_TraderBuy.setListData(game.getCurrentIsland().getStore().getItemsAndUpgradesToSell()</span>
+<span class="nc" id="L263">							.toArray(StoreTradable[]::new));</span>
+
+<span class="nc" id="L265">					list_TraderHistoryBought.setListData(game.getCurrentIsland().getStore().getItemsAndUpgradesBought()</span>
+<span class="nc" id="L266">							.toArray(StoreTradable[]::new));</span>
+<span class="nc" id="L267">					slider_QtyBuy.setMaximum(0);</span>
+<span class="nc" id="L268">					JOptionPane.showMessageDialog(new JFrame(),</span>
+<span class="nc" id="L269">							&quot;You successfuly bought &quot; + quantity + &quot; &quot; + storeTradable.getName(), &quot;Success!&quot;,</span>
+<span class="nc" id="L270">							JOptionPane.INFORMATION_MESSAGE);</span>
+				}
+<span class="nc" id="L272">			}</span>
+		});
+
+<span class="nc" id="L275">		DefaultListModel&lt;StoreTradable&gt; soldHistoryListModel = new DefaultListModel&lt;StoreTradable&gt;();</span>
+<span class="nc" id="L276">		soldHistoryListModel.addAll(game.getCurrentIsland().getStore().getItemsAndUpgradesSold());</span>
+
+<span class="nc" id="L278">		JScrollPane scrollPane_3 = new JScrollPane();</span>
+<span class="nc" id="L279">		scrollPane_3.setBounds(464, 486, 341, 94);</span>
+<span class="nc" id="L280">		storeWindow.getContentPane().add(scrollPane_3);</span>
+
+<span class="nc" id="L282">		JList&lt;StoreTradable&gt; list_TraderHistorySold = new JList&lt;StoreTradable&gt;(soldHistoryListModel);</span>
+<span class="nc" id="L283">		scrollPane_3.setViewportView(list_TraderHistorySold);</span>
+<span class="nc" id="L284">		list_TraderHistorySold.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+<span class="nc" id="L285">		list_TraderHistorySold.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 12));</span>
+
+<span class="nc" id="L287">		btnSell.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L290">				int quantity = slider_QtySell.getValue();</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">				if (list_TraderSell.getSelectedValue() == null) {</span>
+<span class="nc" id="L292">					JOptionPane.showMessageDialog(new JFrame(), &quot;Error: Select an item to sell!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L293">							JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L294">					return;</span>
+				}
+<span class="nc" id="L296">				StoreTradable storeTradable = getStoreTradableFromStoreTradableId(</span>
+<span class="nc" id="L297">						list_TraderSell.getSelectedValue().getIdNumber(),</span>
+<span class="nc" id="L298">						game.getCurrentIsland().getStore().getItemsAndUpgradesToBuy());</span>
+<span class="nc" id="L299">				float price = storeTradable.getPrice();</span>
+<span class="nc" id="L300">				float totalPrice = quantity * price;</span>
+<span class="nc" id="L301">				Trader trader = game.getTrader();</span>
+
+<span class="nc bnc" id="L303" title="All 2 branches missed.">				if (canSellTradable(trader, storeTradable, quantity, trader.getShipOwned())) {</span>
+<span class="nc" id="L304">					storeTradable.decreaseQuantity(quantity);</span>
+<span class="nc" id="L305">					trader.addAmountToBalance(totalPrice);</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">					if (storeTradable.getTradable() instanceof Upgrade) {</span>
+<span class="nc" id="L307">						Upgrade upgrade = (Upgrade) storeTradable.getTradable();</span>
+<span class="nc" id="L308">						trader.getShipOwned().decreaseSpeed(upgrade.getIncreaseSpeed() * quantity);</span>
+<span class="nc" id="L309">						trader.getShipOwned().decreaseSneakiness(upgrade.getIncreaseSpeed() * quantity);</span>
+<span class="nc" id="L310">						trader.getShipOwned().decreaseEndurance(upgrade.getIncreaseEndurance() * quantity);</span>
+<span class="nc" id="L311">						trader.getShipOwned().decreaseCargoHoldCapacity(upgrade.getIncreaseCargoCapacity() * quantity);</span>
+<span class="nc" id="L312">					} else {</span>
+<span class="nc" id="L313">						Item item = (Item) storeTradable.getTradable();</span>
+<span class="nc" id="L314">						float totalWeight = quantity * item.getWeight();</span>
+<span class="nc" id="L315">						trader.getShipOwned().increaseCargoHoldCapacity(totalWeight);</span>
+					}
+<span class="nc" id="L317">					lblYourShipCan.setText(String.format(&quot;Your ship can still carry: %.2f kgs.&quot;,</span>
+<span class="nc" id="L318">							game.getTrader().getShipOwned().getCargoCapacity()));</span>
+<span class="nc" id="L319">					lblTraderBalance.setText(</span>
+<span class="nc" id="L320">							String.format(&quot;You have $ %.2f available.&quot;, game.getTrader().getTraderAccountBalance()));</span>
+<span class="nc" id="L321">					addStoreTradableSoldHistory(storeTradable, totalPrice, quantity,</span>
+<span class="nc" id="L322">							game.getCurrentIsland().getStore());</span>
+<span class="nc" id="L323">					removeStoreTradableFromShip(storeTradable, totalPrice, quantity, trader.getShipOwned());</span>
+<span class="nc" id="L324">					lblYourShipCan.setText(String.format(&quot;Your ship can still carry: %.2f kgs.&quot;,</span>
+<span class="nc" id="L325">							game.getTrader().getShipOwned().getCargoCapacity()));</span>
+<span class="nc" id="L326">					list_TraderSell.setListData(game.getCurrentIsland().getStore().getItemsAndUpgradesToBuy()</span>
+<span class="nc" id="L327">							.toArray(StoreTradable[]::new));</span>
+
+<span class="nc" id="L329">					list_TraderHistorySold.setListData(</span>
+<span class="nc" id="L330">							game.getCurrentIsland().getStore().getItemsAndUpgradesSold().toArray(StoreTradable[]::new));</span>
+<span class="nc" id="L331">					slider_QtySell.setMaximum(0);</span>
+<span class="nc" id="L332">					JOptionPane.showMessageDialog(new JFrame(),</span>
+<span class="nc" id="L333">							&quot;You successfuly sold &quot; + quantity + &quot; &quot; + storeTradable.getName(), &quot;Success!&quot;,</span>
+<span class="nc" id="L334">							JOptionPane.INFORMATION_MESSAGE);</span>
+				}
+<span class="nc" id="L336">			}</span>
+		});
+
+<span class="nc" id="L339">		JButton btnLeaveStore = new JButton(&quot;Leave Store&quot;);</span>
+<span class="nc" id="L340">		btnLeaveStore.setBackground(Color.WHITE);</span>
+<span class="nc" id="L341">		btnLeaveStore.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L344">				storeWindow.dispose();</span>
+<span class="nc" id="L345">			}</span>
+		});
+<span class="nc" id="L347">		btnLeaveStore.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L348">		btnLeaveStore.setBounds(348, 600, 119, 32);</span>
+<span class="nc" id="L349">		storeWindow.getContentPane().add(btnLeaveStore);</span>
+
+<span class="nc" id="L351">		JButton btnViewCargoGoods = new JButton(&quot;View my cargo goods&quot;);</span>
+<span class="nc" id="L352">		btnViewCargoGoods.setBackground(Color.WHITE);</span>
+<span class="nc" id="L353">		btnViewCargoGoods.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L356">				game.launchCargoStoreTradablesWindow();</span>
+<span class="nc" id="L357">			}</span>
+		});
+<span class="nc" id="L359">		btnViewCargoGoods.setForeground(new Color(204, 51, 102));</span>
+<span class="nc" id="L360">		btnViewCargoGoods.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L361">		btnViewCargoGoods.setBounds(10, 56, 168, 21);</span>
+<span class="nc" id="L362">		storeWindow.getContentPane().add(btnViewCargoGoods);</span>
+
+<span class="nc" id="L364">		JLabel lblNameDescriptionPrice = new JLabel(&quot;Name | Description | Price | Weight | Quantity&quot;);</span>
+<span class="nc" id="L365">		lblNameDescriptionPrice.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L366">		lblNameDescriptionPrice.setBounds(10, 201, 343, 24);</span>
+<span class="nc" id="L367">		storeWindow.getContentPane().add(lblNameDescriptionPrice);</span>
+
+<span class="nc" id="L369">		JLabel lblNameDescriptionPrice_1 = new JLabel(&quot;Name | Description | Price | Weight | Quantity&quot;);</span>
+<span class="nc" id="L370">		lblNameDescriptionPrice_1.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L371">		lblNameDescriptionPrice_1.setBounds(464, 201, 341, 24);</span>
+<span class="nc" id="L372">		storeWindow.getContentPane().add(lblNameDescriptionPrice_1);</span>
+
+<span class="nc" id="L374">		JLabel lblNameDescriptionPrice_2 = new JLabel(&quot;Bought:    Name | Description | Price | Weight | Quantity&quot;);</span>
+<span class="nc" id="L375">		lblNameDescriptionPrice_2.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L376">		lblNameDescriptionPrice_2.setBounds(10, 460, 356, 24);</span>
+<span class="nc" id="L377">		storeWindow.getContentPane().add(lblNameDescriptionPrice_2);</span>
+
+<span class="nc" id="L379">		JLabel lblNameDescriptionPrice_3 = new JLabel(&quot;Sold:     Name | Description | Price | Weight | Quantity&quot;);</span>
+<span class="nc" id="L380">		lblNameDescriptionPrice_3.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L381">		lblNameDescriptionPrice_3.setBounds(462, 460, 343, 24);</span>
+<span class="nc" id="L382">		storeWindow.getContentPane().add(lblNameDescriptionPrice_3);</span>
+
+<span class="nc" id="L384">		DefaultListModel&lt;StoreTradable&gt; tradablesListModel = new DefaultListModel&lt;StoreTradable&gt;();</span>
+
+<span class="nc" id="L386">		tradablesListModel.addAll(game.getTrader().getShipOwned().getCurrentCargoTradables());</span>
+
+<span class="nc" id="L388">		storeWindow.setTitle(&quot;Store&quot;);</span>
+<span class="nc" id="L389">		storeWindow.setIconImage(Toolkit.getDefaultToolkit()</span>
+<span class="nc" id="L390">				.getImage(IslandStoreWindow.class.getResource(&quot;/islandtrader/images/storeIsland.png&quot;)));</span>
+<span class="nc" id="L391">		storeWindow.setBounds(100, 100, 825, 691);</span>
+<span class="nc" id="L392">		storeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L393">	}</span>
+
+	private void removeStoreTradableFromShip(StoreTradable storeTradable, float totalPrice, int quantity, Ship ship) {
+<span class="nc" id="L396">		StoreTradable storeTradableInShip = getStoreTradableFromTradableId(storeTradable.getTradable().getIdNumber(),</span>
+<span class="nc" id="L397">				ship.getCurrentCargoTradables());</span>
+<span class="nc" id="L398">		storeTradableInShip.decreaseQuantity(quantity);</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">		if (storeTradableInShip.getQuantity() == 0) {</span>
+<span class="nc" id="L400">			ship.removeTradable(storeTradableInShip);</span>
+<span class="nc" id="L401">		} else {</span>
+<span class="nc" id="L402">			storeTradableInShip.decreasePrice(totalPrice);</span>
+		}
+<span class="nc" id="L404">	}</span>
+
+	private void addStoreTradableSoldHistory(StoreTradable storeTradable, float totalPrice, int quantity, Store store) {
+		try {
+<span class="nc" id="L408">			StoreTradable storeTradableHistory = (StoreTradable) storeTradable.clone();</span>
+<span class="nc" id="L409">			storeTradableHistory.setPrice(totalPrice);</span>
+<span class="nc" id="L410">			storeTradableHistory.setQuantity(quantity);</span>
+<span class="nc" id="L411">			store.addItemSoldHistory(storeTradableHistory);</span>
+<span class="nc" id="L412">		} catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L413">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L415">	}</span>
+
+	public StoreTradable getStoreTradableFromStoreTradableId(int idNumber, ArrayList&lt;StoreTradable&gt; storeTradables) {
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		for (StoreTradable storeTradable : storeTradables) {</span>
+<span class="nc bnc" id="L419" title="All 2 branches missed.">			if (storeTradable.getIdNumber() == idNumber) {</span>
+<span class="nc" id="L420">				return storeTradable;</span>
+			}
+		}
+<span class="nc" id="L423">		return null;</span>
+	}
+
+	private boolean canSellTradable(Trader trader, StoreTradable storeTradable, int quantity, Ship ship) {
+<span class="nc" id="L427">		boolean canSell = true;</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">		if (quantity == 0) {</span>
+<span class="nc" id="L429">			JOptionPane.showMessageDialog(new JFrame(), &quot;Error: Invalid quantity!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L430">					JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L431">			canSell = false;</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">		} else if (quantity &gt; storeTradable.getQuantity()) {</span>
+<span class="nc" id="L433">			JOptionPane.showMessageDialog(new JFrame(), &quot;Store doesn't buy that amount of quantity!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L434">					JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L435">			canSell = false;</span>
+<span class="nc" id="L436">		} else {</span>
+<span class="nc" id="L437">			StoreTradable storeTradableInShip = getStoreTradableFromTradableId(</span>
+<span class="nc" id="L438">					storeTradable.getTradable().getIdNumber(), ship.getCurrentCargoTradables());</span>
+<span class="nc bnc" id="L439" title="All 4 branches missed.">			if (storeTradableInShip == null || storeTradableInShip.getQuantity() &lt; quantity) {</span>
+<span class="nc" id="L440">				canSell = false;</span>
+<span class="nc" id="L441">				JOptionPane.showMessageDialog(new JFrame(), &quot;You don't have tradables to sell to store!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L442">						JOptionPane.ERROR_MESSAGE);</span>
+			}
+<span class="nc bnc" id="L444" title="All 4 branches missed.">			if (canSell &amp;&amp; storeTradable.getTradable() instanceof Upgrade) {</span>
+<span class="nc" id="L445">				Upgrade upgrade = (Upgrade) storeTradable.getTradable();</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">				if (upgrade.getIncreaseCargoCapacity() &gt; 0) {</span>
+<span class="nc" id="L447">					double totalCapacityToSell = upgrade.getIncreaseCargoCapacity() * quantity;</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">					if (trader.getShipOwned().getCargoCapacity() - totalCapacityToSell &lt; 0) {</span>
+<span class="nc" id="L449">						JOptionPane.showMessageDialog(new JFrame(),</span>
+<span class="nc" id="L450">								&quot;You can't sell the upgrade! You need to sell items first!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L451">								JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L452">						canSell = false;</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L457">		return canSell;</span>
+	}
+
+	private void addStoreTradableBoughtHistory(StoreTradable storeTradable, float totalPrice, int quantity,
+			Store store) {
+		try {
+<span class="nc" id="L463">			StoreTradable storeTradableHistory = (StoreTradable) storeTradable.clone();</span>
+<span class="nc" id="L464">			storeTradableHistory.setPrice(totalPrice);</span>
+<span class="nc" id="L465">			storeTradableHistory.setQuantity(quantity);</span>
+<span class="nc" id="L466">			store.addItemBoughtHistory(storeTradableHistory);</span>
+<span class="nc" id="L467">		} catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L468">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L470">	}</span>
+
+	private boolean canBuyTradable(Trader trader, float totalPrice, StoreTradable storeTradable, int quantity) {
+<span class="nc" id="L473">		boolean canBuy = true;</span>
+<span class="nc bnc" id="L474" title="All 2 branches missed.">		if (quantity == 0) {</span>
+<span class="nc" id="L475">			JOptionPane.showMessageDialog(new JFrame(), &quot;Error: Invalid quantity!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L476">					JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L477">			canBuy = false;</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">		} else if (trader.getTraderAccountBalance() &lt; totalPrice) {</span>
+<span class="nc" id="L479">			canBuy = false;</span>
+<span class="nc" id="L480">			JOptionPane.showMessageDialog(new JFrame(), &quot;Error: You don't have enough money to buy the products!&quot;,</span>
+<span class="nc" id="L481">					&quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">		} else if (quantity &gt; storeTradable.getQuantity()) {</span>
+<span class="nc" id="L483">			canBuy = false;</span>
+<span class="nc" id="L484">			JOptionPane.showMessageDialog(new JFrame(), &quot;Store doesn't have the selected quantity to sell!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L485">					JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">		} else if (storeTradable.getTradable() instanceof Item) {</span>
+<span class="nc" id="L487">			Item item = (Item) storeTradable.getTradable();</span>
+<span class="nc" id="L488">			float totalWeight = quantity * item.getWeight();</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">			if (trader.getShipOwned().getCargoCapacity() &lt; totalWeight) {</span>
+<span class="nc" id="L490">				canBuy = false;</span>
+<span class="nc" id="L491">				JOptionPane.showMessageDialog(new JFrame(),</span>
+<span class="nc" id="L492">						&quot;You don't have available cargo capactity to buy the items!&quot;, &quot;Error!&quot;,</span>
+<span class="nc" id="L493">						JOptionPane.ERROR_MESSAGE);</span>
+			}
+		}
+<span class="nc" id="L496">		return canBuy;</span>
+	}
+
+	private void addStoreTradableToShip(StoreTradable storeTradable, float totalPrice, int quantity, Ship ship) {
+<span class="nc" id="L500">		StoreTradable storeTradableInShip = getStoreTradableFromTradableId(storeTradable.getTradable().getIdNumber(),</span>
+<span class="nc" id="L501">				ship.getCurrentCargoTradables());</span>
+<span class="nc bnc" id="L502" title="All 2 branches missed.">		if (storeTradableInShip == null) {</span>
+			try {
+<span class="nc" id="L504">				StoreTradable storeTradableToAdd = (StoreTradable) storeTradable.clone();</span>
+<span class="nc" id="L505">				storeTradableToAdd.setPrice(totalPrice);</span>
+<span class="nc" id="L506">				storeTradableToAdd.setQuantity(quantity);</span>
+<span class="nc" id="L507">				ship.addTradable(storeTradableToAdd);</span>
+<span class="nc" id="L508">			} catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L509">				e.printStackTrace();</span>
+			}
+<span class="nc" id="L511">		} else {</span>
+<span class="nc" id="L512">			storeTradableInShip.increaseQuantity(quantity);</span>
+<span class="nc" id="L513">			storeTradableInShip.increasePrice(totalPrice);</span>
+		}
+<span class="nc" id="L515">	}</span>
+
+	public StoreTradable getStoreTradableFromTradableId(int idNumber, ArrayList&lt;StoreTradable&gt; storeTradables) {
+<span class="nc bnc" id="L518" title="All 2 branches missed.">		for (StoreTradable storeTradable : storeTradables) {</span>
+<span class="nc bnc" id="L519" title="All 2 branches missed.">			if (storeTradable.getTradable().getIdNumber() == idNumber) {</span>
+<span class="nc" id="L520">				return storeTradable;</span>
+			}
+		}
+<span class="nc" id="L523">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

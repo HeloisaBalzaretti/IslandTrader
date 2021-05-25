@@ -73,11 +73,12 @@ public class Pirate extends RandomEvent {
 	/**
 	 * A new Pirate Object is instantiated
 	 *
-	 * @param idNumber
-	 * @param name
-	 * @param description
-	 * @param numberNeededToScapeThisPirate
-	 * @param happinessLevel
+	 * @param idNumber                      this Pirate id number
+	 * @param name                          this Pirate name
+	 * @param description                   this Pirate description
+	 * @param numberNeededToScapeThisPirate the number to try to escape from this
+	 *                                      Pirate
+	 * @param happinessLevel                this Pirate happiness level
 	 */
 	public Pirate(int idNumber, String name, String description, int numberNeededToScapeThisPirate,
 			int happinessLevel) {
@@ -124,7 +125,7 @@ public class Pirate extends RandomEvent {
 	 * Trader did not convince the Pirate to be happy taking the goods, the pirate
 	 * takes the money and make the Trader walk the plank.
 	 *
-	 * @param trader
+	 * @param trader the player
 	 */
 	private void walkThePlank(Trader trader) {
 		trader.cleanTraderAccountBalance();

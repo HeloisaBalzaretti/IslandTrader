@@ -16,14 +16,28 @@ import javax.swing.SwingConstants;
 import islandtrader.core.Island;
 import islandtrader.core.StoreTradable;
 
+/**
+ * Creates the window that shows the information about the selected Island from
+ * the ArchipelagoWindow
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
 public class IslandDetailWindow {
-
+	/**
+	 * The window to show the information about the selected Island
+	 */
 	private JFrame islandDetailsWindow;
 
+	/**
+	 * The selected Island that Trader want to see more about.
+	 */
 	private Island islandSelected;
 
 	/**
-	 * Create the application.
+	 * Create the application to show the information about the selected Island
+	 *
+	 * @param island the Island selected
 	 */
 	public IslandDetailWindow(Island island) {
 		islandSelected = island;
@@ -100,15 +114,19 @@ public class IslandDetailWindow {
 		lblBSell.setBounds(372, 254, 217, 26);
 		islandDetailsWindow.getContentPane().add(lblBSell);
 
-		JLabel lblNewLabel = new JLabel(
-				"To be able to buy or sell items you must be in the island! Let's go sailing!!");
-		lblNewLabel.setForeground(new Color(255, 102, 51));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 14));
-		lblNewLabel.setBounds(10, 438, 707, 42);
-		islandDetailsWindow.getContentPane().add(lblNewLabel);
+		JLabel lblAlert = new JLabel("To be able to buy or sell items you must be in the island! Let's go sailing!!");
+		lblAlert.setForeground(new Color(255, 102, 51));
+		lblAlert.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAlert.setFont(new Font("Serif", Font.BOLD, 14));
+		lblAlert.setBounds(10, 438, 707, 42);
+		islandDetailsWindow.getContentPane().add(lblAlert);
 	}
 
+	/**
+	 * Changes the Island image for the window
+	 *
+	 * @return the file path for the image
+	 */
 	public String changeIslandImg() {
 		String sourcePath;
 		String prefix = "/islandtrader/images/";

@@ -26,25 +26,58 @@ import javax.swing.event.ChangeListener;
 import islandtrader.core.Ship;
 import islandtrader.core.Trader;
 
+/**
+ * The first window in the game, where the player informs the name, and duration
+ * of game in days, and chooses a Ship to captain
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+
 @SuppressWarnings("serial")
 public class SetupTraderWindow extends JFrame {
 
+	/**
+	 * The frame for the Setup Trader
+	 */
 	private JFrame windowSetupTrader;
+
+	/**
+	 * Text fild for the player to inform the name
+	 */
 	private JTextField textTraderName;
 
+	/**
+	 * The Trader name to be set in the game
+	 */
 	private String traderName;
+
+	/**
+	 * The game gui interface
+	 */
 	private GameEnvironmentSwing game;
 
+	/**
+	 * Creates a set up window
+	 *
+	 * @param incomingPlayer the player starting the game
+	 */
 	public SetupTraderWindow(GameEnvironmentSwing incomingPlayer) {
 		game = incomingPlayer;
 		initialize();
 		windowSetupTrader.setVisible(true);
 	}
 
+	/**
+	 * Closes the set up window
+	 */
 	public void closeWindow() {
 		windowSetupTrader.dispose();
 	}
 
+	/**
+	 * finishes the set up window
+	 */
 	public void finishedWindow() {
 		game.closeSetupScreen(this);
 	}
@@ -91,12 +124,12 @@ public class SetupTraderWindow extends JFrame {
 				new ImageIcon(SetupTraderWindow.class.getResource("/islandtrader/images/SteeringWeelSmall.png")));
 		windowSetupTrader.getContentPane().add(lblSteeringWeelImg);
 
-		JLabel lblNewLabel = new JLabel("Welcome to the Island trader adventure!");
-		lblNewLabel.setBackground(new Color(0, 0, 102));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Stencil", Font.PLAIN, 20));
-		lblNewLabel.setBounds(178, 14, 640, 64);
-		windowSetupTrader.getContentPane().add(lblNewLabel);
+		JLabel lblWelcomeGreeting = new JLabel("Welcome to the Island trader adventure!");
+		lblWelcomeGreeting.setBackground(new Color(0, 0, 102));
+		lblWelcomeGreeting.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcomeGreeting.setFont(new Font("Stencil", Font.PLAIN, 20));
+		lblWelcomeGreeting.setBounds(178, 14, 640, 64);
+		windowSetupTrader.getContentPane().add(lblWelcomeGreeting);
 
 		textTraderName = new JTextField();
 		textTraderName.setHorizontalAlignment(SwingConstants.LEFT);
@@ -202,6 +235,9 @@ public class SetupTraderWindow extends JFrame {
 		windowSetupTrader.getContentPane().add(btnStart);
 	}
 
+	/**
+	 * Set the trader name from the text box
+	 */
 	public void setTraderName() {
 		traderName = textTraderName.getText();
 	}
@@ -220,10 +256,21 @@ public class SetupTraderWindow extends JFrame {
 		return game.getDurationChosenInDays();
 	}
 
+	/**
+	 * Sets the trader Ship from list of ships
+	 *
+	 * @param list_ShipToChoose the list with the possible Ships
+	 */
 	public void setChoosenShip(JList<Ship> list_ShipToChoose) {
 		game.setShip(list_ShipToChoose.getSelectedValue());
 	}
 
+	/**
+	 * Gets the selected Ship
+	 *
+	 * @param list_ShipToChoose list of Ships
+	 * @return the selected value from the JList list_ShipToChoose
+	 */
 	public Ship getChoosenShip(JList<Ship> list_ShipToChoose) {
 		return list_ShipToChoose.getSelectedValue();
 	}

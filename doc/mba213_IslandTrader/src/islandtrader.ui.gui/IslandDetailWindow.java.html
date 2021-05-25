@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>IslandDetailWindow.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.gui</a> &gt; <span class="el_source">IslandDetailWindow.java</span></div><h1>IslandDetailWindow.java</h1><pre class="source lang-java linenums">package islandtrader.ui.gui;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+
+import islandtrader.core.Island;
+import islandtrader.core.StoreTradable;
+
+/**
+ * Creates the window that shows the information about the selected Island from
+ * the ArchipelagoWindow
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class IslandDetailWindow {
+	/**
+	 * The window to show the information about the selected Island
+	 */
+	private JFrame islandDetailsWindow;
+
+	/**
+	 * The selected Island that Trader want to see more about.
+	 */
+	private Island islandSelected;
+
+	/**
+	 * Create the application to show the information about the selected Island
+	 *
+	 * @param island the Island selected
+	 */
+<span class="nc" id="L42">	public IslandDetailWindow(Island island) {</span>
+<span class="nc" id="L43">		islandSelected = island;</span>
+
+<span class="nc" id="L45">		initialize();</span>
+<span class="nc" id="L46">		islandDetailsWindow.setVisible(true);</span>
+<span class="nc" id="L47">	}</span>
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L53">		islandDetailsWindow = new JFrame();</span>
+<span class="nc" id="L54">		islandDetailsWindow.setIconImage(Toolkit.getDefaultToolkit()</span>
+<span class="nc" id="L55">				.getImage(IslandDetailWindow.class.getResource(&quot;/islandtrader/images/island1Sml.png&quot;)));</span>
+<span class="nc" id="L56">		islandDetailsWindow.setTitle(islandSelected.getName() + &quot; details&quot;);</span>
+<span class="nc" id="L57">		islandDetailsWindow.setBounds(100, 100, 741, 540);</span>
+<span class="nc" id="L58">		islandDetailsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L59">		islandDetailsWindow.getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L61">		JLabel lblIslandImg = new JLabel(&quot;&quot;);</span>
+<span class="nc" id="L62">		lblIslandImg.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L63">		changeIslandImg();</span>
+<span class="nc" id="L64">		lblIslandImg.setIcon(new ImageIcon(IslandDetailWindow.class.getResource(changeIslandImg())));</span>
+<span class="nc" id="L65">		lblIslandImg.setBounds(10, 10, 276, 234);</span>
+<span class="nc" id="L66">		islandDetailsWindow.getContentPane().add(lblIslandImg);</span>
+
+<span class="nc" id="L68">		JLabel lblIslandDescription = new JLabel(</span>
+<span class="nc" id="L69">				&quot;&lt;html&gt;&lt;body style=\&quot;text-align: justify;  text-justify: inter-word;\&quot;&gt;&quot;</span>
+<span class="nc" id="L70">						+ islandSelected.getDescription() + &quot;&lt;/body&gt;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L71">		lblIslandDescription.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L72">		lblIslandDescription.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 15));</span>
+<span class="nc" id="L73">		lblIslandDescription.setBounds(296, 68, 421, 143);</span>
+<span class="nc" id="L74">		islandDetailsWindow.getContentPane().add(lblIslandDescription);</span>
+
+<span class="nc" id="L76">		JLabel lblIslandName = new JLabel(islandSelected.getName());</span>
+<span class="nc" id="L77">		lblIslandName.setFont(new Font(&quot;Stencil&quot;, Font.PLAIN, 20));</span>
+<span class="nc" id="L78">		lblIslandName.setBounds(306, 28, 393, 26);</span>
+<span class="nc" id="L79">		islandDetailsWindow.getContentPane().add(lblIslandName);</span>
+<span class="nc" id="L80">		DefaultListModel&lt;StoreTradable&gt; tradablesBuyListModel = new DefaultListModel&lt;StoreTradable&gt;();</span>
+
+		// Add the existing items to the ListModel
+<span class="nc" id="L83">		tradablesBuyListModel.addAll(islandSelected.getStore().getItemsAndUpgradesToBuy());</span>
+
+<span class="nc" id="L85">		JScrollPane scrollPane = new JScrollPane();</span>
+<span class="nc" id="L86">		scrollPane.setBounds(10, 290, 337, 115);</span>
+<span class="nc" id="L87">		islandDetailsWindow.getContentPane().add(scrollPane);</span>
+
+<span class="nc" id="L89">		JList&lt;StoreTradable&gt; list_Buy = new JList&lt;StoreTradable&gt;(tradablesBuyListModel);</span>
+<span class="nc" id="L90">		list_Buy.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 12));</span>
+<span class="nc" id="L91">		scrollPane.setViewportView(list_Buy);</span>
+<span class="nc" id="L92">		list_Buy.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+
+<span class="nc" id="L94">		DefaultListModel&lt;StoreTradable&gt; tradablesSellListModel = new DefaultListModel&lt;StoreTradable&gt;();</span>
+
+		// Add the existing items to the ListModel
+<span class="nc" id="L97">		tradablesSellListModel.addAll(islandSelected.getStore().getItemsAndUpgradesToSell());</span>
+
+<span class="nc" id="L99">		JScrollPane scrollPane_1 = new JScrollPane();</span>
+<span class="nc" id="L100">		scrollPane_1.setBounds(372, 290, 345, 115);</span>
+<span class="nc" id="L101">		islandDetailsWindow.getContentPane().add(scrollPane_1);</span>
+<span class="nc" id="L102">		JList&lt;StoreTradable&gt; list_Sell = new JList&lt;StoreTradable&gt;(tradablesSellListModel);</span>
+<span class="nc" id="L103">		list_Sell.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 12));</span>
+<span class="nc" id="L104">		scrollPane_1.setViewportView(list_Sell);</span>
+<span class="nc" id="L105">		list_Sell.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+
+<span class="nc" id="L107">		JLabel lblBuy = new JLabel(&quot;Items this Island Buys&quot;);</span>
+<span class="nc" id="L108">		lblBuy.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L109">		lblBuy.setBounds(10, 254, 217, 26);</span>
+<span class="nc" id="L110">		islandDetailsWindow.getContentPane().add(lblBuy);</span>
+
+<span class="nc" id="L112">		JLabel lblBSell = new JLabel(&quot;Items this Island Sells&quot;);</span>
+<span class="nc" id="L113">		lblBSell.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 13));</span>
+<span class="nc" id="L114">		lblBSell.setBounds(372, 254, 217, 26);</span>
+<span class="nc" id="L115">		islandDetailsWindow.getContentPane().add(lblBSell);</span>
+
+<span class="nc" id="L117">		JLabel lblNewLabel = new JLabel(</span>
+<span class="nc" id="L118">				&quot;To be able to buy or sell items you must be in the island! Let's go sailing!!&quot;);</span>
+<span class="nc" id="L119">		lblNewLabel.setForeground(new Color(255, 102, 51));</span>
+<span class="nc" id="L120">		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L121">		lblNewLabel.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L122">		lblNewLabel.setBounds(10, 438, 707, 42);</span>
+<span class="nc" id="L123">		islandDetailsWindow.getContentPane().add(lblNewLabel);</span>
+<span class="nc" id="L124">	}</span>
+
+	/**
+	 * Changes the Island image for the window
+	 *
+	 * @return the file path for the image
+	 */
+	public String changeIslandImg() {
+		String sourcePath;
+<span class="nc" id="L133">		String prefix = &quot;/islandtrader/images/&quot;;</span>
+<span class="nc" id="L134">		int indexIsland = islandSelected.getIdNumber() - 1;</span>
+<span class="nc bnc" id="L135" title="All 6 branches missed.">		switch (indexIsland) {</span>
+
+		case 0:
+<span class="nc" id="L138">			sourcePath = &quot;island1Sml.png&quot;;</span>
+<span class="nc" id="L139">			break;</span>
+		case 1:
+<span class="nc" id="L141">			sourcePath = &quot;island2Sml.png&quot;;</span>
+<span class="nc" id="L142">			break;</span>
+		case 2:
+<span class="nc" id="L144">			sourcePath = &quot;island3Sml.png&quot;;</span>
+<span class="nc" id="L145">			break;</span>
+		case 3:
+<span class="nc" id="L147">			sourcePath = &quot;island4Sml.png&quot;;</span>
+<span class="nc" id="L148">			break;</span>
+		case 4:
+<span class="nc" id="L150">			sourcePath = &quot;island5Sml.png&quot;;</span>
+<span class="nc" id="L151">			break;</span>
+		default:
+<span class="nc" id="L153">			sourcePath = &quot;island0Sml.png&quot;;</span>
+<span class="nc" id="L154">			break;</span>
+
+		}
+<span class="nc" id="L157">		return prefix + sourcePath;</span>
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

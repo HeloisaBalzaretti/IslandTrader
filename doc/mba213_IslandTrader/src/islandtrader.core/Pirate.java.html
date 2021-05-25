@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Pirate.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Pirate.java</span></div><h1>Pirate.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+import java.util.Random;
+
+/**
+ * Represents a Pirate to be used in the RandomEvents encounters that will
+ * happen when Trader is sailing.
+ *
+ * @author Maria Heloisa Balzaretti
+ */
+public class Pirate extends RandomEvent {
+
+	/**
+	 * the random number that represents the dice played by the trader
+	 */
+	private int traderDicePlayed;
+
+	/**
+	 * the random number that represents the dice played by the trader in the
+	 * attempt to convince the Pirate that he is happy taking only the Trader goods
+	 */
+	private int makePirateHappyDicePlayed;
+
+	/**
+	 * Pirate Hapinnes level to decide if he is in a good mood, so the Trader can
+	 * try beat it with the dice,
+	 */
+	private int pirateHappinessLevel;
+
+	/**
+	 * The number used to be played against the Trader in the dice game, so the
+	 * Trader has a chance to defeat this Pirate playing the dice.
+	 */
+	private int numberNeededToScapeThisPirate;
+
+	/**
+	 * A boolean value to say if the Pirate is Happy or not with the goods he got
+	 * from Trader.
+	 */
+	private boolean isPirateHappy;
+
+	/**
+	 * A boolean value to say if the Trader escaped from the Pirate and defended the
+	 * Ship
+	 */
+	private boolean traderCouldEscape;
+
+	/**
+	 * Template message used when Trader defeated the Pirate
+	 */
+<span class="fc" id="L55">	private final String DEFEATED_THE_PIRATE = &quot;You successfully scaped from the pirate and saved all your goods&quot;;</span>
+
+	/**
+	 * Template message used when Pirate takes all goods from Trader
+	 */
+<span class="fc" id="L60">	private final String PIRATE_TAKE_ALL_GOODS = &quot;It was not enough to defeat the pirate and you lost your goods!&quot;;</span>
+
+	/**
+	 * Template message used when Pirate is Happy enough only with the Trader'goods.
+	 */
+<span class="fc" id="L65">	private final String MESSAGE_HAPPY_PIRATE = &quot;You played the dice again and got a %d and it was enough to convinced %s to be satisfied and happy taking only your goods,\n you can go on with your travels&quot;;</span>
+
+	/**
+	 * Template message used when Pirate is not happy and wants to take the
+	 * Trader'Ship.
+	 */
+<span class="fc" id="L71">	private final String MESSAGE_WALK_THE_PLANK = &quot;You played the dice again and got a %d but you could not convince %s to be satisfied with your goods and to let you go. You lost your ship and your money...Go walk the plank and swim with the sharks.&quot;;;</span>
+
+	/**
+	 * A new Pirate Object is instantiated
+	 *
+	 * @param idNumber                      this Pirate id number
+	 * @param name                          this Pirate name
+	 * @param description                   this Pirate description
+	 * @param numberNeededToScapeThisPirate the number to try to escape from this
+	 *                                      Pirate
+	 * @param happinessLevel                this Pirate happiness level
+	 */
+	public Pirate(int idNumber, String name, String description, int numberNeededToScapeThisPirate,
+			int happinessLevel) {
+<span class="fc" id="L85">		super(idNumber, name, description);</span>
+<span class="fc" id="L86">		this.pirateHappinessLevel = happinessLevel;</span>
+<span class="fc" id="L87">		this.numberNeededToScapeThisPirate = numberNeededToScapeThisPirate;</span>
+<span class="fc" id="L88">	}</span>
+
+	/**
+	 * Generates the specific action when Trader encounters Pirate RandomEvent It
+	 * calls the helper methods to the Trader play the dice and the consequences of
+	 * each outcome. if Trader can escape, Trader keep all goods. if Trader cannot
+	 * escape and pirate has to be happy to only take the goods or make the Trader
+	 * walk the plank and ends the game.
+	 */
+	@Override
+	public void randomEventSpecificAction(Trader trader) {
+<span class="nc" id="L99">		setTraderDicePlayed();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (traderDicePlayed &lt; numberNeededToScapeThisPirate) {</span>
+<span class="nc" id="L101">			this.traderCouldEscape = false;</span>
+<span class="nc" id="L102">			trader.getShipOwned().removeAllCargoTradables();</span>
+<span class="nc" id="L103">			setMakePirateHappyDicePlayed();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (makePirateHappyDicePlayed &lt; pirateHappinessLevel) {</span>
+<span class="nc" id="L105">				this.isPirateHappy = false;</span>
+<span class="nc" id="L106">				this.walkThePlank(trader);</span>
+<span class="nc" id="L107">			} else {</span>
+<span class="nc" id="L108">				this.isPirateHappy = true;</span>
+			}
+
+<span class="nc" id="L111">		} else {</span>
+<span class="nc" id="L112">			this.traderCouldEscape = true;</span>
+		}
+<span class="nc" id="L114">	}</span>
+
+	/**
+	 * sets the random dice played to try to convince the Pirate is happy enough
+	 * with Trader goods.
+	 */
+	private void setMakePirateHappyDicePlayed() {
+<span class="nc" id="L121">		this.makePirateHappyDicePlayed = playDice();</span>
+<span class="nc" id="L122">	}</span>
+
+	/**
+	 * Trader did not convince the Pirate to be happy taking the goods, the pirate
+	 * takes the money and make the Trader walk the plank.
+	 *
+	 * @param trader the player
+	 */
+	private void walkThePlank(Trader trader) {
+<span class="nc" id="L131">		trader.cleanTraderAccountBalance();</span>
+
+<span class="nc" id="L133">	}</span>
+
+	/**
+	 * Sets a random number for the Trader dice played.
+	 */
+	private void setTraderDicePlayed() {
+<span class="nc" id="L139">		this.traderDicePlayed = playDice();</span>
+<span class="nc" id="L140">	}</span>
+
+	/**
+	 * Represents a dice game
+	 *
+	 * @return a random number between 1 and 6.
+	 */
+	private int playDice() {
+<span class="nc" id="L148">		Random random = new Random();</span>
+<span class="nc" id="L149">		int randomDiceNumber = random.nextInt(6) + 1;</span>
+<span class="nc" id="L150">		return randomDiceNumber;</span>
+	}
+
+	/**
+	 * Overrides the super encounterMessage from RandomEvent class to the Pirate
+	 * encounter event
+	 */
+
+	@Override
+	public String encounterMessage() {
+<span class="nc" id="L160">		return &quot;You meet &quot; + this.name + &quot;! &quot; + this.description + &quot;\nGood luck trying to scape from &quot; + this.name</span>
+<span class="nc" id="L161">				+ &quot;!&quot;;</span>
+	}
+
+	/**
+	 * Overrides the super resultOfEncounterMessage from RandomEvent class to the
+	 * Pirate result of encounter event
+	 */
+	@Override
+	public String resultOfEncounterMessage() {
+<span class="nc" id="L170">		return &quot;You needed a &quot; + this.numberNeededToScapeThisPirate + &quot; on the dice game to scape from &quot; + this.name</span>
+<span class="nc" id="L171">				+ &quot;. You played the dice and got a &quot; + traderDicePlayed;</span>
+	}
+
+	/**
+	 * The message when the Pirate wins the dice game and takes all Trader'goods.
+	 *
+	 * @return PIRATE_TAKE_ALL_GOODS
+	 */
+	public String getMessagePirateTakeAllGoods() {
+<span class="nc" id="L180">		return PIRATE_TAKE_ALL_GOODS;</span>
+	}
+
+	/**
+	 * The message used when the Pirate is happy with the goods
+	 *
+	 * @return MESSAGE_HAPPY_PIRATE and the value of the dice played.
+	 */
+	public String getMessagePirateHappy() {
+<span class="nc" id="L189">		return String.format(MESSAGE_HAPPY_PIRATE, this.makePirateHappyDicePlayed, this.name);</span>
+	}
+
+	/**
+	 * The message used when the pirate is not happy with the goods
+	 *
+	 * @return MESSAGE_WALK_THE_PLANK and the value of the dice played.
+	 */
+	public String getMessageWalkPlank() {
+<span class="nc" id="L198">		return String.format(MESSAGE_WALK_THE_PLANK, this.makePirateHappyDicePlayed, this.name);</span>
+	}
+
+	/**
+	 * The message when Trader escapes from Pirate
+	 *
+	 * @return DEFEATED_THE_PIRATE
+	 */
+	public String getMessageScapedFromPirate() {
+<span class="nc" id="L207">		return String.format(DEFEATED_THE_PIRATE, this.name);</span>
+	}
+
+	/**
+	 * @return the isPirateHappy
+	 */
+	public boolean isPirateHappy() {
+<span class="nc" id="L214">		return this.isPirateHappy;</span>
+	}
+
+	/**
+	 * @param isPirateHappy the isPirateHappy to set
+	 */
+	public void setPirateHappy(boolean isPirateHappy) {
+<span class="nc" id="L221">		this.isPirateHappy = isPirateHappy;</span>
+<span class="nc" id="L222">	}</span>
+
+	/**
+	 * @return the traderCouldEscape
+	 */
+	public boolean isTraderCouldEscape() {
+<span class="nc" id="L228">		return this.traderCouldEscape;</span>
+	}
+
+	/**
+	 * Used to personalize the game for each event.
+	 */
+	@Override
+	public String getEventSpecificName() {
+<span class="nc" id="L236">		return &quot;Pirate&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

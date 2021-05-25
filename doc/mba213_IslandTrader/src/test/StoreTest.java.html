@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>StoreTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">StoreTest.java</span></div><h1>StoreTest.java</h1><pre class="source lang-java linenums">package test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+import islandtrader.core.Item;
+import islandtrader.core.Store;
+import islandtrader.core.StoreTradable;
+
+<span class="fc" id="L13">class StoreTest {</span>
+
+	@Test
+	public void addItemBoughtHistoryTest() {
+<span class="fc" id="L17">		Item item = new Item(1, &quot;chips&quot;, &quot;tasty&quot;, (float) 2.0, (float) 2.0, (float) 2.0);</span>
+<span class="fc" id="L18">		StoreTradable storeTradable = new StoreTradable(item, 0, 0);</span>
+
+<span class="fc" id="L20">		Store store = new Store(&quot;store&quot;, &quot;atisland&quot;, 2, 1);</span>
+<span class="fc" id="L21">		store.addItemBoughtHistory(storeTradable);</span>
+<span class="fc" id="L22">		assertEquals(1, store.getItemsAndUpgradesBought().size());</span>
+
+<span class="fc" id="L24">	}</span>
+
+	@Test
+	public void addItemSoldtHistoryTest() {
+<span class="fc" id="L28">		Item item = new Item(1, &quot;chips&quot;, &quot;tasty&quot;, (float) 2.0, (float) 2.0, (float) 2.0);</span>
+<span class="fc" id="L29">		StoreTradable storeTradable = new StoreTradable(item, 0, 0);</span>
+<span class="fc" id="L30">		Store store = new Store(&quot;store&quot;, &quot;atisland&quot;, 2, 1);</span>
+<span class="fc" id="L31">		store.addItemSoldHistory(storeTradable);</span>
+<span class="fc" id="L32">		assertEquals(1, store.getItemsAndUpgradesSold().size());</span>
+<span class="fc" id="L33">	}</span>
+
+	@Test
+	public void addStoreFeeToStoreTradablesPricesForSellingTest() {
+<span class="fc" id="L37">		float itemPrice = (float) 10.0;</span>
+<span class="fc" id="L38">		Item item = new Item(1, &quot;chips&quot;, &quot;tasty&quot;, (float) 2.0, itemPrice, (float) 2.0);</span>
+<span class="fc" id="L39">		StoreTradable storeTradable = new StoreTradable(item, 0, 0);</span>
+<span class="fc" id="L40">		Store store = new Store(&quot;store&quot;, &quot;atisland&quot;, 10, 1);</span>
+<span class="fc" id="L41">		ArrayList&lt;StoreTradable&gt; list = new ArrayList&lt;StoreTradable&gt;();</span>
+<span class="fc" id="L42">		list.add(storeTradable);</span>
+<span class="fc" id="L43">		store.addStoreFeeToStoreTradablesPricesForSelling(list);</span>
+<span class="fc" id="L44">		float expectedPrice = itemPrice * (1 + 10);</span>
+<span class="fc" id="L45">		assertEquals(expectedPrice, store.getItemsAndUpgradesToSell().get(0).getPrice());</span>
+<span class="fc" id="L46">	}</span>
+
+	@Test
+	public void addStoreFeeToStoreTradablesPricesForBuyingTest() {
+<span class="fc" id="L50">		float itemPrice = (float) 10.0;</span>
+<span class="fc" id="L51">		Item item = new Item(1, &quot;chips&quot;, &quot;tasty&quot;, itemPrice, (float) 2.0, (float) 2.0);</span>
+<span class="fc" id="L52">		StoreTradable storeTradable = new StoreTradable(item, 0, 0);</span>
+<span class="fc" id="L53">		Store store = new Store(&quot;store&quot;, &quot;atisland&quot;, 10, 1);</span>
+<span class="fc" id="L54">		ArrayList&lt;StoreTradable&gt; list = new ArrayList&lt;StoreTradable&gt;();</span>
+<span class="fc" id="L55">		list.add(storeTradable);</span>
+<span class="fc" id="L56">		store.addStoreFeeToStoreTradablesPricesForBuying(list);</span>
+<span class="fc" id="L57">		float expectedPrice = itemPrice * (1 - 10);</span>
+<span class="fc" id="L58">		assertEquals(expectedPrice, store.getItemsAndUpgradesToBuy().get(0).getPrice());</span>
+<span class="fc" id="L59">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

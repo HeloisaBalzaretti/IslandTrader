@@ -32,13 +32,26 @@ import islandtrader.core.StoreTradable;
 import islandtrader.core.Trader;
 import islandtrader.core.Upgrade;
 
+/**
+ * Creates the window for the Store in the current Island
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
 public class IslandStoreWindow {
-
+	/**
+	 * The window for the Island Store
+	 */
 	private JFrame storeWindow;
+	/**
+	 * The current game being played
+	 */
 	private GameEnvironmentSwing game;
 
 	/**
-	 * Create the application.
+	 * Create Store window the application.
+	 *
+	 * @param incomingGame the current game
 	 */
 	public IslandStoreWindow(GameEnvironmentSwing incomingGame) {
 		game = incomingGame;
@@ -392,6 +405,14 @@ public class IslandStoreWindow {
 		storeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
+	/**
+	 * REmoves the Store tradable from ship when it is being sold
+	 *
+	 * @param storeTradable to be removed
+	 * @param totalPrice    get for the storeTradable
+	 * @param quantity      removed
+	 * @param ship          from where it is being removed
+	 */
 	private void removeStoreTradableFromShip(StoreTradable storeTradable, float totalPrice, int quantity, Ship ship) {
 		StoreTradable storeTradableInShip = getStoreTradableFromTradableId(storeTradable.getTradable().getIdNumber(),
 				ship.getCurrentCargoTradables());
@@ -403,6 +424,14 @@ public class IslandStoreWindow {
 		}
 	}
 
+	/**
+	 * Adds the StoreTradable to the History of Sold StoreTradables
+	 *
+	 * @param storeTradable the good or upgrade
+	 * @param totalPrice    total amount paid
+	 * @param quantity      the quantity bought
+	 * @param store         where the trade happened
+	 */
 	private void addStoreTradableSoldHistory(StoreTradable storeTradable, float totalPrice, int quantity, Store store) {
 		try {
 			StoreTradable storeTradableHistory = (StoreTradable) storeTradable.clone();
@@ -414,6 +443,13 @@ public class IslandStoreWindow {
 		}
 	}
 
+	/**
+	 * Gets the Store tradable from store tradable id
+	 *
+	 * @param idNumber       this StoreTradable id number
+	 * @param storeTradables collection of StoreTradable
+	 * @return the StoreTradable from its id number
+	 */
 	public StoreTradable getStoreTradableFromStoreTradableId(int idNumber, ArrayList<StoreTradable> storeTradables) {
 		for (StoreTradable storeTradable : storeTradables) {
 			if (storeTradable.getIdNumber() == idNumber) {
@@ -422,6 +458,16 @@ public class IslandStoreWindow {
 		}
 		return null;
 	}
+
+	/**
+	 * Checks if the Trader can sell the StoreTradable
+	 *
+	 * @param trader        the Trader
+	 * @param storeTradable the good or upgrade
+	 * @param quantity      the quantity bought
+	 * @param ship
+	 * @return true or false depending if the Trader met the conditions or not
+	 */
 
 	private boolean canSellTradable(Trader trader, StoreTradable storeTradable, int quantity, Ship ship) {
 		boolean canSell = true;
@@ -457,6 +503,14 @@ public class IslandStoreWindow {
 		return canSell;
 	}
 
+	/**
+	 * Adds the StoreTradable to the History of Bought StoreTradables
+	 *
+	 * @param storeTradable the good or upgrade
+	 * @param totalPrice    total amount paid
+	 * @param quantity      the quantity bought
+	 * @param store         where the trade happened
+	 */
 	private void addStoreTradableBoughtHistory(StoreTradable storeTradable, float totalPrice, int quantity,
 			Store store) {
 		try {
@@ -469,6 +523,15 @@ public class IslandStoreWindow {
 		}
 	}
 
+	/**
+	 * Checks if the Trader can buy the StoreTradable
+	 *
+	 * @param trader        the Trader
+	 * @param totalPrice    total price to be paid for the StoreTradable
+	 * @param storeTradable the good or upgrade
+	 * @param quantity      the quantity bought
+	 * @return true or false depending if the Trader met the conditions or not
+	 */
 	private boolean canBuyTradable(Trader trader, float totalPrice, StoreTradable storeTradable, int quantity) {
 		boolean canBuy = true;
 		if (quantity == 0) {
@@ -496,6 +559,14 @@ public class IslandStoreWindow {
 		return canBuy;
 	}
 
+	/**
+	 * Adds the StoreTradable to Ship when Trader buys it
+	 *
+	 * @param storeTradable the good or upgrade bought
+	 * @param totalPrice    amount paid in total
+	 * @param quantity      the quantity bought
+	 * @param ship          the Trader's Ship
+	 */
 	private void addStoreTradableToShip(StoreTradable storeTradable, float totalPrice, int quantity, Ship ship) {
 		StoreTradable storeTradableInShip = getStoreTradableFromTradableId(storeTradable.getTradable().getIdNumber(),
 				ship.getCurrentCargoTradables());
@@ -514,6 +585,13 @@ public class IslandStoreWindow {
 		}
 	}
 
+	/**
+	 * Gets the Store tradable by the id number
+	 *
+	 * @param idNumber       this StoreTradable id number
+	 * @param storeTradables collection of StoreTradable
+	 * @return the StoreTradable from its id number
+	 */
 	public StoreTradable getStoreTradableFromTradableId(int idNumber, ArrayList<StoreTradable> storeTradables) {
 		for (StoreTradable storeTradable : storeTradables) {
 			if (storeTradable.getTradable().getIdNumber() == idNumber) {

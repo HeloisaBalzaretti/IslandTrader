@@ -45,8 +45,8 @@ public class IslandRepository extends BaseRepository {
 	private final String ISLAND_CSV_FILEPATH = "csvFiles/islands.csv";
 
 	/**
-	 * Returns an Array List of objects Island constructed in
-	 * getIslands(List<List<String>> islandList) method from the given database.
+	 * Returns an Array List of objects Island constructed in getIslands(islandList)
+	 * method from the given database.
 	 */
 	@Override
 	public ArrayList<Island> getList() {

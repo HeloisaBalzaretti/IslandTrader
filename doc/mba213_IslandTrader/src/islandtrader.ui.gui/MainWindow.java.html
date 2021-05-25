@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MainWindow.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.gui</a> &gt; <span class="el_source">MainWindow.java</span></div><h1>MainWindow.java</h1><pre class="source lang-java linenums">package islandtrader.ui.gui;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import islandtrader.core.Island;
+import islandtrader.core.Pirate;
+import islandtrader.core.RandomEvent;
+import islandtrader.core.Ship;
+import islandtrader.core.Trader;
+
+/**
+ * Creates the Main window from where the Trader can access the Store, view Ship
+ * properties and set Sail.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class MainWindow {
+
+	private JFrame mainWindowTraderAdventure;
+	private GameEnvironmentSwing game;
+	private String currentIslandDescription;
+
+	/**
+	 * Creates new Main window application
+	 *
+	 * @param incomingGame the current game
+	 */
+<span class="nc" id="L49">	public MainWindow(GameEnvironmentSwing incomingGame) {</span>
+<span class="nc" id="L50">		game = incomingGame;</span>
+
+<span class="nc" id="L52">		initialize();</span>
+<span class="nc" id="L53">		mainWindowTraderAdventure.setVisible(true);</span>
+
+<span class="nc" id="L55">	}</span>
+
+	/**
+	 * closes the main window
+	 */
+	public void closeWindow() {
+<span class="nc" id="L61">		mainWindowTraderAdventure.dispose();</span>
+<span class="nc" id="L62">	}</span>
+
+	/**
+	 * finishes the main window
+	 */
+	public void finishedWindow() {
+<span class="nc" id="L68">		game.closeMainScreen(this);</span>
+<span class="nc" id="L69">	}</span>
+
+	/**
+	 * @return the currentIslandDescription
+	 */
+	public String getCurrentIslandDescription() {
+<span class="nc" id="L75">		return currentIslandDescription;</span>
+	}
+
+	/**
+	 * @param currentIslandDescription the currentIslandDescription to set
+	 */
+	public void setCurrentIslandDescription(String currentIslandDescription) {
+<span class="nc" id="L82">		this.currentIslandDescription = currentIslandDescription;</span>
+<span class="nc" id="L83">	}</span>
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L89">		mainWindowTraderAdventure = new JFrame();</span>
+<span class="nc" id="L90">		mainWindowTraderAdventure.getContentPane().setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 12));</span>
+<span class="nc" id="L91">		mainWindowTraderAdventure.setIconImage(Toolkit.getDefaultToolkit()</span>
+<span class="nc" id="L92">				.getImage(MainWindow.class.getResource(&quot;/islandtrader/images/shipWater1.png&quot;)));</span>
+<span class="nc" id="L93">		mainWindowTraderAdventure.setTitle(&quot;Island Trader Adventure&quot;);</span>
+<span class="nc" id="L94">		mainWindowTraderAdventure.setBounds(100, 100, 945, 608);</span>
+<span class="nc" id="L95">		mainWindowTraderAdventure.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L96">		mainWindowTraderAdventure.getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L98">		JLabel lblDaysLeftToTravel = new JLabel(&quot;Days left to travel :  &quot; + game.getDaysRemaining());</span>
+<span class="nc" id="L99">		lblDaysLeftToTravel.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L100">		lblDaysLeftToTravel.setHorizontalAlignment(SwingConstants.LEFT);</span>
+<span class="nc" id="L101">		lblDaysLeftToTravel.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L102">		lblDaysLeftToTravel.setBounds(768, 10, 153, 19);</span>
+<span class="nc" id="L103">		mainWindowTraderAdventure.getContentPane().add(lblDaysLeftToTravel);</span>
+
+<span class="nc" id="L105">		JLabel lblDaysElapsedTxt = new JLabel(&quot;Days elapsed: &quot; + game.getDaysElapsed());</span>
+<span class="nc" id="L106">		lblDaysElapsedTxt.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L107">		lblDaysElapsedTxt.setHorizontalAlignment(SwingConstants.LEFT);</span>
+<span class="nc" id="L108">		lblDaysElapsedTxt.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L109">		lblDaysElapsedTxt.setBounds(768, 39, 153, 19);</span>
+<span class="nc" id="L110">		mainWindowTraderAdventure.getContentPane().add(lblDaysElapsedTxt);</span>
+
+<span class="nc" id="L112">		JLabel lblTraderImg = new JLabel(&quot;&quot;);</span>
+<span class="nc" id="L113">		lblTraderImg.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L114">		lblTraderImg.setIcon(new ImageIcon(MainWindow.class.getResource(&quot;/islandtrader/images/capitain9.png&quot;)));</span>
+<span class="nc" id="L115">		lblTraderImg.setBounds(0, 10, 130, 90);</span>
+<span class="nc" id="L116">		mainWindowTraderAdventure.getContentPane().add(lblTraderImg);</span>
+
+<span class="nc" id="L118">		JLabel lblTraderInfo = new JLabel(game.getTrader().toString());</span>
+<span class="nc" id="L119">		lblTraderInfo.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L120">		lblTraderInfo.setBounds(158, 7, 497, 24);</span>
+
+<span class="nc" id="L122">		mainWindowTraderAdventure.getContentPane().add(lblTraderInfo);</span>
+
+<span class="nc" id="L124">		JLabel lblShipDescription = new JLabel(game.getTrader().getShipOwned().getDescription());</span>
+<span class="nc" id="L125">		lblShipDescription.setBackground(Color.WHITE);</span>
+<span class="nc" id="L126">		lblShipDescription.setIcon(null);</span>
+<span class="nc" id="L127">		lblShipDescription.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L128">		lblShipDescription.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L129">		lblShipDescription.setBounds(140, 42, 678, 24);</span>
+<span class="nc" id="L130">		mainWindowTraderAdventure.getContentPane().add(lblShipDescription);</span>
+
+<span class="nc" id="L132">		JLabel lblIslandImg = new JLabel(&quot;&quot;);</span>
+<span class="nc" id="L133">		lblIslandImg.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L134">		lblIslandImg.setIcon(new ImageIcon(MainWindow.class.getResource(changeIslandImg())));</span>
+<span class="nc" id="L135">		lblIslandImg.setBounds(10, 223, 253, 201);</span>
+<span class="nc" id="L136">		mainWindowTraderAdventure.getContentPane().add(lblIslandImg);</span>
+
+<span class="nc" id="L138">		JLabel lblCurrentDocked = new JLabel(&quot;Currently docket at &quot; + game.getCurrentIsland().getName());</span>
+<span class="nc" id="L139">		lblCurrentDocked.setForeground(new Color(0, 0, 102));</span>
+<span class="nc" id="L140">		lblCurrentDocked.setFont(new Font(&quot;Stencil&quot;, Font.PLAIN, 20));</span>
+<span class="nc" id="L141">		lblCurrentDocked.setBounds(273, 223, 561, 58);</span>
+<span class="nc" id="L142">		mainWindowTraderAdventure.getContentPane().add(lblCurrentDocked);</span>
+
+<span class="nc" id="L144">		JButton btnViewMyItems = new JButton(&quot;View my cargo items&quot;);</span>
+<span class="nc" id="L145">		btnViewMyItems.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L148">				game.launchCargoStoreTradablesWindow();</span>
+
+<span class="nc" id="L150">			}</span>
+		});
+<span class="nc" id="L152">		btnViewMyItems.setForeground(new Color(51, 51, 102));</span>
+<span class="nc" id="L153">		btnViewMyItems.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L154">		btnViewMyItems.setBackground(Color.WHITE);</span>
+<span class="nc" id="L155">		btnViewMyItems.setBounds(649, 116, 169, 24);</span>
+<span class="nc" id="L156">		mainWindowTraderAdventure.getContentPane().add(btnViewMyItems);</span>
+
+<span class="nc" id="L158">		JLabel lbCurrentlIslandDescription = new JLabel(game.getCurrentIsland().getDescription());</span>
+<span class="nc" id="L159">		lbCurrentlIslandDescription.setHorizontalAlignment(SwingConstants.LEFT);</span>
+<span class="nc" id="L160">		lbCurrentlIslandDescription.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L161">		lbCurrentlIslandDescription.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 17));</span>
+<span class="nc" id="L162">		lbCurrentlIslandDescription.setBounds(289, 291, 632, 37);</span>
+<span class="nc" id="L163">		mainWindowTraderAdventure.getContentPane().add(lbCurrentlIslandDescription);</span>
+
+<span class="nc" id="L165">		JButton btnViewCurrentStore = new JButton(&quot;Visit Island Store&quot;);</span>
+<span class="nc" id="L166">		btnViewCurrentStore.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L169">				game.launchIslandStore();</span>
+<span class="nc" id="L170">			}</span>
+		});
+<span class="nc" id="L172">		btnViewCurrentStore.setForeground(new Color(0, 153, 255));</span>
+<span class="nc" id="L173">		btnViewCurrentStore.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 16));</span>
+<span class="nc" id="L174">		btnViewCurrentStore.setBackground(Color.WHITE);</span>
+<span class="nc" id="L175">		btnViewCurrentStore.setBounds(10, 434, 171, 35);</span>
+<span class="nc" id="L176">		mainWindowTraderAdventure.getContentPane().add(btnViewCurrentStore);</span>
+
+<span class="nc" id="L178">		JProgressBar progressBarShipHealth = new JProgressBar();</span>
+<span class="nc" id="L179">		progressBarShipHealth.setForeground(new Color(102, 255, 51));</span>
+<span class="nc" id="L180">		progressBarShipHealth.setValue((int) game.getTrader().getShipOwned().getCurrentHealthStatus());</span>
+<span class="nc" id="L181">		progressBarShipHealth.setBounds(115, 124, 130, 16);</span>
+<span class="nc" id="L182">		mainWindowTraderAdventure.getContentPane().add(progressBarShipHealth);</span>
+
+<span class="nc" id="L184">		JLabel lblShipHealth = new JLabel(&quot;Ship Health&quot;);</span>
+<span class="nc" id="L185">		lblShipHealth.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L186">		lblShipHealth.setBounds(23, 121, 85, 19);</span>
+<span class="nc" id="L187">		mainWindowTraderAdventure.getContentPane().add(lblShipHealth);</span>
+
+<span class="nc" id="L189">		JButton btnViewArchipelagoMap = new JButton(&quot;View Archipelago Map Information&quot;);</span>
+<span class="nc" id="L190">		btnViewArchipelagoMap.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L193">				game.launchArchipelagoWindow();</span>
+<span class="nc" id="L194">			}</span>
+		});
+<span class="nc" id="L196">		btnViewArchipelagoMap.setForeground(new Color(51, 51, 102));</span>
+<span class="nc" id="L197">		btnViewArchipelagoMap.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 16));</span>
+<span class="nc" id="L198">		btnViewArchipelagoMap.setBackground(Color.WHITE);</span>
+<span class="nc" id="L199">		btnViewArchipelagoMap.setBounds(10, 526, 300, 35);</span>
+<span class="nc" id="L200">		mainWindowTraderAdventure.getContentPane().add(btnViewArchipelagoMap);</span>
+
+<span class="nc" id="L202">		JLabel lblChooseIsland = new JLabel(&quot;Select Island to Sail:&quot;);</span>
+<span class="nc" id="L203">		lblChooseIsland.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L204">		lblChooseIsland.setBounds(598, 364, 136, 24);</span>
+<span class="nc" id="L205">		mainWindowTraderAdventure.getContentPane().add(lblChooseIsland);</span>
+
+<span class="nc" id="L207">		DefaultListModel&lt;Island&gt; islandListModel = new DefaultListModel&lt;Island&gt;();</span>
+<span class="nc" id="L208">		islandListModel.addAll(game.getIslands());</span>
+<span class="nc" id="L209">		islandListModel.removeElement(game.getCurrentIsland());</span>
+
+<span class="nc" id="L211">		JButton btnViewRoutesLeavingCurrentIsland = new JButton(&quot;View All Routes Information&quot;);</span>
+<span class="nc" id="L212">		btnViewRoutesLeavingCurrentIsland.setHorizontalAlignment(SwingConstants.LEFT);</span>
+<span class="nc" id="L213">		btnViewRoutesLeavingCurrentIsland.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L216">				game.launchRoutesInformation();</span>
+<span class="nc" id="L217">			}</span>
+		});
+<span class="nc" id="L219">		btnViewRoutesLeavingCurrentIsland.setForeground(new Color(51, 51, 102));</span>
+<span class="nc" id="L220">		btnViewRoutesLeavingCurrentIsland.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 16));</span>
+<span class="nc" id="L221">		btnViewRoutesLeavingCurrentIsland.setBackground(Color.WHITE);</span>
+<span class="nc" id="L222">		btnViewRoutesLeavingCurrentIsland.setBounds(10, 479, 230, 37);</span>
+<span class="nc" id="L223">		mainWindowTraderAdventure.getContentPane().add(btnViewRoutesLeavingCurrentIsland);</span>
+
+<span class="nc" id="L225">		JScrollPane scrollPane = new JScrollPane();</span>
+<span class="nc" id="L226">		scrollPane.setBounds(424, 398, 497, 97);</span>
+<span class="nc" id="L227">		mainWindowTraderAdventure.getContentPane().add(scrollPane);</span>
+
+<span class="nc" id="L229">		JList&lt;Island&gt; islandsList = new JList&lt;Island&gt;(islandListModel);</span>
+<span class="nc" id="L230">		scrollPane.setViewportView(islandsList);</span>
+<span class="nc" id="L231">		islandsList.addListSelectionListener(new ListSelectionListener() {</span>
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+<span class="nc" id="L234">				game.getTrader().getShipOwned().setAbleToSail(true);</span>
+<span class="nc" id="L235">			}</span>
+		});
+<span class="nc" id="L237">		islandsList.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 14));</span>
+
+<span class="nc" id="L239">		islandsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+
+<span class="nc" id="L241">		JButton btnFixShip = new JButton(&quot;Repair Ship&quot;);</span>
+<span class="nc" id="L242">		btnFixShip.setForeground(new Color(0, 153, 153));</span>
+<span class="nc" id="L243">		btnFixShip.setBackground(Color.WHITE);</span>
+<span class="nc" id="L244">		btnFixShip.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L247">				Trader trader = game.getTrader();</span>
+<span class="nc" id="L248">				Ship traderShip = trader.getShipOwned();</span>
+<span class="nc" id="L249">				double shipHealth = traderShip.getCurrentHealthStatus();</span>
+<span class="nc" id="L250">				double totalDiscount = 100 - shipHealth;</span>
+<span class="nc" id="L251">				totalDiscount = totalDiscount * 10;</span>
+<span class="nc" id="L252">				String shipFullHealthMessage = &quot;Your ship &quot; + traderShip.getName()</span>
+<span class="nc" id="L253">						+ &quot; is at full health.\nYou do not need to fix it now!&quot;;</span>
+<span class="nc" id="L254">				String messageTemplate = &quot;Repairing ship. Its current health is %.2f. It will cost you %.2f $ to repair.\n&quot;;</span>
+
+<span class="nc bnc" id="L256" title="All 2 branches missed.">				if (trader.getShipOwned().getCurrentHealthStatus() == 100) {</span>
+<span class="nc" id="L257">					JOptionPane.showMessageDialog(new JFrame(), shipFullHealthMessage,</span>
+<span class="nc" id="L258">							traderShip.getName() + &quot; at 100%&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L259">					return;</span>
+				}
+
+<span class="nc bnc" id="L262" title="All 2 branches missed.">				if (trader.getTraderAccountBalance() &lt; totalDiscount) {</span>
+<span class="nc" id="L263">					messageTemplate += &quot;You do not have enough money to pay the repair&quot;;</span>
+<span class="nc" id="L264">				} else {</span>
+<span class="nc" id="L265">					traderShip.repair();</span>
+<span class="nc" id="L266">					trader.removeAmountFromBalance(totalDiscount);</span>
+<span class="nc" id="L267">					progressBarShipHealth.setValue((int) traderShip.getCurrentHealthStatus());</span>
+<span class="nc" id="L268">					traderShip.setAbleToSail(true);</span>
+				}
+<span class="nc" id="L270">				JOptionPane.showMessageDialog(new JFrame(), String.format(messageTemplate, shipHealth, totalDiscount),</span>
+<span class="nc" id="L271">						&quot;Repairing Ship&quot;, JOptionPane.YES_NO_CANCEL_OPTION);</span>
+
+<span class="nc" id="L273">			}</span>
+		});
+<span class="nc" id="L275">		btnFixShip.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 12));</span>
+<span class="nc" id="L276">		btnFixShip.setBounds(258, 119, 108, 21);</span>
+<span class="nc" id="L277">		mainWindowTraderAdventure.getContentPane().add(btnFixShip);</span>
+
+<span class="nc" id="L279">		JButton btnSail = new JButton(&quot;Sail!&quot;);</span>
+<span class="nc" id="L280">		btnSail.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+<span class="nc" id="L284">				String errorMessageTemplate = &quot;You cannot sail! \n&quot;;</span>
+<span class="nc" id="L285">				String errors = &quot;&quot;;</span>
+
+<span class="nc bnc" id="L287" title="All 2 branches missed.">				if (islandsList.getSelectedValue() == null) {</span>
+
+<span class="nc" id="L289">					errors += &quot;You need to choose the Island to visit!&quot;;</span>
+<span class="nc" id="L290">					JOptionPane.showMessageDialog(new JFrame(), errorMessageTemplate + errors, &quot;Oops&quot;,</span>
+<span class="nc" id="L291">							JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L292">					return;</span>
+				}
+<span class="nc" id="L294">				Trader trader = game.getTrader();</span>
+<span class="nc" id="L295">				game.setSelectedIsland(islandsList.getSelectedValue());</span>
+
+<span class="nc" id="L297">				Ship traderShip = game.getTrader().getShipOwned();</span>
+<span class="nc" id="L298">				Island islandToGo = game.getSelectedIsland();</span>
+<span class="nc" id="L299">				int daysNeededToTravel = game.getCurrentIsland()</span>
+<span class="nc" id="L300">						.getDistanceToAnotherIslandInDays(islandToGo.getIdNumber() - 1);</span>
+
+<span class="nc" id="L302">				int daysRemaining = game.getDaysRemaining();</span>
+<span class="nc" id="L303">				int daysElapsed = game.getDaysElapsed();</span>
+<span class="nc" id="L304">				double shipHealth = traderShip.getCurrentHealthStatus();</span>
+<span class="nc" id="L305">				double costToSail = traderShip.getCrewCostToSailByTotalDays(daysNeededToTravel);</span>
+
+<span class="nc bnc" id="L307" title="All 2 branches missed.">				if (shipHealth &lt; 100) {</span>
+<span class="nc" id="L308">					traderShip.setAbleToSail(false);</span>
+<span class="nc" id="L309">					errors += &quot;You must repair you ship before you sail again!\n&quot;;</span>
+				}
+<span class="nc bnc" id="L311" title="All 2 branches missed.">				if (trader.getTraderAccountBalance() &lt; costToSail) {</span>
+<span class="nc" id="L312">					traderShip.setAbleToSail(false);</span>
+<span class="nc" id="L313">					errors += &quot;You do not have enough money to afford this many days sailing!\n&quot;;</span>
+				}
+<span class="nc bnc" id="L315" title="All 2 branches missed.">				if (daysNeededToTravel &gt; daysRemaining) {</span>
+<span class="nc" id="L316">					traderShip.setAbleToSail(false);</span>
+<span class="nc" id="L317">					errors += &quot;You do not have enough days remaining go this far!\n&quot;;</span>
+				}
+
+<span class="nc bnc" id="L320" title="All 2 branches missed.">				if (traderShip.isAbleToSail()) {</span>
+<span class="nc" id="L321">					errorMessageTemplate = &quot;You sailed during %d days to %s \nThe travel cost you: %.2f $\n&quot;;</span>
+
+<span class="nc" id="L323">					JOptionPane.showMessageDialog(new JFrame(),</span>
+<span class="nc" id="L324">							String.format(errorMessageTemplate + errors, daysNeededToTravel,</span>
+<span class="nc" id="L325">									game.getSelectedIsland().getName(), costToSail),</span>
+<span class="nc" id="L326">							&quot;Sailing...&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+
+<span class="nc" id="L328">					randomEventHappenedHelper(game.getSelectedIsland().getIdNumber() - 1, btnSail);</span>
+<span class="nc" id="L329">					trader.removeAmountFromBalance(costToSail);</span>
+<span class="nc" id="L330">					game.setCurrentIsland(islandToGo);</span>
+<span class="nc" id="L331">					game.setDaysElapsed(daysElapsed + daysNeededToTravel);</span>
+<span class="nc" id="L332">					game.launchMainScreen(game.getTrader());</span>
+<span class="nc" id="L333">					mainWindowTraderAdventure.dispose();</span>
+
+<span class="nc" id="L335">				} else {</span>
+<span class="nc" id="L336">					JOptionPane.showMessageDialog(new JFrame(), errorMessageTemplate + errors, &quot;Sailing...&quot;,</span>
+<span class="nc" id="L337">							JOptionPane.INFORMATION_MESSAGE);</span>
+				}
+
+<span class="nc" id="L340">			}</span>
+		});
+<span class="nc" id="L342">		btnSail.setForeground(new Color(0, 153, 102));</span>
+<span class="nc" id="L343">		btnSail.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 16));</span>
+<span class="nc" id="L344">		btnSail.setBackground(Color.WHITE);</span>
+<span class="nc" id="L345">		btnSail.setBounds(649, 505, 85, 35);</span>
+<span class="nc" id="L346">		mainWindowTraderAdventure.getContentPane().add(btnSail);</span>
+
+<span class="nc" id="L348">		JLabel lblDdd = new JLabel(game.getTrader().getShipOwned().toString());</span>
+<span class="nc" id="L349">		lblDdd.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L350">		lblDdd.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L351">		lblDdd.setBackground(Color.WHITE);</span>
+<span class="nc" id="L352">		lblDdd.setBounds(140, 76, 678, 24);</span>
+<span class="nc" id="L353">		mainWindowTraderAdventure.getContentPane().add(lblDdd);</span>
+
+<span class="nc" id="L355">		JLabel lblShipProperties = new JLabel((String) null);</span>
+<span class="nc" id="L356">		lblShipProperties.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L357">		lblShipProperties.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L358">		lblShipProperties.setBackground(Color.WHITE);</span>
+<span class="nc" id="L359">		lblShipProperties.setBounds(140, 96, 678, 24);</span>
+<span class="nc" id="L360">		mainWindowTraderAdventure.getContentPane().add(lblShipProperties);</span>
+<span class="nc" id="L361">		mainWindowTraderAdventure.addWindowFocusListener(new WindowFocusListener() {</span>
+			@Override
+			public void windowGainedFocus(WindowEvent e) {
+<span class="nc" id="L364">				game.changeLabelText(lblTraderInfo, game.getTrader().toString());</span>
+<span class="nc" id="L365">			}</span>
+
+			@Override
+			public void windowLostFocus(WindowEvent e) {
+<span class="nc" id="L369">				game.changeLabelText(lblTraderInfo, game.getTrader().toString());</span>
+<span class="nc" id="L370">			}</span>
+
+		});
+
+<span class="nc" id="L374">	}</span>
+
+	/**
+	 * Helper for the sail method when the random event happens
+	 *
+	 * @param selectedIslandIndex selects the island
+	 * @param btnSail             btn to be set invisible
+	 */
+	private void randomEventHappenedHelper(int selectedIslandIndex, JButton btnSail) {
+<span class="nc" id="L383">		String eventEncounterMessage = &quot;&quot;;</span>
+<span class="nc" id="L384">		String eventResultOfEncounterMessage = &quot;&quot;;</span>
+<span class="nc" id="L385">		RandomEvent randomEvent = game.getEventFromListOfPossibleEvents(</span>
+<span class="nc" id="L386">				game.getCurrentIsland().getRoutes()[selectedIslandIndex].getPossibleEvents());</span>
+
+<span class="nc bnc" id="L388" title="All 2 branches missed.">		if (randomEvent != null) {</span>
+
+<span class="nc" id="L390">			eventEncounterMessage += randomEvent.encounterMessage() + &quot;\n&quot;;</span>
+<span class="nc" id="L391">			randomEvent.randomEventSpecificAction(game.getTrader());</span>
+<span class="nc" id="L392">			JOptionPane.showMessageDialog(new JFrame(), eventEncounterMessage, randomEvent.getName(),</span>
+<span class="nc" id="L393">					JOptionPane.WARNING_MESSAGE);</span>
+
+<span class="nc bnc" id="L395" title="All 2 branches missed.">			if (randomEvent instanceof Pirate) {</span>
+<span class="nc" id="L396">				randomEventIsPirateHelper(randomEvent, btnSail);</span>
+<span class="nc" id="L397">			} else {</span>
+<span class="nc" id="L398">				eventResultOfEncounterMessage += randomEvent.resultOfEncounterMessage() + &quot;\n&quot;;</span>
+<span class="nc" id="L399">				JOptionPane.showMessageDialog(new JFrame(), eventResultOfEncounterMessage, randomEvent.getName(),</span>
+<span class="nc" id="L400">						JOptionPane.INFORMATION_MESSAGE);</span>
+			}
+
+<span class="nc" id="L403">		} else {</span>
+<span class="nc" id="L404">			eventEncounterMessage = &quot;You did not encounter any interesting things during your travel...\n&quot;;</span>
+<span class="nc" id="L405">			JOptionPane.showMessageDialog(new JFrame(), eventEncounterMessage, &quot;All goody&quot;, JOptionPane.DEFAULT_OPTION);</span>
+		}
+<span class="nc" id="L407">	}</span>
+
+	/**
+	 * Helper for when the random event happening is of type Pirate
+	 *
+	 * @param randomEvent the event Pirate
+	 * @param btnSail     btn to be set invisible
+	 */
+	private void randomEventIsPirateHelper(RandomEvent randomEvent, JButton btnSail) {
+
+<span class="nc" id="L417">		Pirate pirate = (Pirate) randomEvent;</span>
+
+<span class="nc bnc" id="L419" title="All 2 branches missed.">		if (pirate.isTraderCouldEscape()) {</span>
+<span class="nc" id="L420">			JOptionPane.showMessageDialog(new JFrame(), pirate.getMessageScapedFromPirate(), pirate.getName(),</span>
+<span class="nc" id="L421">					JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L422">		} else {</span>
+<span class="nc" id="L423">			JOptionPane.showMessageDialog(new JFrame(), randomEvent.resultOfEncounterMessage(), pirate.getName(),</span>
+<span class="nc" id="L424">					JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L425">			JOptionPane.showMessageDialog(new JFrame(), pirate.getMessagePirateTakeAllGoods(), randomEvent.getName(),</span>
+<span class="nc" id="L426">					JOptionPane.INFORMATION_MESSAGE);</span>
+
+<span class="nc bnc" id="L428" title="All 2 branches missed.">			if (pirate.isPirateHappy()) {</span>
+<span class="nc" id="L429">				game.getTrader().getShipOwned().setAbleToSail(true);</span>
+
+<span class="nc" id="L431">				JOptionPane.showMessageDialog(new JFrame(), pirate.getMessagePirateHappy(), pirate.getName(),</span>
+<span class="nc" id="L432">						JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L433">			} else {</span>
+<span class="nc" id="L434">				game.pirateMadeTraderWalkThePlank(pirate, btnSail);</span>
+
+			}
+		}
+<span class="nc" id="L438">	}</span>
+
+	/**
+	 * to help change the image of the island according with current island
+	 *
+	 * @return current Island image file path
+	 */
+	public String changeIslandImg() {
+		String sourcePath;
+<span class="nc" id="L447">		int indexIsland = game.getCurrentIsland().getIdNumber() - 1;</span>
+<span class="nc" id="L448">		String prefix = &quot;/islandtrader/images/&quot;;</span>
+<span class="nc bnc" id="L449" title="All 6 branches missed.">		switch (indexIsland) {</span>
+
+		case 0:
+<span class="nc" id="L452">			sourcePath = &quot;island1Sml.png&quot;;</span>
+<span class="nc" id="L453">			break;</span>
+		case 1:
+<span class="nc" id="L455">			sourcePath = &quot;island2Sml.png&quot;;</span>
+<span class="nc" id="L456">			break;</span>
+		case 2:
+<span class="nc" id="L458">			sourcePath = &quot;island3Sml.png&quot;;</span>
+<span class="nc" id="L459">			break;</span>
+		case 3:
+<span class="nc" id="L461">			sourcePath = &quot;island4Sml.png&quot;;</span>
+<span class="nc" id="L462">			break;</span>
+		case 4:
+<span class="nc" id="L464">			sourcePath = &quot;island5Sml.png&quot;;</span>
+<span class="nc" id="L465">			break;</span>
+		default:
+<span class="nc" id="L467">			sourcePath = &quot;island0Sml.png&quot;;</span>
+<span class="nc" id="L468">			break;</span>
+
+		}
+<span class="nc" id="L471">		return prefix + sourcePath;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

@@ -58,9 +58,10 @@ public class RandomEventService {
 	 * weatherList, so we don't need to provide it every time we need a list of
 	 * random events.
 	 *
-	 * @param pirates
-	 * @param sailors
-	 * @param weatherList
+	 * @param pirates     all the possible Pirates random event for the Route
+	 * @param sailors     all the possible RescuedSailors random event for the Route
+	 * @param weatherList all the possible UnfortunateWeather randomEvent for the
+	 *                    Route
 	 */
 	public RandomEventService(ArrayList<Pirate> pirates, ArrayList<RescuedSailor> sailors,
 			ArrayList<UnfortunateWeather> weatherList) {
@@ -74,7 +75,7 @@ public class RandomEventService {
 	 * one weather, shuffling their positions in the list to make it even more
 	 * random.
 	 *
-	 * @return
+	 * @return array list of RandomEvents for the Route
 	 */
 	public ArrayList<RandomEvent> getRandomEventsForRoute() {
 		ArrayList<RandomEvent> events = new ArrayList<RandomEvent>();
@@ -92,8 +93,8 @@ public class RandomEventService {
 	 * We need to get a cloned object as we are going to change its percentage of
 	 * encounter randomly.
 	 *
-	 * @param list
-	 * @return
+	 * @param list of Random events for the route
+	 * @return the event randomly chosen for the Route
 	 */
 	private RandomEvent getRandomEventFromList(ArrayList<? extends RandomEvent> list) {
 		RandomEvent event = null;
@@ -109,7 +110,7 @@ public class RandomEventService {
 	/**
 	 * Gets the random percentage value for a random event.
 	 *
-	 * @return
+	 * @return a number to help random events being decided
 	 */
 	private int getPercentageOfEncounterEvent() {
 		return getRandomNumberFromMinToMax(MIN_PERCENTAGE_OF_ENCOUNTER, MAX_PERCENTAGE_OF_ENCOUNTER);
@@ -119,7 +120,7 @@ public class RandomEventService {
 	 * Gets the maximum random number
 	 *
 	 * @param max
-	 * @return
+	 * @return a number to help random event being decided
 	 */
 	private int getRandomNumberFromMax(int max) {
 		return getRandomNumberFromMinToMax(0, max);
@@ -130,7 +131,7 @@ public class RandomEventService {
 	 *
 	 * @param min
 	 * @param max
-	 * @return
+	 * @return a new random number
 	 */
 	private int getRandomNumberFromMinToMax(int min, int max) {
 		return new Random().nextInt(max - min + 1) + min;

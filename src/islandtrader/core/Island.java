@@ -28,11 +28,13 @@ public class Island extends Entity {
 	/**
 	 * Constructor of the class. Creates an object island with the given parameters.
 	 *
-	 * @param islandIdNumber     idNumber of the Island.
-	 * @param islandName         Name of the Island.
-	 * @param islandDescription  Description of the Island.
-	 * @param islandDistanceList Distance (in days at 20km/h) list to other Islands.
-	 *                           Distance to this island is 0.
+	 *
+	 * @param idNumber       idNumber of the Island.
+	 * @param name           Name of the Island.
+	 * @param description    Description of the Island.
+	 * @param distanceInDays Distance (in days at 20km/h) list to other Islands.
+	 *                       Distance to this island is 0.
+	 * @param store          this Island Store
 	 */
 	public Island(int idNumber, String name, String description, int[] distanceInDays, Store store) {
 		super(idNumber, name, description);
@@ -66,7 +68,7 @@ public class Island extends Entity {
 	/**
 	 * Gets the list of routes.
 	 *
-	 * @return
+	 * @return routes
 	 */
 	public Route[] getRoutes() {
 		return routes;
@@ -95,7 +97,7 @@ public class Island extends Entity {
 	 * Takes the idNumber of another Island as a parameter to return the distance in
 	 * days from this Island.
 	 *
-	 * @param islandNumber
+	 * @param islandNumber the island to get the distance in days.
 	 * @return distance in days
 	 */
 	public int getDistanceToAnotherIslandInDays(int islandNumber) {

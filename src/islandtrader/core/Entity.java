@@ -55,7 +55,9 @@ public abstract class Entity {
 	/**
 	 * Creates a new Entity for the project with the given idNumber
 	 *
-	 * @param idNumber This Entity idNumber
+	 * @param idNumber    This Entity idNumber
+	 * @param name        this entity name
+	 * @param description this entity description
 	 */
 	public Entity(int idNumber, String name, String description) {
 		this.idNumber = idNumber;

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>BaseRepository.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">repository</a> &gt; <span class="el_source">BaseRepository.java</span></div><h1>BaseRepository.java</h1><pre class="source lang-java linenums">/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
+package repository;
+
+/**
+ * package to help read the CSV files
+ */
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import islandtrader.core.Entity;
+
+/**
+ * An Abstract class that represents a Basic Repository.It helps mocking a
+ * Database to create the Entities used in the project(Ship, Island, Store, Item
+ * and so on). Used to read the CSV files, which contains information to build
+ * these Entities. Each line in the CSV file is used to build an object, with
+ * each String in the file representing a property of some object in the
+ * project, i.e Item or Store. As the first three informations of each line
+ * repeat, they belong to the base repository ID_NUMBER, NAME, DESCRIPTION.
+ * Other properties that will vary will be treated in each particular
+ * repository.
+ *
+ * @author Maria Heloisa Balzaretti
+ */
+<span class="nc" id="L35">public abstract class BaseRepository {</span>
+	/**
+	 * DELIMITER is the character used to delimiter the strings in the CSV files,
+	 *
+	 */
+	private final static String DELIMITER = &quot;\\|&quot;;
+
+	/**
+	 * This Item idNumber is at index 0 of the sublist in the specific get method of
+	 * each repository that will return the Array of the relevant type
+	 */
+<span class="nc" id="L46">	protected final int ID_NUMBER = 0;</span>
+	/**
+	 * this Item name is at index 1 of the sublist in the specific get method of
+	 * each repository that will return the Array of the relevant type
+	 */
+<span class="nc" id="L51">	protected final int NAME = 1;</span>
+
+	/**
+	 * this Item description is at index 2 of the sublist in the specific get method
+	 * of each repository that will return the Array of the relevant type
+	 */
+<span class="nc" id="L57">	protected final int DESCRIPTION = 2;</span>
+
+	/**
+	 * This method is used to read the CSV files.
+	 *
+	 * @param filePath is the filepath of the CSV files with the relevant
+	 *                 information to build the objects.
+	 * @return a resulting list that contains sublists of Strings that are separated
+	 *         by a comma.
+	 */
+	public List&lt;List&lt;String&gt;&gt; getResultListfromFile(String filePath) {
+<span class="nc" id="L68">		List&lt;List&lt;String&gt;&gt; resultList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L69">		InputStream stream = getClass().getResourceAsStream(filePath);</span>
+<span class="nc" id="L70">		try (InputStreamReader streamReader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {</span>
+<span class="nc" id="L71">			BufferedReader reader = new BufferedReader(streamReader);</span>
+			String line;
+<span class="nc bnc" id="L73" title="All 2 branches missed.">			while ((line = reader.readLine()) != null) {</span>
+<span class="nc" id="L74">				String[] values = line.split(DELIMITER);</span>
+<span class="nc" id="L75">				resultList.add(Arrays.asList(values));</span>
+			}
+<span class="nc" id="L77">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L78">			e.printStackTrace();</span>
+<span class="nc" id="L79">		} catch (IOException e) {</span>
+<span class="nc" id="L80">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L82">		return resultList;</span>
+	}
+
+	/**
+	 * This method enforce that every classRepository that uses the baseRepository
+	 * to create its own arrayList of type Entity and return the Array with the
+	 * proper type, i.e ItemRepository will be used to read the files and return an
+	 * ArrayList of all Items in the database, to be added to the Stores later.
+	 *
+	 * @return ArrayList of the necessary Entity
+	 */
+	public abstract ArrayList&lt;? extends Entity&gt; getList();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

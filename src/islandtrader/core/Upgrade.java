@@ -45,6 +45,22 @@ public class Upgrade extends Tradable {
 	/**
 	 * Creates a new Upgrade Object of type Tradable
 	 */
+	/**
+	 *
+	 * @param name                  this Upgrade name
+	 * @param description           this Upgrade description
+	 * @param priceToBuy            this Upgrade price to buy
+	 * @param priceToSell           this Upgrade price to sell
+	 * @param idNumber              this Upgrade id number
+	 * @param increaseEndurance     this Upgrade amount to increase in the Ship
+	 *                              endurance
+	 * @param increaseSneakiness    this Upgrade amount to increase in the Ship
+	 *                              sneakiness
+	 * @param increaseCargoCapacity this Upgrade amount to increase in the Ship
+	 *                              cargo capacity
+	 * @param increaseSpeed         this Upgrade amount to increase in the Ship
+	 *                              speed
+	 */
 	public Upgrade(String name, String description, float priceToBuy, float priceToSell, int idNumber,
 			int increaseEndurance, int increaseSneakiness, int increaseCargoCapacity, int increaseSpeed) {
 		super(name, description, priceToBuy, priceToSell, idNumber);

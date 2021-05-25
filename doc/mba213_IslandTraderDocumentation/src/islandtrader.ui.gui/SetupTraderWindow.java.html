@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SetupTraderWindow.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.gui</a> &gt; <span class="el_source">SetupTraderWindow.java</span></div><h1>SetupTraderWindow.java</h1><pre class="source lang-java linenums">package islandtrader.ui.gui;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import islandtrader.core.Ship;
+import islandtrader.core.Trader;
+
+@SuppressWarnings(&quot;serial&quot;)
+public class SetupTraderWindow extends JFrame {
+
+	private JFrame windowSetupTrader;
+	private JTextField textTraderName;
+
+	private String traderName;
+	private GameEnvironmentSwing game;
+
+<span class="nc" id="L38">	public SetupTraderWindow(GameEnvironmentSwing incomingPlayer) {</span>
+<span class="nc" id="L39">		game = incomingPlayer;</span>
+<span class="nc" id="L40">		initialize();</span>
+<span class="nc" id="L41">		windowSetupTrader.setVisible(true);</span>
+<span class="nc" id="L42">	}</span>
+
+	public void closeWindow() {
+<span class="nc" id="L45">		windowSetupTrader.dispose();</span>
+<span class="nc" id="L46">	}</span>
+
+	public void finishedWindow() {
+<span class="nc" id="L49">		game.closeSetupScreen(this);</span>
+<span class="nc" id="L50">	}</span>
+
+	/**
+	 * Create the application.
+	 */
+<span class="nc" id="L55">	public SetupTraderWindow() {</span>
+<span class="nc" id="L56">		initialize();</span>
+<span class="nc" id="L57">	}</span>
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L63">		windowSetupTrader = new JFrame();</span>
+<span class="nc" id="L64">		windowSetupTrader.getContentPane().setForeground(new Color(51, 51, 153));</span>
+<span class="nc" id="L65">		windowSetupTrader.getContentPane().setBackground(SystemColor.control);</span>
+<span class="nc" id="L66">		windowSetupTrader.getContentPane().setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L67">		windowSetupTrader.setIconImage(Toolkit.getDefaultToolkit()</span>
+<span class="nc" id="L68">				.getImage(SetupTraderWindow.class.getResource(&quot;/islandtrader/images/shipWater1.png&quot;)));</span>
+<span class="nc" id="L69">		windowSetupTrader.setTitle(&quot;Island Trader Adventure&quot;);</span>
+<span class="nc" id="L70">		windowSetupTrader.setBounds(100, 100, 842, 527);</span>
+<span class="nc" id="L71">		windowSetupTrader.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L72">		windowSetupTrader.getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L74">		JLabel lblInformDuration = new JLabel(&quot;Inform how many days you want to travel:&quot;);</span>
+<span class="nc" id="L75">		lblInformDuration.setHorizontalAlignment(SwingConstants.LEFT);</span>
+<span class="nc" id="L76">		lblInformDuration.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L77">		lblInformDuration.setBounds(207, 125, 287, 25);</span>
+<span class="nc" id="L78">		windowSetupTrader.getContentPane().add(lblInformDuration);</span>
+
+<span class="nc" id="L80">		JLabel lblInformTraderName = new JLabel(&quot;Inform your name:&quot;);</span>
+<span class="nc" id="L81">		lblInformTraderName.setHorizontalAlignment(SwingConstants.LEFT);</span>
+<span class="nc" id="L82">		lblInformTraderName.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L83">		lblInformTraderName.setBounds(209, 88, 134, 25);</span>
+<span class="nc" id="L84">		windowSetupTrader.getContentPane().add(lblInformTraderName);</span>
+
+<span class="nc" id="L86">		JLabel lblSteeringWeelImg = new JLabel(&quot;captain&quot;);</span>
+<span class="nc" id="L87">		lblSteeringWeelImg.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L88">		lblSteeringWeelImg.setForeground(SystemColor.textHighlightText);</span>
+<span class="nc" id="L89">		lblSteeringWeelImg.setBounds(10, 14, 193, 186);</span>
+<span class="nc" id="L90">		lblSteeringWeelImg.setIcon(</span>
+<span class="nc" id="L91">				new ImageIcon(SetupTraderWindow.class.getResource(&quot;/islandtrader/images/SteeringWeelSmall.png&quot;)));</span>
+<span class="nc" id="L92">		windowSetupTrader.getContentPane().add(lblSteeringWeelImg);</span>
+
+<span class="nc" id="L94">		JLabel lblNewLabel = new JLabel(&quot;Welcome to the Island trader adventure!&quot;);</span>
+<span class="nc" id="L95">		lblNewLabel.setBackground(new Color(0, 0, 102));</span>
+<span class="nc" id="L96">		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L97">		lblNewLabel.setFont(new Font(&quot;Stencil&quot;, Font.PLAIN, 20));</span>
+<span class="nc" id="L98">		lblNewLabel.setBounds(178, 14, 640, 64);</span>
+<span class="nc" id="L99">		windowSetupTrader.getContentPane().add(lblNewLabel);</span>
+
+<span class="nc" id="L101">		textTraderName = new JTextField();</span>
+<span class="nc" id="L102">		textTraderName.setHorizontalAlignment(SwingConstants.LEFT);</span>
+<span class="nc" id="L103">		textTraderName.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 12));</span>
+<span class="nc" id="L104">		textTraderName.setBounds(342, 93, 343, 19);</span>
+<span class="nc" id="L105">		windowSetupTrader.getContentPane().add(textTraderName);</span>
+<span class="nc" id="L106">		textTraderName.setColumns(10);</span>
+
+<span class="nc" id="L108">		JLabel lblNumDaysMin = new JLabel(&quot;20&quot;);</span>
+<span class="nc" id="L109">		lblNumDaysMin.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L110">		lblNumDaysMin.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L111">		lblNumDaysMin.setBounds(472, 145, 28, 25);</span>
+<span class="nc" id="L112">		windowSetupTrader.getContentPane().add(lblNumDaysMin);</span>
+<span class="nc" id="L113">		JLabel lblNumDaysMax = new JLabel(&quot;50&quot;);</span>
+<span class="nc" id="L114">		lblNumDaysMax.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L115">		lblNumDaysMax.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L116">		lblNumDaysMax.setBounds(670, 145, 28, 25);</span>
+<span class="nc" id="L117">		windowSetupTrader.getContentPane().add(lblNumDaysMax);</span>
+
+<span class="nc" id="L119">		JLabel lblNumDaysChoosen = new JLabel(&quot;35&quot;);</span>
+
+<span class="nc" id="L121">		lblNumDaysChoosen.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L122">		lblNumDaysChoosen.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L123">		lblNumDaysChoosen.setBounds(573, 145, 28, 25);</span>
+<span class="nc" id="L124">		windowSetupTrader.getContentPane().add(lblNumDaysChoosen);</span>
+
+<span class="nc" id="L126">		JSlider sliderDurationDays = new JSlider();</span>
+<span class="nc" id="L127">		sliderDurationDays.addChangeListener(new ChangeListener() {</span>
+			@Override
+			public void stateChanged(ChangeEvent e) {
+<span class="nc" id="L130">				game.showSliderValue(sliderDurationDays, lblNumDaysChoosen);</span>
+<span class="nc" id="L131">			}</span>
+		});
+<span class="nc" id="L133">		sliderDurationDays.setValue(35);</span>
+<span class="nc" id="L134">		sliderDurationDays.setMaximum(50);</span>
+<span class="nc" id="L135">		sliderDurationDays.setMinimum(20);</span>
+<span class="nc" id="L136">		sliderDurationDays.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L137">		sliderDurationDays.setBounds(486, 125, 200, 22);</span>
+<span class="nc" id="L138">		windowSetupTrader.getContentPane().add(sliderDurationDays);</span>
+
+<span class="nc" id="L140">		JLabel lblChooseShip = new JLabel(&quot;Choose a ship to captain:&quot;);</span>
+<span class="nc" id="L141">		lblChooseShip.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 15));</span>
+<span class="nc" id="L142">		lblChooseShip.setBounds(201, 273, 164, 22);</span>
+<span class="nc" id="L143">		windowSetupTrader.getContentPane().add(lblChooseShip);</span>
+
+<span class="nc" id="L145">		JLabel lblShipImg = new JLabel(&quot;&quot;);</span>
+<span class="nc" id="L146">		lblShipImg.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L147">		lblShipImg.setIcon(new ImageIcon(SetupTraderWindow.class.getResource(&quot;/islandtrader/images/shipWater1.png&quot;)));</span>
+<span class="nc" id="L148">		lblShipImg.setBounds(588, 218, 230, 204);</span>
+<span class="nc" id="L149">		windowSetupTrader.getContentPane().add(lblShipImg);</span>
+<span class="nc" id="L150">		DefaultListModel&lt;Ship&gt; shipListModel = new DefaultListModel&lt;Ship&gt;();</span>
+<span class="nc" id="L151">		shipListModel.addAll(game.getShips());</span>
+
+<span class="nc" id="L153">		JScrollPane scrollPane = new JScrollPane();</span>
+<span class="nc" id="L154">		scrollPane.setBounds(10, 318, 568, 92);</span>
+<span class="nc" id="L155">		windowSetupTrader.getContentPane().add(scrollPane);</span>
+
+<span class="nc" id="L157">		JList&lt;Ship&gt; list_ShipToChoose = new JList&lt;Ship&gt;(shipListModel);</span>
+<span class="nc" id="L158">		scrollPane.setViewportView(list_ShipToChoose);</span>
+<span class="nc" id="L159">		list_ShipToChoose.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L160">		list_ShipToChoose.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+
+<span class="nc" id="L162">		JButton btnStart = new JButton(&quot;Start!&quot;);</span>
+<span class="nc" id="L163">		btnStart.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+<span class="nc" id="L167">				boolean areFieldsValid = true;</span>
+<span class="nc" id="L168">				String errors = &quot;&quot;;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				if (textTraderName.getText().isEmpty()) {</span>
+<span class="nc" id="L170">					areFieldsValid = false;</span>
+<span class="nc" id="L171">					errors = &quot;Name cannot be empty!\n&quot;;</span>
+				}
+<span class="nc bnc" id="L173" title="All 2 branches missed.">				if (list_ShipToChoose.getSelectedValue() == null) {</span>
+<span class="nc" id="L174">					areFieldsValid = false;</span>
+<span class="nc" id="L175">					errors += &quot;Select a ship!\n&quot;;</span>
+				}
+<span class="nc bnc" id="L177" title="All 4 branches missed.">				if ((textTraderName.getText().length() &lt; 3 || textTraderName.getText().length() &gt; 15)) {</span>
+<span class="nc" id="L178">					areFieldsValid = false;</span>
+<span class="nc" id="L179">					errors += &quot;Name must be between 3 and 15 characters long.\n&quot;;</span>
+				}
+<span class="nc bnc" id="L181" title="All 2 branches missed.">				if (!Pattern.matches(&quot;[a-zA-Z ]+&quot;, textTraderName.getText())) {</span>
+<span class="nc" id="L182">					areFieldsValid = false;</span>
+<span class="nc" id="L183">					errors += &quot;Name must not contain special characters or numbers.\n&quot;;</span>
+				}
+<span class="nc bnc" id="L185" title="All 2 branches missed.">				if (areFieldsValid) {</span>
+<span class="nc" id="L186">					String name = textTraderName.getText().trim();</span>
+<span class="nc" id="L187">					Trader trader = new Trader(name, &quot;a very Brave Captain!&quot;, getChoosenShip(list_ShipToChoose));</span>
+<span class="nc" id="L188">					game.setTrader(trader);</span>
+<span class="nc" id="L189">					game.setDurationChosenInDays(sliderDurationDays.getValue());</span>
+<span class="nc" id="L190">					game.launchMainScreen(trader);</span>
+<span class="nc" id="L191">					finishedWindow();</span>
+<span class="nc" id="L192">				} else {</span>
+<span class="nc" id="L193">					String message = &quot;Some errors were found: \n&quot;;</span>
+<span class="nc" id="L194">					JOptionPane.showMessageDialog(new JFrame(), message + errors, &quot;Dialog&quot;, JOptionPane.ERROR_MESSAGE);</span>
+				}
+<span class="nc" id="L196">			}</span>
+		});
+<span class="nc" id="L198">		btnStart.setForeground(new Color(51, 51, 102));</span>
+<span class="nc" id="L199">		btnStart.setBackground(new Color(255, 255, 255));</span>
+<span class="nc" id="L200">		btnStart.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 16));</span>
+<span class="nc" id="L201">		btnStart.setBounds(327, 431, 134, 37);</span>
+<span class="nc" id="L202">		windowSetupTrader.getContentPane().add(btnStart);</span>
+<span class="nc" id="L203">	}</span>
+
+	public void setTraderName() {
+<span class="nc" id="L206">		traderName = textTraderName.getText();</span>
+<span class="nc" id="L207">	}</span>
+
+	/**
+	 * @return the traderName
+	 */
+	public String getTraderName() {
+<span class="nc" id="L213">		return traderName;</span>
+	}
+
+	/**
+	 * @return the durationSelected
+	 */
+	public int getDurationSelected() {
+<span class="nc" id="L220">		return game.getDurationChosenInDays();</span>
+	}
+
+	public void setChoosenShip(JList&lt;Ship&gt; list_ShipToChoose) {
+<span class="nc" id="L224">		game.setShip(list_ShipToChoose.getSelectedValue());</span>
+<span class="nc" id="L225">	}</span>
+
+	public Ship getChoosenShip(JList&lt;Ship&gt; list_ShipToChoose) {
+<span class="nc" id="L228">		return list_ShipToChoose.getSelectedValue();</span>
+	}
+
+	/**
+	 * @return the textTraderName
+	 */
+	public JTextField getTextTraderName() {
+<span class="nc" id="L235">		return textTraderName;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

@@ -10,15 +10,29 @@ import islandtrader.core.StoreTradable;
 import islandtrader.core.Trader;
 import islandtrader.core.Upgrade;
 
+/**
+ * Helper class for the Store in the command line application
+ *
+ * @author Maria Heloisa Balzareetti
+ *
+ */
 public class GameEnvironmentStoreHelper {
 	private final String GO_BACK = "0 [Go back]\n";
 	private final String TRADABLES_HEADER = "ID - Name\n";
 	private GameEnvironmentMessageHelper messageHelper;
 
+	/**
+	 * Creates a new Store helper for the command line application
+	 */
 	public GameEnvironmentStoreHelper() {
 		this.messageHelper = new GameEnvironmentMessageHelper();
 	}
 
+	/**
+	 * Gets the menu for the store
+	 *
+	 * @return menu String
+	 */
 	public String getStoreMenuMessage() {
 		String menu = "Choose what you want to do:\n";
 		menu += "0 - Go back\n";
@@ -31,6 +45,13 @@ public class GameEnvironmentStoreHelper {
 		return menu;
 	}
 
+	/**
+	 * Buy the StoreTradable from store
+	 *
+	 * @param trader        the Trader buying
+	 * @param store         the Store where the trade happens
+	 * @param storeTradable the good or upgrade being traded
+	 */
 	public void buyTradableFromStore(Trader trader, Store store, StoreTradable storeTradable) {
 		float totalPrice = storeTradable.getPrice();
 		int quantity = 1;
@@ -116,6 +137,13 @@ public class GameEnvironmentStoreHelper {
 		}
 	}
 
+	/**
+	 * Sells the StoreTradable to the store
+	 *
+	 * @param trader        the Trader selling
+	 * @param store         the Store where the trade happens
+	 * @param storeTradable the good or upgrade being traded
+	 */
 	public void sellTradableToStore(Trader trader, Store store, StoreTradable storeTradable) {
 		float totalPrice = storeTradable.getPrice();
 		int quantity = 1;
@@ -199,6 +227,11 @@ public class GameEnvironmentStoreHelper {
 		}
 	}
 
+	/**
+	 * View the history of traded goods
+	 *
+	 * @param islands collection of Islands
+	 */
 	public void viewHistoryTraderGoods(ArrayList<Island> islands) {
 		for (Island island : islands) {
 			String template = "History of purchases and sellings in the island %s,  store %s\n";
@@ -211,6 +244,11 @@ public class GameEnvironmentStoreHelper {
 		}
 	}
 
+	/**
+	 * Shows the Buy history for the Store
+	 *
+	 * @param store where the trade happened
+	 */
 	public void showBuyHistory(Store store) {
 		if (store.getItemsAndUpgradesBought().size() > 0) {
 			String itemsOrUpgradesToString = TRADABLES_HEADER;
@@ -225,6 +263,11 @@ public class GameEnvironmentStoreHelper {
 		}
 	}
 
+	/**
+	 * Show selling history
+	 *
+	 * @param store where the trade happened
+	 */
 	public void showSellHistory(Store store) {
 		if (store.getItemsAndUpgradesSold().size() > 0) {
 			String itemsOrUpgradesToString = TRADABLES_HEADER;
@@ -263,26 +306,58 @@ public class GameEnvironmentStoreHelper {
 		return itemsOrUpgradesToString;
 	}
 
+	/**
+	 * Gets the menu for the goods the Trader can buy
+	 *
+	 * @param currentIsland the current Island
+	 * @return string with goods
+	 */
 	public String getItemsTraderCanBuy(Island currentIsland) {
 		String header = "Inform the item id you wish to buy: \n";
 		return header + getUpgradeItemsToBuy(true, currentIsland);
 	}
 
+	/**
+	 * Gets the string with the Upgrades the Trader can buy
+	 *
+	 * @param currentIsland the current Island
+	 * @return string with the Upgrades the Trader can buy
+	 */
 	public String getUpgradesTraderCanBuy(Island currentIsland) {
 		String header = "Inform the number of the upgrades you wish to buy: \n";
 		return header + getUpgradeItemsToBuy(false, currentIsland);
 	}
 
+	/**
+	 * Gets the string with the Items the Trader can Sell
+	 *
+	 * @param currentIsland the current island
+	 * @return string with the Items the Trader can Sell
+	 */
 	public String getItemsTraderCanSell(Island currentIsland) {
 		String header = "Inform the number of the items you wish to sell: \n";
 		return header + getUpgradeItemsToSell(true, currentIsland);
 	}
 
+	/**
+	 * Gets the string with the Upgrades the Trader can sell
+	 *
+	 * @param currentIsland the current Island
+	 * @return string with the Upgrades the Trader can sell
+	 */
 	public String getUpgradesTraderCanSell(Island currentIsland) {
 		String header = "Inform the uograde id you wish to sell: \n";
 		return header + getUpgradeItemsToSell(false, currentIsland);
 	}
 
+	/**
+	 * Gets the Item from a collection of StoreTradables by id number
+	 *
+	 * @param idNumber       the StoreTradable id number
+	 * @param storeTradables collection of StoreTradable
+	 * @param isItem         checks if it of type Item
+	 * @return the StoreTradable
+	 */
 	public StoreTradable getStoreTradableFromStoreTradableId(int idNumber, ArrayList<StoreTradable> storeTradables,
 			boolean isItem) {
 		for (StoreTradable storeTradable : storeTradables) {
@@ -295,6 +370,13 @@ public class GameEnvironmentStoreHelper {
 		return null;
 	}
 
+	/**
+	 * Gets the StoreTradable from a collection of StoreTradables
+	 *
+	 * @param idNumber       the StoreTradable id number
+	 * @param storeTradables collection of StoreTradable
+	 * @return the StoreTradable
+	 */
 	public StoreTradable getStoreTradableFromTradableId(int idNumber, ArrayList<StoreTradable> storeTradables) {
 		for (StoreTradable storeTradable : storeTradables) {
 			if (storeTradable.getTradable().getIdNumber() == idNumber) {

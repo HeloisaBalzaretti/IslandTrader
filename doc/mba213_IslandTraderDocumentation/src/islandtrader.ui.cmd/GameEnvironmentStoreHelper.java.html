@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GameEnvironmentStoreHelper.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.cmd</a> &gt; <span class="el_source">GameEnvironmentStoreHelper.java</span></div><h1>GameEnvironmentStoreHelper.java</h1><pre class="source lang-java linenums">package islandtrader.ui.cmd;
+
+import java.util.ArrayList;
+
+import islandtrader.core.Island;
+import islandtrader.core.Item;
+import islandtrader.core.Ship;
+import islandtrader.core.Store;
+import islandtrader.core.StoreTradable;
+import islandtrader.core.Trader;
+import islandtrader.core.Upgrade;
+
+public class GameEnvironmentStoreHelper {
+<span class="nc" id="L14">	private final String GO_BACK = &quot;0 [Go back]\n&quot;;</span>
+<span class="nc" id="L15">	private final String TRADABLES_HEADER = &quot;ID - Name\n&quot;;</span>
+	private GameEnvironmentMessageHelper messageHelper;
+
+<span class="nc" id="L18">	public GameEnvironmentStoreHelper() {</span>
+<span class="nc" id="L19">		this.messageHelper = new GameEnvironmentMessageHelper();</span>
+<span class="nc" id="L20">	}</span>
+
+	public String getStoreMenuMessage() {
+<span class="nc" id="L23">		String menu = &quot;Choose what you want to do:\n&quot;;</span>
+<span class="nc" id="L24">		menu += &quot;0 - Go back\n&quot;;</span>
+<span class="nc" id="L25">		menu += &quot;1 - Buy Items\n&quot;;</span>
+<span class="nc" id="L26">		menu += &quot;2 - Sell Items\n&quot;;</span>
+<span class="nc" id="L27">		menu += &quot;3 - Buy Upgrades\n&quot;;</span>
+<span class="nc" id="L28">		menu += &quot;4 - Sell Upgrades\n&quot;;</span>
+<span class="nc" id="L29">		menu += &quot;5 - Show purchase history\n&quot;;</span>
+<span class="nc" id="L30">		menu += &quot;6 - Show selling history\n&quot;;</span>
+<span class="nc" id="L31">		return menu;</span>
+	}
+
+	public void buyTradableFromStore(Trader trader, Store store, StoreTradable storeTradable) {
+<span class="nc" id="L35">		float totalPrice = storeTradable.getPrice();</span>
+<span class="nc" id="L36">		int quantity = 1;</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		if (storeTradable.getQuantity() &gt; 1) {</span>
+<span class="nc" id="L38">			quantity = messageHelper.readInputInteger(&quot;Inform the quantity to buy:&quot;);</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">			if (quantity &lt;= 0) {</span>
+<span class="nc" id="L40">				messageHelper.printMessage(&quot;Invalid quantity!&quot;);</span>
+<span class="nc" id="L41">				return;</span>
+			}
+<span class="nc" id="L43">			totalPrice *= quantity;</span>
+		}
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (canBuyTradable(trader, totalPrice, storeTradable, quantity)) {</span>
+<span class="nc" id="L46">			storeTradable.decreaseQuantity(quantity);</span>
+<span class="nc" id="L47">			trader.removeAmountFromBalance(totalPrice);</span>
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">			if (storeTradable.getTradable() instanceof Upgrade) {</span>
+<span class="nc" id="L50">				Upgrade upgrade = (Upgrade) storeTradable.getTradable();</span>
+<span class="nc" id="L51">				trader.getShipOwned().increaseSpeed(upgrade.getIncreaseSpeed() * quantity);</span>
+<span class="nc" id="L52">				trader.getShipOwned().increaseSneakiness(upgrade.getIncreaseSpeed() * quantity);</span>
+<span class="nc" id="L53">				trader.getShipOwned().increaseEndurance(upgrade.getIncreaseEndurance() * quantity);</span>
+<span class="nc" id="L54">				trader.getShipOwned().increaseCargoHoldCapacity(upgrade.getIncreaseCargoCapacity() * quantity);</span>
+<span class="nc" id="L55">			} else {</span>
+<span class="nc" id="L56">				Item item = (Item) storeTradable.getTradable();</span>
+<span class="nc" id="L57">				float totalWeight = quantity * item.getWeight();</span>
+<span class="nc" id="L58">				trader.getShipOwned().decreaseCargoHoldCapacity(totalWeight);</span>
+			}
+<span class="nc" id="L60">			String baseTemplate = &quot;You bought %d %s from the store, costing you $%.2f. Your current balance is: $%.2f.\n&quot;;</span>
+<span class="nc" id="L61">			baseTemplate += &quot;Current Features: Speed %.1f, Cargo Capacity %.1f kg, Sneakiness %d and Endurance %d.&quot;;</span>
+<span class="nc" id="L62">			messageHelper.printMessage(String.format(baseTemplate + &quot;\n&quot;, quantity,</span>
+<span class="nc" id="L63">					storeTradable.getTradable().getName(), totalPrice, trader.getTraderAccountBalance(),</span>
+<span class="nc" id="L64">					trader.getShipOwned().getSailSpeed(), trader.getShipOwned().getCargoCapacity(),</span>
+<span class="nc" id="L65">					trader.getShipOwned().getSneakiness(), trader.getShipOwned().getEndurance()));</span>
+<span class="nc" id="L66">			addStoreTradableBoughtHistory(storeTradable, totalPrice, quantity, store);</span>
+<span class="nc" id="L67">			addStoreTradableToShip(storeTradable, totalPrice, quantity, trader.getShipOwned());</span>
+		}
+<span class="nc" id="L69">	}</span>
+
+	private void addStoreTradableToShip(StoreTradable storeTradable, float totalPrice, int quantity, Ship ship) {
+<span class="nc" id="L72">		StoreTradable storeTradableInShip = getStoreTradableFromTradableId(storeTradable.getTradable().getIdNumber(),</span>
+<span class="nc" id="L73">				ship.getCurrentCargoTradables());</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (storeTradableInShip == null) {</span>
+			try {
+<span class="nc" id="L76">				StoreTradable storeTradableToAdd = (StoreTradable) storeTradable.clone();</span>
+<span class="nc" id="L77">				storeTradableToAdd.setPrice(0);</span>
+<span class="nc" id="L78">				storeTradableToAdd.setQuantity(quantity);</span>
+<span class="nc" id="L79">				ship.addTradable(storeTradableToAdd);</span>
+<span class="nc" id="L80">			} catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L81">				e.printStackTrace();</span>
+			}
+<span class="nc" id="L83">		} else {</span>
+<span class="nc" id="L84">			storeTradableInShip.increaseQuantity(quantity);</span>
+		}
+<span class="nc" id="L86">	}</span>
+
+	private boolean canBuyTradable(Trader trader, float totalPrice, StoreTradable storeTradable, int quantity) {
+<span class="nc" id="L89">		boolean canBuy = true;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (trader.getTraderAccountBalance() &lt; totalPrice) {</span>
+<span class="nc" id="L91">			canBuy = false;</span>
+<span class="nc" id="L92">			messageHelper.printMessage(&quot;You don't have enough money to buy the products!&quot;);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		} else if (quantity &gt; storeTradable.getQuantity()) {</span>
+<span class="nc" id="L94">			canBuy = false;</span>
+<span class="nc" id="L95">			messageHelper.printMessage(&quot;Store doesn't have the selected quantity to sell!&quot;);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		} else if (storeTradable.getTradable() instanceof Item) {</span>
+<span class="nc" id="L97">			Item item = (Item) storeTradable.getTradable();</span>
+<span class="nc" id="L98">			float totalWeight = quantity * item.getWeight();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (trader.getShipOwned().getCargoCapacity() &lt; totalWeight) {</span>
+<span class="nc" id="L100">				canBuy = false;</span>
+<span class="nc" id="L101">				messageHelper.printMessage(&quot;You don't have available cargo capactity to buy the items!&quot;);</span>
+			}
+		}
+<span class="nc" id="L104">		return canBuy;</span>
+	}
+
+	private void addStoreTradableBoughtHistory(StoreTradable storeTradable, float totalPrice, int quantity,
+			Store store) {
+		try {
+<span class="nc" id="L110">			StoreTradable storeTradableHistory = (StoreTradable) storeTradable.clone();</span>
+<span class="nc" id="L111">			storeTradableHistory.setPrice(totalPrice);</span>
+<span class="nc" id="L112">			storeTradableHistory.setQuantity(quantity);</span>
+<span class="nc" id="L113">			store.addItemBoughtHistory(storeTradableHistory);</span>
+<span class="nc" id="L114">		} catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L115">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L117">	}</span>
+
+	public void sellTradableToStore(Trader trader, Store store, StoreTradable storeTradable) {
+<span class="nc" id="L120">		float totalPrice = storeTradable.getPrice();</span>
+<span class="nc" id="L121">		int quantity = 1;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (storeTradable.getQuantity() &gt; 1) {</span>
+<span class="nc" id="L123">			quantity = messageHelper.readInputInteger(&quot;Inform the quantity to sell:&quot;);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (quantity &lt;= 0) {</span>
+<span class="nc" id="L125">				messageHelper.printMessage(&quot;Invalid quantity!&quot;);</span>
+<span class="nc" id="L126">				return;</span>
+			}
+<span class="nc" id="L128">			totalPrice *= quantity;</span>
+		}
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (canSellTradable(trader, storeTradable, quantity, trader.getShipOwned())) {</span>
+<span class="nc" id="L131">			storeTradable.decreaseQuantity(quantity);</span>
+<span class="nc" id="L132">			trader.addAmountToBalance(totalPrice);</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			if (storeTradable.getTradable() instanceof Upgrade) {</span>
+<span class="nc" id="L135">				Upgrade upgrade = (Upgrade) storeTradable.getTradable();</span>
+<span class="nc" id="L136">				trader.getShipOwned().decreaseSpeed(upgrade.getIncreaseSpeed() * quantity);</span>
+<span class="nc" id="L137">				trader.getShipOwned().decreaseSneakiness(upgrade.getIncreaseSpeed() * quantity);</span>
+<span class="nc" id="L138">				trader.getShipOwned().decreaseEndurance(upgrade.getIncreaseEndurance() * quantity);</span>
+<span class="nc" id="L139">				trader.getShipOwned().decreaseCargoHoldCapacity(upgrade.getIncreaseCargoCapacity() * quantity);</span>
+			}
+
+<span class="nc" id="L142">			String baseTemplate = &quot;You sold %d %s to the store, getting you $%.2f. Your current balance is: $%.2f\n&quot;;</span>
+<span class="nc" id="L143">			baseTemplate += &quot;Current Features: Speed %.1f, Cargo Capacity %.1f kg, Sneakiness %d and Endurance %d.&quot;;</span>
+<span class="nc" id="L144">			messageHelper.printMessage(String.format(baseTemplate + &quot;\n&quot;, quantity,</span>
+<span class="nc" id="L145">					storeTradable.getTradable().getName(), totalPrice, trader.getTraderAccountBalance(),</span>
+<span class="nc" id="L146">					trader.getShipOwned().getSailSpeed(), trader.getShipOwned().getCargoCapacity(),</span>
+<span class="nc" id="L147">					trader.getShipOwned().getSneakiness(), trader.getShipOwned().getEndurance()));</span>
+			// TODO add to list of bought items
+<span class="nc" id="L149">			addStoreTradableSoldHistory(storeTradable, totalPrice, quantity, store);</span>
+<span class="nc" id="L150">			removeStoreTradableToShip(storeTradable, quantity, trader.getShipOwned());</span>
+
+		}
+<span class="nc" id="L153">	}</span>
+
+	private void removeStoreTradableToShip(StoreTradable storeTradable, int quantity, Ship ship) {
+<span class="nc" id="L156">		StoreTradable storeTradableInShip = getStoreTradableFromTradableId(storeTradable.getTradable().getIdNumber(),</span>
+<span class="nc" id="L157">				ship.getCurrentCargoTradables());</span>
+<span class="nc" id="L158">		storeTradableInShip.decreaseQuantity(quantity);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (storeTradableInShip.getQuantity() == 0) {</span>
+<span class="nc" id="L160">			ship.removeTradable(storeTradableInShip);</span>
+		}
+<span class="nc" id="L162">	}</span>
+
+	private boolean canSellTradable(Trader trader, StoreTradable storeTradable, int quantity, Ship ship) {
+<span class="nc" id="L165">		boolean canSell = true;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (quantity &gt; storeTradable.getQuantity()) {</span>
+<span class="nc" id="L167">			messageHelper.printMessage(&quot;Store doesn't buy that amount of quantity!&quot;);</span>
+<span class="nc" id="L168">			canSell = false;</span>
+<span class="nc" id="L169">		} else {</span>
+<span class="nc" id="L170">			StoreTradable storeTradableInShip = getStoreTradableFromTradableId(</span>
+<span class="nc" id="L171">					storeTradable.getTradable().getIdNumber(), ship.getCurrentCargoTradables());</span>
+<span class="nc bnc" id="L172" title="All 4 branches missed.">			if (storeTradableInShip == null || storeTradableInShip.getQuantity() &lt; quantity) {</span>
+<span class="nc" id="L173">				canSell = false;</span>
+<span class="nc" id="L174">				messageHelper.printMessage(&quot;You don't have tradables to sell to store!&quot;);</span>
+			}
+
+<span class="nc bnc" id="L177" title="All 4 branches missed.">			if (canSell &amp;&amp; storeTradable.getTradable() instanceof Upgrade) {</span>
+<span class="nc" id="L178">				Upgrade upgrade = (Upgrade) storeTradable.getTradable();</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">				if (upgrade.getIncreaseCargoCapacity() &gt; 0) {</span>
+<span class="nc" id="L180">					double totalCapacityToSell = upgrade.getIncreaseCargoCapacity() * quantity;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">					if (trader.getShipOwned().getCargoCapacity() - totalCapacityToSell &lt; 0) {</span>
+<span class="nc" id="L182">						messageHelper.printMessage(&quot;You can't sell the upgrade! You need to sell items first!&quot;);</span>
+<span class="nc" id="L183">						canSell = false;</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L188">		return canSell;</span>
+	}
+
+	private void addStoreTradableSoldHistory(StoreTradable storeTradable, float totalPrice, int quantity, Store store) {
+		try {
+<span class="nc" id="L193">			StoreTradable storeTradableHistory = (StoreTradable) storeTradable.clone();</span>
+<span class="nc" id="L194">			storeTradableHistory.setPrice(totalPrice);</span>
+<span class="nc" id="L195">			storeTradableHistory.setQuantity(quantity);</span>
+<span class="nc" id="L196">			store.addItemSoldHistory(storeTradableHistory);</span>
+<span class="nc" id="L197">		} catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L198">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L200">	}</span>
+
+	public void viewHistoryTraderGoods(ArrayList&lt;Island&gt; islands) {
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		for (Island island : islands) {</span>
+<span class="nc" id="L204">			String template = &quot;History of purchases and sellings in the island %s,  store %s\n&quot;;</span>
+<span class="nc" id="L205">			messageHelper.printMessage(String.format(template, island.getName(), island.getStore().getName()));</span>
+<span class="nc" id="L206">			messageHelper.printMessage(&quot;Buy History:&quot;);</span>
+<span class="nc" id="L207">			showBuyHistory(island.getStore());</span>
+<span class="nc" id="L208">			messageHelper.printMessage(&quot;Sell History:&quot;);</span>
+<span class="nc" id="L209">			showSellHistory(island.getStore());</span>
+<span class="nc" id="L210">			messageHelper.printMessage(&quot;\n&quot;);</span>
+		}
+<span class="nc" id="L212">	}</span>
+
+	public void showBuyHistory(Store store) {
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (store.getItemsAndUpgradesBought().size() &gt; 0) {</span>
+<span class="nc" id="L216">			String itemsOrUpgradesToString = TRADABLES_HEADER;</span>
+<span class="nc" id="L217">			int index = 1;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">			for (StoreTradable storeTradable : store.getItemsAndUpgradesBought()) {</span>
+<span class="nc" id="L219">				itemsOrUpgradesToString += getDescriptionHistoryBought(index, storeTradable);</span>
+<span class="nc" id="L220">				index++;</span>
+			}
+<span class="nc" id="L222">			messageHelper.printMessage(itemsOrUpgradesToString);</span>
+<span class="nc" id="L223">		} else {</span>
+<span class="nc" id="L224">			messageHelper.printMessage(&quot;No item bought from the store!&quot;);</span>
+		}
+<span class="nc" id="L226">	}</span>
+
+	public void showSellHistory(Store store) {
+<span class="nc bnc" id="L229" title="All 2 branches missed.">		if (store.getItemsAndUpgradesSold().size() &gt; 0) {</span>
+<span class="nc" id="L230">			String itemsOrUpgradesToString = TRADABLES_HEADER;</span>
+<span class="nc" id="L231">			int index = 1;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">			for (StoreTradable storeTradable : store.getItemsAndUpgradesSold()) {</span>
+<span class="nc" id="L233">				itemsOrUpgradesToString += getDescriptionHistorySold(index, storeTradable);</span>
+<span class="nc" id="L234">				index++;</span>
+			}
+<span class="nc" id="L236">			messageHelper.printMessage(itemsOrUpgradesToString);</span>
+<span class="nc" id="L237">		} else {</span>
+<span class="nc" id="L238">			messageHelper.printMessage(&quot;No item sold to the store!&quot;);</span>
+		}
+<span class="nc" id="L240">	}</span>
+
+	private String getUpgradeItemsToBuy(boolean showItems, Island currentIsland) {
+<span class="nc" id="L243">		String itemsOrUpgradesToString = GO_BACK + TRADABLES_HEADER;</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		for (StoreTradable storeTradable : currentIsland.getStore().getItemsAndUpgradesToSell()) {</span>
+<span class="nc bnc" id="L245" title="All 4 branches missed.">			if (((showItems &amp;&amp; storeTradable.getTradable() instanceof Item)</span>
+<span class="nc bnc" id="L246" title="All 4 branches missed.">					|| (!showItems &amp;&amp; storeTradable.getTradable() instanceof Upgrade))</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">					&amp;&amp; storeTradable.getQuantity() &gt; 0) {</span>
+<span class="nc" id="L248">				itemsOrUpgradesToString += getDescriptionTraderBuying(storeTradable.getIdNumber(), storeTradable);</span>
+			}
+		}
+<span class="nc" id="L251">		return itemsOrUpgradesToString;</span>
+	}
+
+	private String getUpgradeItemsToSell(boolean showItems, Island currentIsland) {
+<span class="nc" id="L255">		String itemsOrUpgradesToString = GO_BACK + TRADABLES_HEADER;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		for (StoreTradable storeTradable : currentIsland.getStore().getItemsAndUpgradesToBuy()) {</span>
+<span class="nc bnc" id="L257" title="All 4 branches missed.">			if (((showItems &amp;&amp; storeTradable.getTradable() instanceof Item)</span>
+<span class="nc bnc" id="L258" title="All 4 branches missed.">					|| (!showItems &amp;&amp; storeTradable.getTradable() instanceof Upgrade))</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">					&amp;&amp; storeTradable.getQuantity() &gt; 0) {</span>
+<span class="nc" id="L260">				itemsOrUpgradesToString += getDescriptionTraderSelling(storeTradable.getIdNumber(), storeTradable);</span>
+			}
+		}
+<span class="nc" id="L263">		return itemsOrUpgradesToString;</span>
+	}
+
+	public String getItemsTraderCanBuy(Island currentIsland) {
+<span class="nc" id="L267">		String header = &quot;Inform the item id you wish to buy: \n&quot;;</span>
+<span class="nc" id="L268">		return header + getUpgradeItemsToBuy(true, currentIsland);</span>
+	}
+
+	public String getUpgradesTraderCanBuy(Island currentIsland) {
+<span class="nc" id="L272">		String header = &quot;Inform the number of the upgrades you wish to buy: \n&quot;;</span>
+<span class="nc" id="L273">		return header + getUpgradeItemsToBuy(false, currentIsland);</span>
+	}
+
+	public String getItemsTraderCanSell(Island currentIsland) {
+<span class="nc" id="L277">		String header = &quot;Inform the number of the items you wish to sell: \n&quot;;</span>
+<span class="nc" id="L278">		return header + getUpgradeItemsToSell(true, currentIsland);</span>
+	}
+
+	public String getUpgradesTraderCanSell(Island currentIsland) {
+<span class="nc" id="L282">		String header = &quot;Inform the uograde id you wish to sell: \n&quot;;</span>
+<span class="nc" id="L283">		return header + getUpgradeItemsToSell(false, currentIsland);</span>
+	}
+
+	public StoreTradable getStoreTradableFromStoreTradableId(int idNumber, ArrayList&lt;StoreTradable&gt; storeTradables,
+			boolean isItem) {
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		for (StoreTradable storeTradable : storeTradables) {</span>
+<span class="nc bnc" id="L289" title="All 4 branches missed.">			if (((isItem &amp;&amp; storeTradable.getTradable() instanceof Item)</span>
+<span class="nc bnc" id="L290" title="All 4 branches missed.">					|| (!isItem &amp;&amp; storeTradable.getTradable() instanceof Upgrade))</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">					&amp;&amp; storeTradable.getIdNumber() == idNumber) {</span>
+<span class="nc" id="L292">				return storeTradable;</span>
+			}
+		}
+<span class="nc" id="L295">		return null;</span>
+	}
+
+	public StoreTradable getStoreTradableFromTradableId(int idNumber, ArrayList&lt;StoreTradable&gt; storeTradables) {
+<span class="nc bnc" id="L299" title="All 2 branches missed.">		for (StoreTradable storeTradable : storeTradables) {</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">			if (storeTradable.getTradable().getIdNumber() == idNumber) {</span>
+<span class="nc" id="L301">				return storeTradable;</span>
+			}
+		}
+<span class="nc" id="L304">		return null;</span>
+	}
+
+	private String getDescriptionHistoryBought(int idNumber, StoreTradable storeTradable) {
+<span class="nc" id="L308">		return String.format(&quot;%d - You bought %d %s, it costed $%.2f\n&quot;, idNumber, storeTradable.getQuantity(),</span>
+<span class="nc" id="L309">				storeTradable.getName(), storeTradable.getPrice());</span>
+	}
+
+	private String getDescriptionHistorySold(int idNumber, StoreTradable storeTradable) {
+<span class="nc" id="L313">		return String.format(&quot;%d - You sold %d %s, giving you $%.2f\n&quot;, idNumber, storeTradable.getQuantity(),</span>
+<span class="nc" id="L314">				storeTradable.getName(), storeTradable.getPrice());</span>
+	}
+
+	private String getDescriptionTraderBuying(int idNumber, StoreTradable storeTradable) {
+<span class="nc bnc" id="L318" title="All 2 branches missed.">		if (storeTradable.getTradable() instanceof Upgrade) {</span>
+<span class="nc" id="L319">			Upgrade upgrade = (Upgrade) storeTradable.getTradable();</span>
+<span class="nc" id="L320">			String baseTemplate = &quot;%d - %s, %s, it costs $%.2f (%d available).&quot;;</span>
+<span class="nc" id="L321">			baseTemplate += &quot; Features: Speed +%d, Cargo Capacity +%d kg, Sneakiness +%d and Endurance +%d&quot;;</span>
+<span class="nc" id="L322">			return String.format(baseTemplate + &quot;\n&quot;, idNumber, storeTradable.getName(), storeTradable.getDescription(),</span>
+<span class="nc" id="L323">					storeTradable.getPrice(), storeTradable.getQuantity(), upgrade.getIncreaseSpeed(),</span>
+<span class="nc" id="L324">					upgrade.getIncreaseCargoCapacity(), upgrade.getIncreaseSneakiness(),</span>
+<span class="nc" id="L325">					upgrade.getIncreaseEndurance());</span>
+		} else {
+<span class="nc" id="L327">			Item item = (Item) storeTradable.getTradable();</span>
+<span class="nc" id="L328">			String baseFormat = &quot;%d - %s, %s, it weights %.1f kg, it costs $%.2f (%d available).&quot;;</span>
+<span class="nc" id="L329">			return String.format(baseFormat + &quot;\n&quot;, idNumber, storeTradable.getName(), storeTradable.getDescription(),</span>
+<span class="nc" id="L330">					item.getWeight(), storeTradable.getPrice(), storeTradable.getQuantity());</span>
+		}
+	}
+
+	private String getDescriptionTraderSelling(int idNumber, StoreTradable storeTradable) {
+<span class="nc bnc" id="L335" title="All 2 branches missed.">		if (storeTradable.getTradable() instanceof Upgrade) {</span>
+<span class="nc" id="L336">			String baseTemplate = &quot;%d - %s, %s, and the store will buy it from you for $%.2f (store can buy only %d)&quot;;</span>
+<span class="nc" id="L337">			Upgrade upgrade = (Upgrade) storeTradable.getTradable();</span>
+<span class="nc" id="L338">			baseTemplate += &quot;. Features: Speed -%d, Cargo Capacity -%d, Sneakiness -%d and Endurance -%d&quot;;</span>
+<span class="nc" id="L339">			return String.format(baseTemplate + &quot;\n&quot;, idNumber, storeTradable.getName(), storeTradable.getDescription(),</span>
+<span class="nc" id="L340">					storeTradable.getPrice(), storeTradable.getQuantity(), upgrade.getIncreaseSpeed(),</span>
+<span class="nc" id="L341">					upgrade.getIncreaseCargoCapacity(), upgrade.getIncreaseSneakiness(),</span>
+<span class="nc" id="L342">					upgrade.getIncreaseEndurance());</span>
+		} else {
+<span class="nc" id="L344">			Item item = (Item) storeTradable.getTradable();</span>
+<span class="nc" id="L345">			String baseFormat = &quot;%d - %s, %s, it weights %.1f kg and the store will buy it from you for $%.2f (store can buy only %d)&quot;;</span>
+<span class="nc" id="L346">			return String.format(baseFormat + &quot;\n&quot;, idNumber, storeTradable.getName(), storeTradable.getDescription(),</span>
+<span class="nc" id="L347">					item.getWeight(), storeTradable.getPrice(), storeTradable.getQuantity());</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

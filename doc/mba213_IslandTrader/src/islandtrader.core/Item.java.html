@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Item.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Item.java</span></div><h1>Item.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+/**
+ * Represents an Item of type Tradable that will be traded between Store and
+ * Trader. Trader has to sell Item to make profit.
+ *
+ * @author Maria Heloisa Balzaretti.
+ */
+public class Item extends Tradable {
+
+	/**
+	 * weight of the item is used to calculate the space that the cargo hold
+	 * capacity has available or used.
+	 */
+	private float weight;
+
+	/**
+	 * Creates a new Item Object of type Tradable.
+	 *
+	 * @param idNumber    this Item id number
+	 * @param name        this Item name
+	 * @param description this Item description
+	 * @param priceToBuy  this Item price to buy
+	 * @param priceToSell this Item price to sell
+	 * @param weight      this Item weight
+	 */
+	public Item(int idNumber, String name, String description, float priceToBuy, float priceToSell, float weight) {
+<span class="fc" id="L32">		super(name, description, priceToBuy, priceToSell, idNumber);</span>
+<span class="fc" id="L33">		this.weight = weight;</span>
+<span class="fc" id="L34">	}</span>
+
+	/**
+	 * Gets the weight of this Item.
+	 *
+	 * @return this Tradable's weight.
+	 */
+	public float getWeight() {
+<span class="nc" id="L42">		return weight;</span>
+	}
+
+	/**
+	 * Changes the weight of this Item.
+	 *
+	 * @param weight This Item's new weight.
+	 */
+	public void setWeight(float weight) {
+<span class="nc" id="L51">		this.weight = weight;</span>
+<span class="nc" id="L52">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

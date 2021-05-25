@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GameEnvironmentCmdLine.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.cmd</a> &gt; <span class="el_source">GameEnvironmentCmdLine.java</span></div><h1>GameEnvironmentCmdLine.java</h1><pre class="source lang-java linenums">/**
+ *
+ */
+package islandtrader.ui.cmd;
+
+import java.util.ArrayList;
+
+import islandtrader.core.GameEnvironment;
+import islandtrader.core.Island;
+import islandtrader.core.Pirate;
+import islandtrader.core.RandomEvent;
+import islandtrader.core.Route;
+import islandtrader.core.Ship;
+import islandtrader.core.StoreTradable;
+import islandtrader.core.Trader;
+import repository.IslandRepository;
+import repository.ShipRepository;
+
+/**
+ * Creates the command line application
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+
+public class GameEnvironmentCmdLine extends GameEnvironment {
+<span class="nc" id="L27">	private final String YOU_ARE_HERE_MESSAGE = &quot; - [%s - You are already here!]\n&quot;;</span>
+<span class="nc" id="L28">	private final String ROUTE_MENU_HEADING = &quot;Choose one of the available routes leaving from %s:\n0 - [Go back]\nIslandId - Route information\n&quot;;</span>
+<span class="nc" id="L29">	private final String ROUTE_MENU_LINE_MESSAGE = &quot; - %d days of sailing with a total cost of %.2f$ to get %s\n&quot;;</span>
+<span class="nc" id="L30">	private final String ARRIVED_DESTINY_MESSAGE = &quot;You sailed %d days to %s and it cost you $ %.2f to get here!\n&quot;;</span>
+<span class="nc" id="L31">	private final String GO_BACK_MENU_OPTION = &quot;0 - Go back\n&quot;;</span>
+
+	private GameEnvironmentStoreHelper storeHelper;
+	private GameEnvironmentMessageHelper messageHelper;
+<span class="nc" id="L35">	private final String INVALID_OPTION_MESSAGE = &quot;Invalid Option!&quot;;</span>
+
+	/**
+	 * Creates a new command line application
+	 */
+<span class="nc" id="L40">	public GameEnvironmentCmdLine() {</span>
+<span class="nc" id="L41">		IslandRepository islandRepository = new IslandRepository();</span>
+<span class="nc" id="L42">		this.availableIslands = islandRepository.getList();</span>
+<span class="nc" id="L43">		this.storeHelper = new GameEnvironmentStoreHelper();</span>
+<span class="nc" id="L44">		this.messageHelper = new GameEnvironmentMessageHelper();</span>
+<span class="nc" id="L45">	}</span>
+
+	/**
+	 * Set trader up to start the game at island 1 - Phuket or at a randim island.
+	 */
+	@Override
+	public void startGame() {
+<span class="nc" id="L52">		setupTrader();</span>
+<span class="nc" id="L53">		setDuration();</span>
+<span class="nc" id="L54">		currentIsland = getRandomIsland();</span>
+<span class="nc" id="L55">		messageHelper.printMessage(&quot;Game started!&quot;);</span>
+<span class="nc" id="L56">		showMainMenu();</span>
+<span class="nc" id="L57">	}</span>
+
+	private void showMainMenu() {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		while (canStillPlay()) {</span>
+<span class="nc" id="L61">			showTraderCurrentInformation();</span>
+<span class="nc" id="L62">			int option = messageHelper.readInputInteger(getMainMenuMessage());</span>
+<span class="nc bnc" id="L63" title="All 10 branches missed.">			switch (option) {</span>
+			case 0:
+<span class="nc" id="L65">				messageHelper.printMessage(&quot;Game finished!&quot;);</span>
+<span class="nc" id="L66">				return;</span>
+			case 1:
+<span class="nc" id="L68">				storeHelper.viewHistoryTraderGoods(availableIslands);</span>
+<span class="nc" id="L69">				break;</span>
+			case 2:
+<span class="nc" id="L71">				viewIslands();</span>
+<span class="nc" id="L72">				break;</span>
+			case 3:
+<span class="nc" id="L74">				viewCurrentIslandRoutes();</span>
+<span class="nc" id="L75">				break;</span>
+			case 4:
+<span class="nc" id="L77">				showStoreMenu();</span>
+<span class="nc" id="L78">				break;</span>
+			case 5:
+<span class="nc" id="L80">				viewShip();</span>
+<span class="nc" id="L81">				break;</span>
+			case 6:
+<span class="nc" id="L83">				viewTraderCurrentGoods();</span>
+<span class="nc" id="L84">				break;</span>
+			case 7:
+<span class="nc" id="L86">				repairShip();</span>
+<span class="nc" id="L87">				break;</span>
+			case 8:
+<span class="nc" id="L89">				showSailMenu();</span>
+<span class="nc" id="L90">				break;</span>
+			default:
+<span class="nc" id="L92">				messageHelper.printMessage(INVALID_OPTION_MESSAGE);</span>
+			}
+		}
+<span class="nc" id="L95">	}</span>
+
+	private String getMainMenuMessage() {
+<span class="nc" id="L98">		String menu = &quot;Choose what you want to do next:\n&quot;;</span>
+<span class="nc" id="L99">		menu += &quot;0 - Quit\n&quot;;</span>
+<span class="nc" id="L100">		menu += &quot;1 - View History Trader Goods\n&quot;;</span>
+<span class="nc" id="L101">		menu += &quot;2 - View Islands\n&quot;;</span>
+<span class="nc" id="L102">		menu += &quot;3 - View Current Island Routes\n&quot;;</span>
+<span class="nc" id="L103">		menu += &quot;4 - View Store\n&quot;;</span>
+<span class="nc" id="L104">		menu += &quot;5 - View Ship\n&quot;;</span>
+<span class="nc" id="L105">		menu += &quot;6 - View your goods\n&quot;;</span>
+<span class="nc" id="L106">		menu += &quot;7 - Repair Ship\n&quot;;</span>
+<span class="nc" id="L107">		menu += &quot;8 - Sail\n&quot;;</span>
+<span class="nc" id="L108">		return menu;</span>
+	}
+
+	private void setDuration() {
+<span class="nc" id="L112">		String durationMessage = String.format(&quot;Please provide the game duration between %d and %d:&quot;, MINIMUM_DURATION,</span>
+<span class="nc" id="L113">				MAXIMUM_DURATION);</span>
+<span class="nc" id="L114">		durationChosenInDays = messageHelper.readInputInteger(durationMessage);</span>
+<span class="nc bnc" id="L115" title="All 4 branches missed.">		while (durationChosenInDays &lt; MINIMUM_DURATION || durationChosenInDays &gt; MAXIMUM_DURATION) {</span>
+<span class="nc" id="L116">			messageHelper.printMessage(&quot;Invalid!\n&quot;);</span>
+<span class="nc" id="L117">			durationChosenInDays = messageHelper.readInputInteger(durationMessage);</span>
+		}
+<span class="nc" id="L119">	}</span>
+
+	private void setupTrader() {
+<span class="nc" id="L122">		String nameMessage = &quot;Please provide your name:&quot;;</span>
+		// validate valid selection
+<span class="nc" id="L124">		String selectedName = messageHelper.readInput(nameMessage);</span>
+
+<span class="nc" id="L126">		ShipRepository shipRepository = new ShipRepository();</span>
+<span class="nc" id="L127">		ArrayList&lt;Ship&gt; ships = shipRepository.getList();</span>
+<span class="nc" id="L128">		String shipMessage = &quot;Please select one of the following ships:\n&quot;;</span>
+
+<span class="nc" id="L130">		String shipMessageTemplate = &quot;%d - %s. Speed %.1f. Endurance %d. Sneakiness %d \n&quot;;</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		for (int indexShip = 0; indexShip &lt; ships.size(); indexShip++) {</span>
+<span class="nc" id="L133">			Ship ship = ships.get(indexShip);</span>
+<span class="nc" id="L134">			shipMessage += String.format(shipMessageTemplate, indexShip, ship.getName(), ship.getSailSpeed(),</span>
+<span class="nc" id="L135">					ship.getEndurance(), ship.getSneakiness());</span>
+		}
+		// validate valid selection
+<span class="nc" id="L138">		int selectedShipInt = messageHelper.readInputInteger(shipMessage);</span>
+<span class="nc bnc" id="L139" title="All 4 branches missed.">		while (selectedShipInt &lt; 0 || selectedShipInt &gt;= ships.size()) {</span>
+<span class="nc" id="L140">			messageHelper.printMessage(&quot;Invalid!\n&quot;);</span>
+<span class="nc" id="L141">			selectedShipInt = messageHelper.readInputInteger(shipMessage);</span>
+		}
+<span class="nc" id="L143">		Ship selectedShip = ships.get(selectedShipInt);</span>
+
+<span class="nc" id="L145">		trader = new Trader(selectedName, &quot;Very Brave Sailer&quot;, selectedShip);</span>
+<span class="nc" id="L146">	}</span>
+
+	private void showTraderCurrentInformation() {
+<span class="nc" id="L149">		double shiphealth = trader.getShipOwned().getCurrentHealthStatus();</span>
+<span class="nc" id="L150">		double traderAccountBalance = trader.getTraderAccountBalance();</span>
+<span class="nc" id="L151">		String shipName = trader.getShipOwned().getName();</span>
+<span class="nc" id="L152">		String traderInformation = &quot;%s, &quot;;</span>
+<span class="nc" id="L153">		traderInformation += &quot;you currently have  %.2f $ available.\n&quot;;</span>
+<span class="nc" id="L154">		traderInformation += &quot;Your ship %s is at %.2f %% Health.\n&quot;;</span>
+<span class="nc" id="L155">		traderInformation += &quot;You are docked at %s.\n&quot;;</span>
+<span class="nc" id="L156">		traderInformation += &quot;You already traveled a total of %d days.\n&quot;;</span>
+<span class="nc" id="L157">		traderInformation += &quot;You have %d remaining days to sail!\n&quot;;</span>
+<span class="nc" id="L158">		messageHelper.printMessage(String.format(traderInformation, trader.getName(), traderAccountBalance, shipName,</span>
+<span class="nc" id="L159">				shiphealth, currentIsland.getName(), daysElapsed, getDaysRemaining()));</span>
+<span class="nc" id="L160">	}</span>
+
+	private void viewTraderCurrentGoods() {
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (trader.getShipOwned().getCurrentCargoTradables().size() &gt; 0) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			for (StoreTradable storeTradable : trader.getShipOwned().getCurrentCargoTradables()) {</span>
+<span class="nc" id="L165">				String template = &quot;%d - %s, %s. Quantity: %d\n&quot;;</span>
+<span class="nc" id="L166">				messageHelper.printMessage(String.format(template, storeTradable.getIdNumber(), storeTradable.getName(),</span>
+<span class="nc" id="L167">						storeTradable.getDescription(), storeTradable.getQuantity()));</span>
+			}
+<span class="nc" id="L169">		} else {</span>
+<span class="nc" id="L170">			messageHelper.printMessage(&quot;No items.&quot;);</span>
+		}
+<span class="nc" id="L172">	}</span>
+
+	private void viewIslands() {
+<span class="nc" id="L175">		messageHelper.printMessage(availableIslands.toString());</span>
+
+<span class="nc" id="L177">	}</span>
+
+	private void viewCurrentIslandRoutes() {
+<span class="nc" id="L180">		messageHelper.printMessage(&quot;Available routes leaving from &quot; + currentIsland.getName() + &quot;:&quot;);</span>
+<span class="nc" id="L181">		messageHelper.printMessage(getRoutesToString());</span>
+<span class="nc" id="L182">	}</span>
+
+	private void showStoreMenu() {
+<span class="nc" id="L185">		messageHelper.printMessage(currentIsland.getStore().getDescription());</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		while (canStillPlay()) {</span>
+<span class="nc" id="L187">			int option = messageHelper.readInputInteger(storeHelper.getStoreMenuMessage());</span>
+<span class="nc bnc" id="L188" title="All 8 branches missed.">			switch (option) {</span>
+			case 0:
+<span class="nc" id="L190">				messageHelper.printMessage(&quot;Left store&quot;);</span>
+<span class="nc" id="L191">				return;</span>
+			case 1:
+<span class="nc" id="L193">				buyItemsFromStore();</span>
+<span class="nc" id="L194">				break;</span>
+			case 2:
+<span class="nc" id="L196">				sellItemsToStore();</span>
+<span class="nc" id="L197">				break;</span>
+			case 3:
+<span class="nc" id="L199">				buyUpgradesFromStore();</span>
+<span class="nc" id="L200">				break;</span>
+			case 4:
+<span class="nc" id="L202">				sellUpgradesToStore();</span>
+<span class="nc" id="L203">				break;</span>
+			case 5:
+<span class="nc" id="L205">				storeHelper.showBuyHistory(currentIsland.getStore());</span>
+<span class="nc" id="L206">				break;</span>
+			case 6:
+<span class="nc" id="L208">				storeHelper.showSellHistory(currentIsland.getStore());</span>
+<span class="nc" id="L209">				break;</span>
+			default:
+<span class="nc" id="L211">				messageHelper.printMessage(INVALID_OPTION_MESSAGE);</span>
+			}
+		}
+<span class="nc" id="L214">	}</span>
+
+	private void buyUpgradesFromStore() {
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		while (canStillPlay()) {</span>
+<span class="nc" id="L218">			int option = messageHelper.readInputInteger(storeHelper.getUpgradesTraderCanBuy(currentIsland));</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">			if (option == 0) {</span>
+<span class="nc" id="L220">				return;</span>
+			} else {
+<span class="nc" id="L222">				StoreTradable storeTradable = storeHelper.getStoreTradableFromStoreTradableId(option,</span>
+<span class="nc" id="L223">						this.currentIsland.getStore().getItemsAndUpgradesToSell(), false);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">				if (storeTradable == null) {</span>
+<span class="nc" id="L225">					messageHelper.printMessage(&quot;Upgrade not found!&quot;);</span>
+<span class="nc" id="L226">				} else {</span>
+<span class="nc" id="L227">					storeHelper.buyTradableFromStore(trader, currentIsland.getStore(), storeTradable);</span>
+				}
+<span class="nc" id="L229">				return;</span>
+			}
+		}
+<span class="nc" id="L232">	}</span>
+
+	private void sellUpgradesToStore() {
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		while (canStillPlay()) {</span>
+<span class="nc" id="L236">			int option = messageHelper.readInputInteger(storeHelper.getUpgradesTraderCanSell(currentIsland));</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">			if (option == 0) {</span>
+<span class="nc" id="L238">				return;</span>
+			} else {
+<span class="nc" id="L240">				StoreTradable storeTradable = storeHelper.getStoreTradableFromStoreTradableId(option,</span>
+<span class="nc" id="L241">						this.currentIsland.getStore().getItemsAndUpgradesToBuy(), false);</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">				if (storeTradable == null) {</span>
+<span class="nc" id="L243">					messageHelper.printMessage(&quot;Upgrade not found!&quot;);</span>
+<span class="nc" id="L244">				} else {</span>
+<span class="nc" id="L245">					storeHelper.sellTradableToStore(trader, currentIsland.getStore(), storeTradable);</span>
+<span class="nc" id="L246">					return;</span>
+				}
+			}
+		}
+<span class="nc" id="L250">	}</span>
+
+	private void buyItemsFromStore() {
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		while (canStillPlay()) {</span>
+<span class="nc" id="L254">			int option = messageHelper.readInputInteger(storeHelper.getItemsTraderCanBuy(currentIsland));</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">			if (option == 0) {</span>
+<span class="nc" id="L256">				return;</span>
+			} else {
+<span class="nc" id="L258">				StoreTradable storeTradable = storeHelper.getStoreTradableFromStoreTradableId(option,</span>
+<span class="nc" id="L259">						this.currentIsland.getStore().getItemsAndUpgradesToSell(), true);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">				if (storeTradable == null) {</span>
+<span class="nc" id="L261">					messageHelper.printMessage(&quot;Item not found!&quot;);</span>
+<span class="nc" id="L262">				} else {</span>
+<span class="nc" id="L263">					storeHelper.buyTradableFromStore(trader, currentIsland.getStore(), storeTradable);</span>
+<span class="nc" id="L264">					return;</span>
+				}
+			}
+		}
+<span class="nc" id="L268">	}</span>
+
+	private void sellItemsToStore() {
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		while (canStillPlay()) {</span>
+<span class="nc" id="L272">			int option = messageHelper.readInputInteger(storeHelper.getItemsTraderCanSell(this.currentIsland));</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">			if (option == 0) {</span>
+<span class="nc" id="L274">				return;</span>
+			} else {
+<span class="nc" id="L276">				StoreTradable storeTradable = storeHelper.getStoreTradableFromStoreTradableId(option,</span>
+<span class="nc" id="L277">						this.currentIsland.getStore().getItemsAndUpgradesToBuy(), true);</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">				if (storeTradable == null) {</span>
+<span class="nc" id="L279">					messageHelper.printMessage(&quot;Item not found!&quot;);</span>
+<span class="nc" id="L280">				} else {</span>
+<span class="nc" id="L281">					storeHelper.sellTradableToStore(trader, currentIsland.getStore(), storeTradable);</span>
+<span class="nc" id="L282">					return;</span>
+				}
+			}
+		}
+<span class="nc" id="L286">	}</span>
+
+	private void viewShip() {
+<span class="nc" id="L289">		messageHelper.printMessage(trader.getShipOwned().getName());</span>
+<span class="nc" id="L290">	}</span>
+
+	private void repairShip() {
+<span class="nc" id="L293">		double shipHealth = trader.getShipOwned().getCurrentHealthStatus();</span>
+<span class="nc" id="L294">		double totalDiscount = 100 - shipHealth;</span>
+<span class="nc" id="L295">		String messageTemplate = &quot;Repairing ship. Its current health is %.2f. It will cost you %.2f $ to repair.&quot;;</span>
+<span class="nc" id="L296">		messageHelper.printMessage(String.format(messageTemplate, shipHealth, totalDiscount));</span>
+<span class="nc" id="L297">		trader.getShipOwned().repair();</span>
+<span class="nc" id="L298">		trader.removeAmountFromBalance(totalDiscount);</span>
+<span class="nc" id="L299">	}</span>
+
+	private void sail(int selectedIslandId) {
+<span class="nc" id="L302">		int selectedIslandIndex = getIslandIndexById(selectedIslandId);</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">		if (currentIsland.getRoutes()[selectedIslandIndex] == null) {</span>
+<span class="nc" id="L304">			messageHelper.printMessage(String.format(YOU_ARE_HERE_MESSAGE, currentIsland.getName()));</span>
+<span class="nc" id="L305">			return;</span>
+		} else {
+<span class="nc" id="L307">			setSailHelper(selectedIslandIndex);</span>
+		}
+<span class="nc" id="L309">	}</span>
+
+	/**
+	 * @param selectedIslandIndex
+	 */
+	private void setSailHelper(int selectedIslandIndex) {
+<span class="nc" id="L315">		Island selectedIsland = availableIslands.get(selectedIslandIndex);</span>
+<span class="nc" id="L316">		int days = currentIsland.getDistanceToAnotherIslandInDays(selectedIslandIndex);</span>
+<span class="nc" id="L317">		double shipHealth = trader.getShipOwned().getCurrentHealthStatus();</span>
+<span class="nc" id="L318">		double costToSail = trader.getShipOwned().getCrewCostToSailByTotalDays(days);</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		if (shipHealth &lt; 100) {</span>
+<span class="nc" id="L320">			messageHelper.printMessage(&quot;You first need to repair your ship to sail!&quot;);</span>
+<span class="nc" id="L321">			return;</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		} else if (trader.getTraderAccountBalance() &lt; costToSail) {</span>
+<span class="nc" id="L323">			messageHelper.printMessage(&quot;You don't have enough money to pay your crew for this many days sailing!&quot;);</span>
+
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		} else if (days &gt; getDaysRemaining()) {</span>
+<span class="nc" id="L326">			messageHelper.printMessage(&quot;You don't have enough time to afford this many days sailing!&quot;);</span>
+<span class="nc" id="L327">		} else {</span>
+<span class="nc" id="L328">			randomEventHappenedHelper(selectedIslandIndex);</span>
+<span class="nc" id="L329">			successifullySailedToAnotherIsland(selectedIsland, days, costToSail);</span>
+		}
+<span class="nc" id="L331">	}</span>
+
+	/**
+	 * @param selectedIslandIndex
+	 */
+	private void randomEventHappenedHelper(int selectedIslandIndex) {
+<span class="nc" id="L337">		RandomEvent randomEvent = getEventFromListOfPossibleEvents(</span>
+<span class="nc" id="L338">				currentIsland.getRoutes()[selectedIslandIndex].getPossibleEvents());</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		if (randomEvent != null) {</span>
+<span class="nc" id="L340">			messageHelper.printMessage(randomEvent.encounterMessage());</span>
+<span class="nc" id="L341">			randomEvent.randomEventSpecificAction(trader);</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">			if (randomEvent instanceof Pirate) {</span>
+<span class="nc" id="L343">				randomEventIsPirateHelper(randomEvent);</span>
+<span class="nc" id="L344">			} else {</span>
+<span class="nc" id="L345">				messageHelper.printMessage(randomEvent.resultOfEncounterMessage());</span>
+			}
+
+<span class="nc" id="L348">		} else {</span>
+<span class="nc" id="L349">			messageHelper.printMessage(&quot;You did not encounter any interesting things during your travel...&quot;);</span>
+		}
+<span class="nc" id="L351">	}</span>
+
+	/**
+	 * @param randomEvent
+	 */
+	private void randomEventIsPirateHelper(RandomEvent randomEvent) {
+<span class="nc" id="L357">		messageHelper.printMessage(randomEvent.resultOfEncounterMessage());</span>
+<span class="nc" id="L358">		Pirate pirate = (Pirate) randomEvent;</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">		if (pirate.isTraderCouldEscape()) {</span>
+<span class="nc" id="L360">			messageHelper.printMessage(pirate.getMessageScapedFromPirate());</span>
+<span class="nc" id="L361">		} else {</span>
+<span class="nc" id="L362">			messageHelper.printMessage(pirate.getMessagePirateTakeAllGoods());</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">			if (pirate.isPirateHappy()) {</span>
+<span class="nc" id="L364">				messageHelper.printMessage(pirate.getMessagePirateHappy());</span>
+<span class="nc" id="L365">			} else {</span>
+<span class="nc" id="L366">				pirateMadeTraderWalkThePlank(pirate);</span>
+			}
+		}
+<span class="nc" id="L369">	}</span>
+
+	/**
+	 * @param pirate
+	 */
+	private void pirateMadeTraderWalkThePlank(Pirate pirate) {
+<span class="nc" id="L375">		messageHelper.printMessage(pirate.getMessageWalkPlank());</span>
+<span class="nc" id="L376">		isGameOver = true;</span>
+<span class="nc" id="L377">		messageHelper.printMessage(&quot;Game over&quot;);</span>
+<span class="nc" id="L378">	}</span>
+
+	/**
+	 * @param selectedIsland
+	 * @param days
+	 * @param costToSail
+	 */
+	private void successifullySailedToAnotherIsland(Island selectedIsland, int days, double costToSail) {
+<span class="nc" id="L386">		trader.removeAmountFromBalance(costToSail);</span>
+<span class="nc" id="L387">		daysElapsed += days;</span>
+<span class="nc" id="L388">		currentIsland = selectedIsland;</span>
+<span class="nc" id="L389">		messageHelper.printMessage(String.format(ARRIVED_DESTINY_MESSAGE, days, currentIsland.getName(), costToSail));</span>
+<span class="nc" id="L390">	}</span>
+
+	private void showSailMenu() {
+<span class="nc bnc" id="L393" title="All 2 branches missed.">		while (canStillPlay()) {</span>
+<span class="nc" id="L394">			int option = messageHelper.readInputInteger(getSailMenuMessage());</span>
+
+<span class="nc bnc" id="L396" title="All 5 branches missed.">			switch (option) {</span>
+			case 0:
+<span class="nc" id="L398">				return;</span>
+			case 1:
+<span class="nc" id="L400">				repairShip();</span>
+<span class="nc" id="L401">				break;</span>
+			case 2:
+<span class="nc" id="L403">				messageHelper.printMessage(getRoutesToString());</span>
+<span class="nc" id="L404">				break;</span>
+			case 3:
+<span class="nc bnc" id="L406" title="All 2 branches missed.">				if (showRoutesMenuAndLeave()) {</span>
+<span class="nc" id="L407">					return;</span>
+				}
+				break;
+			default:
+<span class="nc" id="L411">				messageHelper.printMessage(&quot;Invalid message&quot;);</span>
+<span class="nc" id="L412">				return;</span>
+			}
+		}
+<span class="nc" id="L415">	}</span>
+
+	private String getSailMenuMessage() {
+<span class="nc" id="L418">		String menu = &quot;Prepare to sail:\n&quot; + GO_BACK_MENU_OPTION;</span>
+<span class="nc" id="L419">		menu += &quot;1 - Repair Ship\n&quot;;</span>
+<span class="nc" id="L420">		menu += &quot;2 - View Current Island Routes\n&quot;;</span>
+<span class="nc" id="L421">		menu += &quot;3 - Sail! By choosing which route to take leaving from &quot; + currentIsland.getName() + &quot;\n&quot;;</span>
+<span class="nc" id="L422">		return menu;</span>
+	}
+
+	private int getIslandIndexById(int idNumberIsland) {
+<span class="nc bnc" id="L426" title="All 2 branches missed.">		for (int islandIndex = 0; islandIndex &lt; availableIslands.size(); islandIndex++) {</span>
+<span class="nc" id="L427">			Island island = availableIslands.get(islandIndex);</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">			if (island.getIdNumber() == idNumberIsland) {</span>
+<span class="nc" id="L429">				return islandIndex;</span>
+			}
+		}
+<span class="nc" id="L432">		return -1;</span>
+	}
+
+	private boolean showRoutesMenuAndLeave() {
+<span class="nc bnc" id="L436" title="All 2 branches missed.">		while (canStillPlay()) {</span>
+<span class="nc" id="L437">			int option = messageHelper.readInputInteger(getRoutesMenuMessage());</span>
+
+<span class="nc bnc" id="L439" title="All 2 branches missed.">			if (option == 0) {</span>
+<span class="nc" id="L440">				return false;</span>
+<span class="nc bnc" id="L441" title="All 4 branches missed.">			} else if (option &lt; 0 || option &gt; availableIslands.size()) {</span>
+<span class="nc" id="L442">				messageHelper.printMessage(&quot;Island not found in the archipelago!&quot;);</span>
+<span class="nc" id="L443">			} else {</span>
+<span class="nc" id="L444">				messageHelper.printMessage(&quot;Chosen island &quot; + option);</span>
+<span class="nc" id="L445">				sail(option);</span>
+<span class="nc" id="L446">				return true;</span>
+			}
+		}
+<span class="nc" id="L449">		return true;</span>
+	}
+
+	private String getRoutesMenuMessage() {
+<span class="nc" id="L453">		String menu = String.format(ROUTE_MENU_HEADING, currentIsland.getName());</span>
+<span class="nc" id="L454">		menu += getRoutesToString();</span>
+<span class="nc" id="L455">		return menu;</span>
+	}
+
+	private String getRoutesToString() {
+<span class="nc" id="L459">		String routesToString = &quot;&quot;;</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">		for (int routeIndex = 0; routeIndex &lt; currentIsland.getRoutes().length; routeIndex++) {</span>
+
+<span class="nc" id="L462">			Route route = currentIsland.getRoutes()[routeIndex];</span>
+<span class="nc" id="L463">			routesToString += availableIslands.get(routeIndex).getIdNumber();</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">			if (route != null) {</span>
+<span class="nc" id="L465">				int durationDays = currentIsland.getDistanceToAnotherIslandInDays(routeIndex);</span>
+<span class="nc" id="L466">				double totalCostCrewToSail = trader.getShipOwned().getCrewCostToSailByTotalDays(durationDays);</span>
+<span class="nc" id="L467">				routesToString += String.format(ROUTE_MENU_LINE_MESSAGE, durationDays, totalCostCrewToSail, route);</span>
+<span class="nc" id="L468">			} else {</span>
+<span class="nc" id="L469">				routesToString += String.format(YOU_ARE_HERE_MESSAGE, currentIsland.getName());</span>
+			}
+		}
+
+<span class="nc" id="L473">		return routesToString;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

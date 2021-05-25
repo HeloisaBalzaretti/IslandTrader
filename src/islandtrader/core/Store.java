@@ -52,6 +52,11 @@ public class Store extends Entity {
 	/**
 	 * Creates a new Store using parameters from Super(Entity) and the particular
 	 * store properties.
+	 *
+	 * @param name               this object name
+	 * @param description        this object description
+	 * @param storePercentageFee this object percentage fee to be applied
+	 * @param idNumber           this object unique identifier
 	 */
 	public Store(String name, String description, float storePercentageFee, int idNumber) {
 		super(idNumber, name, description);
@@ -114,7 +119,7 @@ public class Store extends Entity {
 	/**
 	 * Sets the collection of storeTradable (Item or Upgrade) sold in this Store
 	 *
-	 * @param itemsAndUpgradesSold
+	 * @param itemsAndUpgradesSold the Array to set with all tradables sold
 	 */
 	public void setItemsAndUpgradesSold(ArrayList<StoreTradable> itemsAndUpgradesSold) {
 		this.itemsAndUpgradesSold = itemsAndUpgradesSold;
@@ -185,9 +190,8 @@ public class Store extends Entity {
 	}
 
 	/**
-	 * @Override the toString method to return information about this Store. return
-	 *           name, description and the quantity of StoreTradables to sell and
-	 *           buy.
+	 * toString method to return information about this Store. return name,
+	 * description and the quantity of StoreTradables to sell and buy.
 	 */
 	@Override
 	public String toString() {

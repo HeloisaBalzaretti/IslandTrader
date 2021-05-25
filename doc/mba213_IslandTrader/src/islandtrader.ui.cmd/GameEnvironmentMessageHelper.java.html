@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GameEnvironmentMessageHelper.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.cmd</a> &gt; <span class="el_source">GameEnvironmentMessageHelper.java</span></div><h1>GameEnvironmentMessageHelper.java</h1><pre class="source lang-java linenums">package islandtrader.ui.cmd;
+
+import java.util.Scanner;
+
+/**
+ * Class to help the messages in the command line
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+<span class="nc" id="L11">public class GameEnvironmentMessageHelper {</span>
+	/**
+	 *
+	 * @param message to be printed
+	 * @return the input read
+	 */
+	public String readInput(String message) {
+<span class="nc" id="L18">		printMessage(message);</span>
+<span class="nc" id="L19">		Scanner sc = new Scanner(System.in);</span>
+<span class="nc" id="L20">		return sc.next();</span>
+	}
+
+	/**
+	 *
+	 * @param message to be printed
+	 */
+	public void printMessage(String message) {
+<span class="nc" id="L28">		System.out.println(message);</span>
+<span class="nc" id="L29">	}</span>
+
+	/**
+	 * read the input from user
+	 *
+	 * @param message to be read
+	 * @return the number from user input
+	 */
+	public int readInputInteger(String message) {
+<span class="nc" id="L38">		int intValue = -1;</span>
+		try {
+<span class="nc" id="L40">			intValue = Integer.parseInt(readInput(message));</span>
+<span class="nc" id="L41">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L42">			intValue = -1;</span>
+		}
+<span class="nc" id="L44">		return intValue;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

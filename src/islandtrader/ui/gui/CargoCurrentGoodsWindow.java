@@ -13,13 +13,26 @@ import javax.swing.SwingConstants;
 
 import islandtrader.core.StoreTradable;
 
+/**
+ * Creates the Window that shows the Ship cargo current goods
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
 public class CargoCurrentGoodsWindow {
-
+	/**
+	 * The window to show the current goods in the cargo of the Ship
+	 */
 	private JFrame cargoAllItemsWindow;
+	/**
+	 * The current game being played
+	 */
 	private GameEnvironmentSwing game;
 
 	/**
-	 * Create the application.
+	 * Create current Cargo goods window application.
+	 *
+	 * @param incomingGame the current game
 	 */
 	public CargoCurrentGoodsWindow(GameEnvironmentSwing incomingGame) {
 		game = incomingGame;
@@ -40,22 +53,22 @@ public class CargoCurrentGoodsWindow {
 		cargoAllItemsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		cargoAllItemsWindow.getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("You current goods available for trade");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 18));
-		lblNewLabel.setBounds(244, 10, 342, 30);
-		cargoAllItemsWindow.getContentPane().add(lblNewLabel);
+		JLabel lblTitle = new JLabel("You current goods available for trade");
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setFont(new Font("Serif", Font.BOLD, 18));
+		lblTitle.setBounds(244, 10, 342, 30);
+		cargoAllItemsWindow.getContentPane().add(lblTitle);
 
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(
+		JLabel lblShipImg = new JLabel("");
+		lblShipImg.setIcon(
 				new ImageIcon(CargoCurrentGoodsWindow.class.getResource("/islandtrader/images/shipWater1.png")));
-		lblNewLabel_1.setBounds(28, 60, 237, 250);
-		cargoAllItemsWindow.getContentPane().add(lblNewLabel_1);
+		lblShipImg.setBounds(28, 60, 237, 250);
+		cargoAllItemsWindow.getContentPane().add(lblShipImg);
 
-		JLabel lblNewLabel_2 = new JLabel("Current goods in my ship cargo:");
-		lblNewLabel_2.setFont(new Font("Serif", Font.BOLD, 14));
-		lblNewLabel_2.setBounds(281, 75, 263, 31);
-		cargoAllItemsWindow.getContentPane().add(lblNewLabel_2);
+		JLabel lblCurrentGoods = new JLabel("Current goods in my ship cargo:");
+		lblCurrentGoods.setFont(new Font("Serif", Font.BOLD, 14));
+		lblCurrentGoods.setBounds(281, 75, 263, 31);
+		cargoAllItemsWindow.getContentPane().add(lblCurrentGoods);
 		DefaultListModel<StoreTradable> tradablesListModel = new DefaultListModel<StoreTradable>();
 
 		tradablesListModel.addAll(game.getTrader().getShipOwned().getCurrentCargoTradables());

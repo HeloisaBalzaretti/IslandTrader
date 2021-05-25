@@ -65,9 +65,9 @@ public class UpgradeRepository extends BaseRepository {
 
 	/**
 	 * from baseRepository, this method is a helper method to the
-	 * getUpgrades(List<List<String>> upgradesList) and used to get the list of
-	 * sublists of Strings that represent the properties for the Upgrade. It removes
-	 * the first line that contains the headers/names of properties.
+	 * getUpgrades(upgradesList) and used to get the list of sublists of Strings
+	 * that represent the properties for the Upgrade. It removes the first line that
+	 * contains the headers/names of properties.
 	 */
 	@Override
 	public ArrayList<Upgrade> getList() {

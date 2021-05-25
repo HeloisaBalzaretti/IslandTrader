@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"islandtrader"},{"l":"islandtrader.core"},{"l":"islandtrader.ui.cmd"},{"l":"islandtrader.ui.gui"},{"l":"repository"},{"l":"service"},{"l":"test"}];updateSearchResults();

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">//Equivalent to Main
+
+package islandtrader;
+
+import islandtrader.ui.gui.GameEnvironmentSwing;
+
+/**
+ * Class where application execution begins. If {@code cmd} is passed as a
+ * program argument the application will run as command line application,
+ * otherwise a GUI will be used.
+ *
+ * @author Maria Balzaretti
+ *
+ */
+
+<span class="nc" id="L16">public class Main {</span>
+	/**
+	 * Application entry point for the Island Trader application.
+	 *
+	 * @param args The command line arguments. This application supports a single
+	 *             argument: {@code cmd}. If {@code cmd} is present the app will use
+	 *             a command line interface. When no argument is specified the app
+	 *             will use a graphical interface.
+	 */
+	public static void main(String[] args) {
+
+<span class="nc" id="L27">		GameEnvironmentSwing game = new GameEnvironmentSwing();</span>
+<span class="nc" id="L28">		game.startGame();</span>
+<span class="nc" id="L29">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

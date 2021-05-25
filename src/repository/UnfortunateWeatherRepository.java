@@ -28,10 +28,10 @@ public class UnfortunateWeatherRepository extends BaseRepository {
 	private final String UNFORTUNATE_WEATHER_CSV_FILEPATH = "csvFiles/unfortunateWeather.csv";
 
 	/**
-	 * A helper method to the getUnfortunateWeather(List<List<String>>
-	 * unfortunateWeatherList) and used to get the list of sublists of Strings that
-	 * represent the properties for the UnfortunateWeather. It removes the first
-	 * line that contains the headers/names of properties.
+	 * A helper method to the getUnfortunateWeather( unfortunateWeatherList) and
+	 * used to get the list of sublists of Strings that represent the properties for
+	 * the UnfortunateWeather. It removes the first line that contains the
+	 * headers/names of properties.
 	 */
 	@Override
 	public ArrayList<UnfortunateWeather> getList() {

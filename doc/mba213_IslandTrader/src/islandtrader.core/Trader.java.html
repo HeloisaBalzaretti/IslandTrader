@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Trader.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Trader.java</span></div><h1>Trader.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+/**
+ * A Trader Object used to represent the player and captain the Ship and trade
+ * StoreTradable goods
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class Trader extends Entity {
+
+	/**
+	 * Ship the Trader is captaining.
+	 */
+	private Ship shipOwned;
+
+	/**
+	 * Current money available for the Trader
+	 */
+	private double traderAccountBalance;
+
+	/**
+	 * Starting amount of money so the Trader can travel.
+	 */
+<span class="fc" id="L29">	private final double STARTING_MONEY = 12000;</span>
+
+	/**
+	 * Trader object to represent the player.
+	 *
+	 * @param name        this Trader name, chosen by the player name
+	 * @param description this Trader description, set by default
+	 * @param shipOwned   the ship chosen by the player to captain
+	 */
+	public Trader(String name, String description, Ship shipOwned) {
+<span class="fc" id="L39">		super(1, name, description);</span>
+<span class="fc" id="L40">		this.shipOwned = shipOwned;</span>
+<span class="fc" id="L41">		this.traderAccountBalance = STARTING_MONEY;</span>
+<span class="fc" id="L42">	}</span>
+
+	/**
+	 * @return the shipOwned
+	 */
+	public Ship getShipOwned() {
+<span class="fc" id="L48">		return shipOwned;</span>
+	}
+
+	/**
+	 * @param shipOwned the shipOwned to set
+	 */
+	public void setShipOwned(Ship shipOwned) {
+<span class="nc" id="L55">		this.shipOwned = shipOwned;</span>
+<span class="nc" id="L56">	}</span>
+
+	/**
+	 * @return the traderMoneyBalance
+	 */
+	public double getTraderAccountBalance() {
+<span class="fc" id="L62">		return this.traderAccountBalance;</span>
+	}
+
+	/**
+	 * Add amount to Trader AccountBalance when Trader sells goods.
+	 *
+	 * @param amount to add to balance
+	 */
+	public void addAmountToBalance(double amount) {
+<span class="fc" id="L71">		this.traderAccountBalance += amount;</span>
+<span class="fc" id="L72">	}</span>
+
+	/**
+	 * Remove amount from Trader AccountBalance when Trader buys goods and upgrades.
+	 *
+	 * @param amount to remove from balance
+	 */
+	public void removeAmountFromBalance(double amount) {
+<span class="nc" id="L80">		traderAccountBalance -= amount;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (this.traderAccountBalance &lt; 0) {</span>
+<span class="nc" id="L82">			this.traderAccountBalance = 0;</span>
+		}
+<span class="nc" id="L84">	}</span>
+
+	/**
+	 * Sets the Trader Account to zero when Trader looses to the Pirate RandomEvent
+	 */
+	public void cleanTraderAccountBalance() {
+<span class="nc" id="L90">		this.traderAccountBalance = 0;</span>
+<span class="nc" id="L91">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L95">		return String.format(&quot;%s, %s \nYou have %.2f $ available.&quot;, name, description, traderAccountBalance);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

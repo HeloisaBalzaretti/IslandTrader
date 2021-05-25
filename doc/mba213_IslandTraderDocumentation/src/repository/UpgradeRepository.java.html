@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UpgradeRepository.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">repository</a> &gt; <span class="el_source">UpgradeRepository.java</span></div><h1>UpgradeRepository.java</h1><pre class="source lang-java linenums">/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
+package repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import islandtrader.core.Upgrade;
+
+/**
+ * Represents a database of Upgrades, it is used to create an ArrayList of
+ * Upgrades, from upgrades.csv, that then will be given to the Stores to trade.
+ * Each constant property represents a property located at the index of the
+ * sublist that will be used to build the Upgrade.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+
+<span class="nc" id="L22">public class UpgradeRepository extends BaseRepository {</span>
+
+	/**
+	 * this Upgrade price that store will use to sell to the Trader is at index 3 of
+	 * the sublist of the upgradesList
+	 */
+<span class="nc" id="L28">	private final int PRICE_STORE_SELLS_TO_TRADER = 3;</span>
+
+	/**
+	 * this Upgrade price that store will use to buy to the Trader is at index 4 of
+	 * the sublist of the upgradesList
+	 */
+<span class="nc" id="L34">	private final int PRICE_STORE_BUYS_FROM_TRADER = 4;</span>
+
+	/**
+	 * this amount of speed that the upgrade will increase in the Ship is at index 5
+	 * of the sublist of the upgradesList
+	 */
+<span class="nc" id="L40">	private final int INCREASE_THE_SHIP_SPEED = 5;</span>
+
+	/**
+	 * this amount of sneakiness that the upgrade will increase in the Ship is at
+	 * index 6 of the sublist of the upgradesList
+	 */
+<span class="nc" id="L46">	private final int INCREASE_THE_SHIP_SNEAKINEES = 6;</span>
+
+	/**
+	 * this amount of cargo capacity that the upgrade will increase in the Ship is
+	 * at index 7 of the sublist of the upgradesList
+	 */
+<span class="nc" id="L52">	private final int INCREASE_THE_SHIP_CARGO_CAPACITY = 7;</span>
+
+	/**
+	 * this amount of endurance that the upgrade will increase in the Ship is at
+	 * index 8 of the sublist of the upgradesList
+	 */
+<span class="nc" id="L58">	private final int INCREASE_THE_SHIP_ENDURANCE = 8;</span>
+
+	/**
+	 * The file path to the Upgrade CSV file with the information about all the
+	 * Upgrades traded in the game
+	 */
+<span class="nc" id="L64">	private final String UPGRADES_CSV_FILEPATH = &quot;csvFiles/upgrades.csv&quot;;</span>
+
+	/**
+	 * from baseRepository, this method is a helper method to the
+	 * getUpgrades(List&lt;List&lt;String&gt;&gt; upgradesList) and used to get the list of
+	 * sublists of Strings that represent the properties for the Upgrade. It removes
+	 * the first line that contains the headers/names of properties.
+	 */
+	@Override
+	public ArrayList&lt;Upgrade&gt; getList() {
+<span class="nc" id="L74">		List&lt;List&lt;String&gt;&gt; upgradesList = getResultListfromFile(UPGRADES_CSV_FILEPATH);</span>
+<span class="nc" id="L75">		upgradesList.remove(0);</span>
+<span class="nc" id="L76">		return getUpgrades(upgradesList);</span>
+	}
+
+	/**
+	 * This method is used to convert the upgradesList to the Upgrade type, creating
+	 * a new instance of Upgrade for each sublist and adding it to the ArrayList and
+	 * so creates the Upgrade &quot;database&quot; for the project. uses the previously set
+	 * constants to set the right properties for each instance of Upgrade.
+	 *
+	 * @param upgradesList (which contains sublists of Strings)
+	 * @return an ArrayList of type Upgrade.
+	 */
+	public ArrayList&lt;Upgrade&gt; getUpgrades(List&lt;List&lt;String&gt;&gt; upgradesList) {
+<span class="nc" id="L89">		ArrayList&lt;Upgrade&gt; upgradesArray = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (List&lt;String&gt; upgrade : upgradesList) {</span>
+<span class="nc" id="L91">			int idNumber = Integer.parseInt(upgrade.get(ID_NUMBER));</span>
+<span class="nc" id="L92">			String name = upgrade.get(NAME);</span>
+<span class="nc" id="L93">			String description = upgrade.get(DESCRIPTION);</span>
+<span class="nc" id="L94">			float priceSell = Float.parseFloat(upgrade.get(PRICE_STORE_SELLS_TO_TRADER));</span>
+<span class="nc" id="L95">			float priceBuy = Float.parseFloat(upgrade.get(PRICE_STORE_BUYS_FROM_TRADER));</span>
+<span class="nc" id="L96">			int speed = Integer.parseInt(upgrade.get(INCREASE_THE_SHIP_SPEED));</span>
+<span class="nc" id="L97">			int sneakiness = Integer.parseInt(upgrade.get(INCREASE_THE_SHIP_SNEAKINEES));</span>
+<span class="nc" id="L98">			int cargoCapacity = Integer.parseInt(upgrade.get(INCREASE_THE_SHIP_CARGO_CAPACITY));</span>
+<span class="nc" id="L99">			int endurance = Integer.parseInt(upgrade.get(INCREASE_THE_SHIP_ENDURANCE));</span>
+<span class="nc" id="L100">			Upgrade newUpgrade = new Upgrade(name, description, priceSell, priceBuy, idNumber, endurance, sneakiness,</span>
+<span class="nc" id="L101">					cargoCapacity, speed);</span>
+
+<span class="nc" id="L103">			upgradesArray.add(newUpgrade);</span>
+		}
+<span class="nc" id="L105">		return upgradesArray;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

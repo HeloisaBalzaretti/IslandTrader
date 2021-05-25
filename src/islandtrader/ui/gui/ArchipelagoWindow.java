@@ -12,13 +12,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Creates the Archipelago window that represents a map between the Islands
+ *
+ * @author heloi
+ *
+ */
 public class ArchipelagoWindow {
 
+	/**
+	 * the Archipelago window
+	 */
 	private JFrame frmArchipelagoMap;
+
+	/**
+	 * The current game
+	 */
 	private GameEnvironmentSwing game;
 
 	/**
-	 * Create the application.
+	 * Create the Archipelago window that represents a map.
+	 *
+	 * @param incomingGame the current game
 	 */
 	public ArchipelagoWindow(GameEnvironmentSwing incomingGame) {
 		game = incomingGame;
@@ -40,11 +55,11 @@ public class ArchipelagoWindow {
 		frmArchipelagoMap.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmArchipelagoMap.getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Archipelago Map - Click on the Island to see more");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 20));
-		lblNewLabel.setBounds(109, 10, 727, 39);
-		frmArchipelagoMap.getContentPane().add(lblNewLabel);
+		JLabel lblMap = new JLabel("Archipelago Map - Click on the Island to see more");
+		lblMap.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMap.setFont(new Font("Serif", Font.BOLD, 20));
+		lblMap.setBounds(109, 10, 727, 39);
+		frmArchipelagoMap.getContentPane().add(lblMap);
 
 		JButton btnIslandOne = new JButton("");
 		btnIslandOne.setBackground(new Color(204, 255, 255));

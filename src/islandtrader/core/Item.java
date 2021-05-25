@@ -7,7 +7,7 @@ package islandtrader.core;
 /**
  * Represents an Item of type Tradable that will be traded between Store and
  * Trader. Trader has to sell Item to make profit.
- * 
+ *
  * @author Maria Heloisa Balzaretti.
  */
 public class Item extends Tradable {
@@ -20,6 +20,13 @@ public class Item extends Tradable {
 
 	/**
 	 * Creates a new Item Object of type Tradable.
+	 *
+	 * @param idNumber    this Item id number
+	 * @param name        this Item name
+	 * @param description this Item description
+	 * @param priceToBuy  this Item price to buy
+	 * @param priceToSell this Item price to sell
+	 * @param weight      this Item weight
 	 */
 	public Item(int idNumber, String name, String description, float priceToBuy, float priceToSell, float weight) {
 		super(name, description, priceToBuy, priceToSell, idNumber);

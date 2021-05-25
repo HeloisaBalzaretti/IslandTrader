@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Tradable.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Tradable.java</span></div><h1>Tradable.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+/**
+ * Class that represents a basic item or upgrade that will be traded between
+ * Trader and Island'Stores
+ *
+ * @author Maria Heloisa Balzaretti
+ */
+public abstract class Tradable extends Entity {
+
+	/**
+	 * The default price that the Store would pay to buy item/upgrade from Trader.
+	 */
+	private float priceToBuy;
+	/**
+	 * The default price that the Store would accept to sell item/upgrade from
+	 * Trader.
+	 */
+	private float priceToSell;
+
+	/**
+	 * Creates a new Tradable Object.
+	 *
+	 * @param name        this Tradable name
+	 * @param description this Tradable description
+	 * @param priceToBuy  this Tradable priceToBuy
+	 * @param priceToSell this Tradable priceToSell
+	 * @param idNumber    this Tradable idNumber
+	 */
+	public Tradable(String name, String description, float priceToBuy, float priceToSell, int idNumber) {
+<span class="fc" id="L35">		super(idNumber, name, description);</span>
+<span class="fc" id="L36">		this.priceToBuy = priceToBuy;</span>
+<span class="fc" id="L37">		this.priceToSell = priceToSell;</span>
+<span class="fc" id="L38">	}</span>
+
+	/**
+	 * Gets the item/upgrade priceToBuy of this Tradable. The price that store will
+	 * accept to pay the trader to buy the Tradable from the trader
+	 *
+	 * @return this Tradable's priceToBuy.
+	 */
+	public float getPriceToBuy() {
+<span class="fc" id="L47">		return priceToBuy;</span>
+	}
+
+	/**
+	 * Changes the priceToBuy of this Tradable. The price that store will accept to
+	 * pay trader to buy from the trader
+	 *
+	 * @param priceToBuy This Tradable's new priceToBuy.
+	 */
+	public void setPriceToBuy(float priceToBuy) {
+<span class="nc" id="L57">		this.priceToBuy = priceToBuy;</span>
+<span class="nc" id="L58">	}</span>
+
+	/**
+	 * Gets the item or upgrade priceToSell of this Tradable. The price that store
+	 * will accept to receive from trader to sell the item/upgrade to the trader
+	 *
+	 * @return this Tradable's priceToSell.
+	 */
+	public float getPriceToSell() {
+<span class="fc" id="L67">		return priceToSell;</span>
+	}
+
+	/**
+	 * Changes the priceToSell of this Tradable.
+	 *
+	 * The price that store will accept to receive from trader to sell the item or
+	 * upgrade to the trader
+	 *
+	 * @param priceToSell This Tradable's new priceToSell.
+	 */
+	public void setPriceToSell(float priceToSell) {
+<span class="nc" id="L79">		this.priceToSell = priceToSell;</span>
+<span class="nc" id="L80">	}</span>
+
+	/**
+	 * Changes the toString method of this Tradable.
+	 *
+	 * @return information about the item or upgrade changes the default toString
+	 *         method
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L90">		return String.format(&quot;[%s, %s, it costs %.2f$ $ for you buy and the store will buy it from you for %.2f$ $]&quot;,</span>
+<span class="nc" id="L91">				name, description, priceToBuy, priceToSell);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

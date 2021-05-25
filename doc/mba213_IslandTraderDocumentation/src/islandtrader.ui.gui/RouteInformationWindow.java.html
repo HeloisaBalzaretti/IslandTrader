@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RouteInformationWindow.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.ui.gui</a> &gt; <span class="el_source">RouteInformationWindow.java</span></div><h1>RouteInformationWindow.java</h1><pre class="source lang-java linenums">package islandtrader.ui.gui;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+import islandtrader.core.Route;
+import islandtrader.core.Trader;
+
+public class RouteInformationWindow {
+
+<span class="nc" id="L20">	private final String ROUTE_MENU_LINE_MESSAGE = &quot; %s: &lt;br&gt; %d days and %d kms of sailing with a total cost of %.2f$ to get %s &lt;br&gt;&quot;;</span>
+	private JFrame routesInformationWindow;
+	private GameEnvironmentSwing game;
+
+	/**
+	 * Create the application.
+	 */
+<span class="nc" id="L27">	public RouteInformationWindow(GameEnvironmentSwing incomingGame, Trader trader) {</span>
+<span class="nc" id="L28">		game = incomingGame;</span>
+
+<span class="nc" id="L30">		initialize();</span>
+<span class="nc" id="L31">		routesInformationWindow.setVisible(true);</span>
+
+<span class="nc" id="L33">	}</span>
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L39">		routesInformationWindow = new JFrame();</span>
+<span class="nc" id="L40">		routesInformationWindow.setIconImage(Toolkit.getDefaultToolkit()</span>
+<span class="nc" id="L41">				.getImage(RouteInformationWindow.class.getResource(&quot;/islandtrader/images/shipWater1.png&quot;)));</span>
+<span class="nc" id="L42">		routesInformationWindow.setTitle(&quot;View routes information&quot;);</span>
+<span class="nc" id="L43">		routesInformationWindow.setBounds(100, 100, 842, 721);</span>
+<span class="nc" id="L44">		routesInformationWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L45">		routesInformationWindow.getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L47">		String islandName = game.getCurrentIsland().getName();</span>
+<span class="nc" id="L48">		JLabel lblRoutesInformation = new JLabel(</span>
+<span class="nc" id="L49">				&quot;Routes leaving from &quot; + islandName + &quot; and the random events you may encounter!&quot;);</span>
+<span class="nc" id="L50">		lblRoutesInformation.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L51">		lblRoutesInformation.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 20));</span>
+<span class="nc" id="L52">		lblRoutesInformation.setBounds(10, 23, 808, 27);</span>
+<span class="nc" id="L53">		routesInformationWindow.getContentPane().add(lblRoutesInformation);</span>
+
+<span class="nc" id="L55">		String routeDetailTemplate = getRoutesToString(game.getTrader());</span>
+
+<span class="nc" id="L57">		JLabel lblRouteOne = new JLabel(&quot;&lt;html&gt;&lt;body style=\&quot;text-align: justify;  text-justify: inter-word;\&quot;&gt;&quot;</span>
+<span class="nc" id="L58">				+ routeDetailTemplate + &quot;&lt;/body&gt;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L59">		lblRouteOne.setIcon(null);</span>
+<span class="nc" id="L60">		lblRouteOne.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="nc" id="L61">		lblRouteOne.setHorizontalAlignment(SwingConstants.LEFT);</span>
+
+<span class="nc" id="L63">		lblRouteOne.setFont(new Font(&quot;Serif&quot;, Font.PLAIN, 13));</span>
+<span class="nc" id="L64">		lblRouteOne.setBounds(20, 60, 774, 400);</span>
+<span class="nc" id="L65">		routesInformationWindow.getContentPane().add(lblRouteOne);</span>
+
+<span class="nc" id="L67">		JButton btnNewButton = new JButton(&quot;Go back to sailing options&quot;);</span>
+<span class="nc" id="L68">		btnNewButton.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L71">				routesInformationWindow.dispose();</span>
+<span class="nc" id="L72">				game.startMainWindowPanel();</span>
+
+<span class="nc" id="L74">			}</span>
+		});
+<span class="nc" id="L76">		btnNewButton.setIcon(null);</span>
+<span class="nc" id="L77">		btnNewButton.setForeground(new Color(0, 128, 0));</span>
+<span class="nc" id="L78">		btnNewButton.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L79">		btnNewButton.setBounds(309, 614, 208, 49);</span>
+<span class="nc" id="L80">		routesInformationWindow.getContentPane().add(btnNewButton);</span>
+
+<span class="nc" id="L82">		JLabel lblNewLabel = new JLabel(&quot;&quot;);</span>
+<span class="nc" id="L83">		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L84">		lblNewLabel</span>
+<span class="nc" id="L85">				.setIcon(new ImageIcon(RouteInformationWindow.class.getResource(&quot;/islandtrader/images/pirateT1.png&quot;)));</span>
+<span class="nc" id="L86">		lblNewLabel.setBounds(10, 470, 155, 204);</span>
+<span class="nc" id="L87">		routesInformationWindow.getContentPane().add(lblNewLabel);</span>
+
+<span class="nc" id="L89">		JLabel lblNewLabel_1 = new JLabel(&quot;&quot;);</span>
+<span class="nc" id="L90">		lblNewLabel_1</span>
+<span class="nc" id="L91">				.setIcon(new ImageIcon(RouteInformationWindow.class.getResource(&quot;/islandtrader/images/sailorTom.png&quot;)));</span>
+<span class="nc" id="L92">		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L93">		lblNewLabel_1.setBounds(673, 455, 155, 219);</span>
+<span class="nc" id="L94">		routesInformationWindow.getContentPane().add(lblNewLabel_1);</span>
+
+<span class="nc" id="L96">		JLabel lblNewLabel_2 = new JLabel(&quot;&quot;);</span>
+<span class="nc" id="L97">		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L98">		lblNewLabel_2.setIcon(</span>
+<span class="nc" id="L99">				new ImageIcon(RouteInformationWindow.class.getResource(&quot;/islandtrader/images/badWeatherSmlT.png&quot;)));</span>
+<span class="nc" id="L100">		lblNewLabel_2.setBounds(347, 459, 128, 162);</span>
+<span class="nc" id="L101">		routesInformationWindow.getContentPane().add(lblNewLabel_2);</span>
+<span class="nc" id="L102">	}</span>
+
+	public void closeWindow() {
+<span class="nc" id="L105">		routesInformationWindow.dispose();</span>
+
+<span class="nc" id="L107">	}</span>
+
+	private Route[] getCurrentRoutes() {
+<span class="nc" id="L110">		return game.getCurrentIsland().getRoutes();</span>
+	}
+
+	private String getRoutesToString(Trader trader) {
+<span class="nc" id="L114">		String routesToString = &quot;&quot;;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (int routeIndex = 0; routeIndex &lt; getCurrentRoutes().length; routeIndex++) {</span>
+
+<span class="nc" id="L117">			Route route = getCurrentRoutes()[routeIndex];</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (route != null) {</span>
+<span class="nc" id="L120">				routesToString += &quot;Route &quot; + getCurrentRoutes()[routeIndex].getIdNumber();</span>
+<span class="nc" id="L121">				int durationDays = game.getCurrentIsland().getDistanceToAnotherIslandInDays(routeIndex);</span>
+<span class="nc" id="L122">				int distanceKms = game.getCurrentIsland().getDistanceToAnotherIslandInKm(routeIndex);</span>
+
+<span class="nc" id="L124">				double totalCostCrewToSail = trader.getShipOwned().getCrewCostToSailByTotalDays(durationDays);</span>
+<span class="nc" id="L125">				routesToString += String.format(ROUTE_MENU_LINE_MESSAGE, route.getName(), durationDays, distanceKms,</span>
+<span class="nc" id="L126">						totalCostCrewToSail, route);</span>
+			}
+		}
+
+<span class="nc" id="L130">		return routesToString;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

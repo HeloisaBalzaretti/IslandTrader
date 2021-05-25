@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RescuedSailor.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2021 9:34:28 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">RescuedSailor.java</span></div><h1>RescuedSailor.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+/**
+ * Represents the RandomEvent &quot;Rescued Sailors&quot;, when the Traders have this
+ * encounters they are rewarded with a monetary amount, that will vary depending
+ * on the number of Rescued Sailors they save.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class RescuedSailor extends RandomEvent {
+
+	/**
+	 * Represents how many sailors need rescue
+	 */
+	private int quantityOfSailorsToRescue;
+
+	/**
+	 * the amount to be awarded to the Trader
+	 */
+	private double monetaryRewardPerSailor;
+
+	/**
+	 * Multiplies quantityOfSailorsToRescue and monetaryRewardPerSailor to give the
+	 * final amount of money the Trader shall receive as a reward.
+	 */
+<span class="fc" id="L31">	private double totalMonetaryReward = 0;</span>
+
+	/**
+	 * Creates a new RescuedSailor event of type RandomEvent
+	 *
+	 * @param idNumber
+	 * @param name
+	 * @param description
+	 * @param quantityOfSailorsToRescue
+	 * @param monetaryReward
+	 */
+	public RescuedSailor(int idNumber, String name, String description, int quantityOfSailorsToRescue,
+			float monetaryRewardPerSailor) {
+<span class="fc" id="L44">		super(idNumber, name, description);</span>
+<span class="fc" id="L45">		this.quantityOfSailorsToRescue = quantityOfSailorsToRescue;</span>
+<span class="fc" id="L46">		this.monetaryRewardPerSailor = monetaryRewardPerSailor;</span>
+<span class="fc" id="L47">		this.totalMonetaryReward = quantityOfSailorsToRescue * monetaryRewardPerSailor;</span>
+<span class="fc" id="L48">	}</span>
+
+	/**
+	 * Gets the quantity of sailors to be rescued
+	 *
+	 * @return This number of Sailors to be rescued
+	 */
+	public int getQuantityOfSailorsToRescue() {
+<span class="nc" id="L56">		return quantityOfSailorsToRescue;</span>
+	}
+
+	/**
+	 * Sets the number of Sailors to be rescued.
+	 *
+	 * @param quantityOfSailorsToRescue This new number of Sailors
+	 */
+	public void setQuantityOfSailorsToRescue(int quantityOfSailorsToRescue) {
+<span class="nc" id="L65">		this.quantityOfSailorsToRescue = quantityOfSailorsToRescue;</span>
+<span class="nc" id="L66">	}</span>
+
+	/**
+	 * Gets the amount of money per sailor that will be rewarded to the Trader
+	 *
+	 * @return This RescuedSailor reward amount
+	 */
+	public double getMonetaryRewardPerSailor() {
+<span class="nc" id="L74">		return monetaryRewardPerSailor;</span>
+	}
+
+	/**
+	 * Sets the value of the monetary reward per sailor.
+	 *
+	 * @param monetaryReward This RescuedSailor monetary reward.
+	 */
+
+	public void setMonetaryRewardPerSailor(double monetaryReward) {
+<span class="nc" id="L84">		this.monetaryRewardPerSailor = monetaryReward;</span>
+<span class="nc" id="L85">	}</span>
+
+	/**
+	 * @param totalMonetaryReward the totalMonetaryReward to set
+	 */
+	public void setTotalMonetaryReward() {
+<span class="nc" id="L91">		this.totalMonetaryReward = monetaryRewardPerSailor * quantityOfSailorsToRescue;</span>
+<span class="nc" id="L92">	}</span>
+
+	/**
+	 * From super RandomEvent class, this method gives the Trader a monetary reward.
+	 */
+	@Override
+	public void randomEventSpecificAction(Trader trader) {
+<span class="fc" id="L99">		trader.addAmountToBalance(totalMonetaryReward);</span>
+<span class="fc" id="L100">	}</span>
+
+	/**
+	 * Overrides the super encounterMessage from RandomEvent class to the
+	 * RescuedSailor encounter event
+	 */
+	@Override
+	public String encounterMessage() {
+<span class="nc" id="L108">		return &quot;You encountered &quot; + this.name + &quot;! &quot; + this.description;</span>
+	}
+
+	/**
+	 * Overrides the super resultOfEncounterMessage from RandomEvent class to the
+	 * RescuedSailor encounter event
+	 */
+	@Override
+	public String resultOfEncounterMessage() {
+<span class="nc" id="L117">		String messageTemplate = &quot;As you were very kind and rescued a crew of %d sailors, they are gifting you with $ %.2f!&quot;;</span>
+<span class="nc" id="L118">		return String.format(messageTemplate, quantityOfSailorsToRescue, this.totalMonetaryReward);</span>
+	}
+
+	/**
+	 * Used to personalize the game when applying the randomEvents to the routes.
+	 */
+	@Override
+	public String getEventSpecificName() {
+<span class="nc" id="L126">		return &quot;Rescued Sailor&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (25/05/2021 9:34:28 pm)</div></body></html>

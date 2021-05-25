@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Route.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">islandtrader.core</a> &gt; <span class="el_source">Route.java</span></div><h1>Route.java</h1><pre class="source lang-java linenums">/**
+ * Contains the basic classes to build the game.
+ * For example:Trader, Ship, Route, RandomEvent, Island, Store
+ */
+package islandtrader.core;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * Routes represents the routes that connect the Islands, each Route has 3
+ * possible random events that could happen, or nothing happening is also
+ * possibility
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+public class Route extends Entity {
+
+	/**
+	 * A collection of connected Islands
+	 */
+	private ArrayList&lt;Island&gt; connectIslands;
+
+	/**
+	 * A collection of the possible events for each route
+	 */
+	private ArrayList&lt;RandomEvent&gt; possibleEvents;
+
+	/**
+	 * A template for this Route name
+	 */
+<span class="nc" id="L33">	private final String ROUTE_NAME_TEMPLATE = &quot;to %s&quot;;</span>
+
+	/**
+	 * A template used when informing the Trader of the possible randomEvents in
+	 * this route
+	 */
+	private static final String PROBABILITY_RANDOM_EVENT_MESSAGE = &quot;\nThe possible random encounters you may have if you take this route are:&quot;
+			+ &quot;&lt;br&gt;\n =&gt; %s %s (Chance of encounter: %.0f%%)&lt;br&gt;\n =&gt; %s %s (Chance of encounter: %.0f%%)&lt;br&gt;\n =&gt; %s %s (Chance of encounter: %.0f%%)&quot;;
+
+	/**
+	 * A Route object created with the possible randomEvents.
+	 *
+	 * @param idNumber       this Route id number
+	 * @param possibleEvents array of RandomEvent possible for the Route
+	 */
+	public Route(int idNumber, ArrayList&lt;RandomEvent&gt; possibleEvents) {
+<span class="nc" id="L49">		super(idNumber, &quot;&quot;, &quot;&quot;);</span>
+<span class="nc" id="L50">		this.possibleEvents = possibleEvents;</span>
+<span class="nc" id="L51">		this.description = getDescription(possibleEvents);</span>
+<span class="nc" id="L52">	}</span>
+
+	/**
+	 * Return a description with all the possible random events that may happen in
+	 * the Route and the probability of happening
+	 *
+	 * @param possibleEvents
+	 * @return a summary description of the random events for the route
+	 */
+	private static String getDescription(ArrayList&lt;RandomEvent&gt; possibleEvents) {
+<span class="nc" id="L62">		RandomEvent firstEvent = possibleEvents.get(0);</span>
+<span class="nc" id="L63">		RandomEvent secondEvent = possibleEvents.get(1);</span>
+<span class="nc" id="L64">		RandomEvent thirdEvent = possibleEvents.get(2);</span>
+
+<span class="nc" id="L66">		return String.format(Route.PROBABILITY_RANDOM_EVENT_MESSAGE, firstEvent.getEventSpecificName(),</span>
+<span class="nc" id="L67">				firstEvent.getName(), firstEvent.getPercentageChanceOfEncounter(), secondEvent.getEventSpecificName(),</span>
+<span class="nc" id="L68">				secondEvent.getName(), secondEvent.getPercentageChanceOfEncounter(), thirdEvent.getEventSpecificName(),</span>
+<span class="nc" id="L69">				thirdEvent.getName(), thirdEvent.getPercentageChanceOfEncounter());</span>
+
+	}
+
+	/**
+	 * Set the name according to the islands it connects
+	 *
+	 * @param islandName this island name to be appended to the route name.
+	 */
+	public void setRouteNameByIslandName(String islandName) {
+<span class="nc" id="L79">		this.name = String.format(ROUTE_NAME_TEMPLATE, islandName);</span>
+<span class="nc" id="L80">	}</span>
+
+	/**
+	 * @return the connectIslands
+	 */
+	public ArrayList&lt;Island&gt; getConnectIslands() {
+<span class="nc" id="L86">		return connectIslands;</span>
+	}
+
+	/**
+	 * @param connectIslands the connectIslands to set
+	 */
+	public void setConnectIslands(ArrayList&lt;Island&gt; connectIslands) {
+<span class="nc" id="L93">		this.connectIslands = connectIslands;</span>
+<span class="nc" id="L94">	}</span>
+
+	/**
+	 * @return the possibleEvents
+	 */
+	public ArrayList&lt;RandomEvent&gt; getPossibleEvents() {
+<span class="nc" id="L100">		return possibleEvents;</span>
+	}
+
+	/**
+	 * @param possibleEvents the possibleEvents to set
+	 */
+	public void setPossibleEvents(ArrayList&lt;RandomEvent&gt; possibleEvents) {
+<span class="nc" id="L107">		this.possibleEvents = possibleEvents;</span>
+<span class="nc" id="L108">		this.description = Route.getDescription(possibleEvents);</span>
+<span class="nc" id="L109">	}</span>
+
+	/**
+	 * Adds the possible event to the Route
+	 *
+	 * @param newEvent to be added to route
+	 */
+	public void addPossibleEventToRoute(RandomEvent newEvent) {
+<span class="nc" id="L117">		possibleEvents.add(newEvent);</span>
+<span class="nc" id="L118">	}</span>
+
+	/**
+	 * Removes the event from Route
+	 *
+	 * @param event to be removed from route
+	 */
+	public void removeEventFromRoute(RandomEvent event) {
+<span class="nc" id="L126">		possibleEvents.remove(event);</span>
+<span class="nc" id="L127">	}</span>
+
+	/**
+	 * the default toString method to return information about the route.
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L134">		return this.name + &quot; - &quot; + this.description;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

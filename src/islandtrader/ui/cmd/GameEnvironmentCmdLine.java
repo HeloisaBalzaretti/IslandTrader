@@ -17,17 +17,10 @@ import repository.IslandRepository;
 import repository.ShipRepository;
 
 /**
+ * Creates the command line application
+ *
  * @author Maria Heloisa Balzaretti
  *
- */
-
-/**
- * Create the following based in UML use Cases setupTrader(): void
- * generateGameBoard(): void startGame():void viewGoods(): ArrayList<Item>
- * viewHistoryOfGoods(): ArrayList<Item> viewIslands(): ArrayList<Island>
- * viewRoutes(): ArrayList<Route> viewStore(): Store viewShip(): String
- * viewShipHealth(): String repairShip(): void sail(): //RandomEvent, pay to fix
- * etc
  */
 
 public class GameEnvironmentCmdLine extends GameEnvironment {
@@ -41,6 +34,9 @@ public class GameEnvironmentCmdLine extends GameEnvironment {
 	private GameEnvironmentMessageHelper messageHelper;
 	private final String INVALID_OPTION_MESSAGE = "Invalid Option!";
 
+	/**
+	 * Creates a new command line application
+	 */
 	public GameEnvironmentCmdLine() {
 		IslandRepository islandRepository = new IslandRepository();
 		this.availableIslands = islandRepository.getList();
@@ -49,7 +45,7 @@ public class GameEnvironmentCmdLine extends GameEnvironment {
 	}
 
 	/**
-	 * Set trader up to start the game at island 1 - Phuket
+	 * Set trader up to start the game at island 1 - Phuket or at a randim island.
 	 */
 	@Override
 	public void startGame() {

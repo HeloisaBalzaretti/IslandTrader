@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ShipRepository.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">mba213_IslandTrader (25/05/2021 11:53:43 pm)</a> &gt; <a href="../../index.html" class="el_group">mba213_IslandTrader</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">repository</a> &gt; <span class="el_source">ShipRepository.java</span></div><h1>ShipRepository.java</h1><pre class="source lang-java linenums">/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
+package repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import islandtrader.core.Ship;
+
+/**
+ * Represents a database of Ships, it is used to create an ArrayList of type
+ * Ship, from ships.csv, from where the Trader will choose a Ship to captain.
+ * Each constant property represents a property located at the index of the
+ * sublist that will be used to build the Upgrade.
+ *
+ * @author Maria Heloisa Balzaretti
+ *
+ */
+<span class="nc" id="L21">public class ShipRepository extends BaseRepository {</span>
+
+	/**
+	 * this Ship sail speed is at index 3 of the sublist of the shipsList
+	 */
+<span class="nc" id="L26">	private final int SAIL_SPEED = 3;</span>
+
+	/**
+	 * this Ship cargo capacity is at index 4 of the sublist of the shipsList
+	 */
+<span class="nc" id="L31">	private final int CARGO_CAPACITY = 4;</span>
+
+	/**
+	 * this Ship number of crew is at index 5 of the sublist of the shipsList
+	 */
+<span class="nc" id="L36">	private final int NUMBER_OF_CREW = 5;</span>
+
+	/**
+	 * this Ship endurance is at index 6 of the sublist of the shipsList
+	 */
+<span class="nc" id="L41">	private final int ENDURANCE = 6;</span>
+
+	/**
+	 * this Ship sneakiness is at index 7 of the sublist of the shipsList
+	 */
+
+<span class="nc" id="L47">	private final int SNEAKINESS = 7;</span>
+
+	/**
+	 * The file path to the Ship CSV file with the information about all the Ships
+	 * available for the Trader to choose.
+	 */
+<span class="nc" id="L53">	private final String SHIP_CSV_FILEPATH = &quot;csvFiles/ships.csv&quot;;</span>
+
+	/**
+	 * This method is a helper method to the getShips(shipsList) and used to get the
+	 * list of sublists of Strings that represent the properties for the Ship. It
+	 * removes the first line that contains the headers/names of properties.
+	 */
+	@Override
+	public ArrayList&lt;Ship&gt; getList() {
+<span class="nc" id="L62">		List&lt;List&lt;String&gt;&gt; aList = getResultListfromFile(SHIP_CSV_FILEPATH);</span>
+<span class="nc" id="L63">		aList.remove(0);</span>
+<span class="nc" id="L64">		return getShips(aList);</span>
+	}
+
+	/**
+	 * This method is used to convert the shipsList to the Ship type, creating a new
+	 * instance of Ship for each sublist and adding it to the ArrayList and so
+	 * creates the Ship &quot;database&quot; for the project. uses the previously set
+	 * constants to set the right properties for each instance of Ship.
+	 *
+	 * @param shipsList list of lists of strings
+	 * @return shipsList Array of objects Ship.
+	 */
+	private ArrayList&lt;Ship&gt; getShips(List&lt;List&lt;String&gt;&gt; shipsList) {
+<span class="nc" id="L77">		ArrayList&lt;Ship&gt; shipsArray = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (List&lt;String&gt; ship : shipsList) {</span>
+<span class="nc" id="L80">			int IdNumber = Integer.parseInt(ship.get(ID_NUMBER));</span>
+<span class="nc" id="L81">			String Name = ship.get(NAME);</span>
+<span class="nc" id="L82">			String Description = ship.get(DESCRIPTION);</span>
+<span class="nc" id="L83">			Double SailSpeed = Double.parseDouble(ship.get(SAIL_SPEED));</span>
+<span class="nc" id="L84">			Double CargoCapacity = Double.parseDouble(ship.get(CARGO_CAPACITY));</span>
+<span class="nc" id="L85">			int NumberOfCrew = Integer.parseInt(ship.get(NUMBER_OF_CREW));</span>
+<span class="nc" id="L86">			int Endurance = Integer.parseInt(ship.get(ENDURANCE));</span>
+<span class="nc" id="L87">			int sneakiness = Integer.parseInt(ship.get(SNEAKINESS));</span>
+<span class="nc" id="L88">			Ship newShip = new Ship(IdNumber, Name, Description, SailSpeed, CargoCapacity, NumberOfCrew, Endurance,</span>
+<span class="nc" id="L89">					sneakiness);</span>
+<span class="nc" id="L90">			shipsArray.add(newShip);</span>
+		}
+<span class="nc" id="L92">		return shipsArray;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>mba213_IslandTrader (25/05/2021 11:53:43 pm)</div></body></html>

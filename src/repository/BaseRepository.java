@@ -86,9 +86,9 @@ public abstract class BaseRepository {
 	 * This method enforce that every classRepository that uses the baseRepository
 	 * to create its own arrayList of type Entity and return the Array with the
 	 * proper type, i.e ItemRepository will be used to read the files and return an
-	 * ArrayList<Item>of all Items in the database, to be added to the Stores later.
+	 * ArrayList of all Items in the database, to be added to the Stores later.
 	 *
-	 * @return ArrayList<? extends Entity>
+	 * @return ArrayList of the necessary Entity
 	 */
 	public abstract ArrayList<? extends Entity> getList();
 

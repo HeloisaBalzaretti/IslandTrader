@@ -84,7 +84,7 @@ public abstract class GameEnvironment {
 	/**
 	 * Gets the amount of remaining days available for the Trader to sail.
 	 *
-	 * @return
+	 * @return days remaining to sail
 	 */
 	public int getDaysRemaining() {
 		return durationChosenInDays - daysElapsed;
@@ -107,8 +107,8 @@ public abstract class GameEnvironment {
 	/**
 	 * Gets a random event that happens when sailing
 	 *
-	 * @param randomEventList
-	 * @return
+	 * @param randomEventList possible random events
+	 * @return a random event for route
 	 */
 	public RandomEvent getEventFromListOfPossibleEvents(ArrayList<RandomEvent> randomEventList) {
 		int randomValue = getRandomBetweenMinMax(0, 100);
@@ -123,9 +123,9 @@ public abstract class GameEnvironment {
 	/**
 	 * Gets a number randomly to help the random events to be chosen for the route
 	 *
-	 * @param min
-	 * @param max
-	 * @return
+	 * @param min minimum number
+	 * @param max maximum number
+	 * @return a random number between min and max
 	 */
 	protected int getRandomBetweenMinMax(int min, int max) {
 		return new Random().nextInt(max - min + 1) + min;

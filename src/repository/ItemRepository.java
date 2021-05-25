@@ -47,9 +47,9 @@ public class ItemRepository extends BaseRepository {
 
 	/**
 	 * from baseRepository, this method is a helper method to the
-	 * getItems(List<List<String>> itemsList) and used to get the list of sublists
-	 * of Strings that represent the properties for the Item. It removes the first
-	 * line that contains the headers/name of properties.
+	 * getItems(itemsList) and used to get the list of sublists of Strings that
+	 * represent the properties for the Item. It removes the first line that
+	 * contains the headers/name of properties.
 	 */
 	@Override
 	public ArrayList<Item> getList() {

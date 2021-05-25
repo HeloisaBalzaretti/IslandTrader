@@ -33,11 +33,14 @@ public class RescuedSailor extends RandomEvent {
 	/**
 	 * Creates a new RescuedSailor event of type RandomEvent
 	 *
-	 * @param idNumber
-	 * @param name
-	 * @param description
-	 * @param quantityOfSailorsToRescue
-	 * @param monetaryReward
+	 * @param idNumber                  this RescuedSailor id number
+	 * @param name                      this RescuedSailor name
+	 * @param description               this RescuedSailor description
+	 * @param quantityOfSailorsToRescue this RescuedSailor quantity of crew members
+	 *                                  to rescue
+	 * @param monetaryRewardPerSailor   this RescuedSailor monetary reward to be
+	 *                                  given to the trader, multiplied by size of
+	 *                                  crew
 	 */
 	public RescuedSailor(int idNumber, String name, String description, int quantityOfSailorsToRescue,
 			float monetaryRewardPerSailor) {
@@ -85,7 +88,7 @@ public class RescuedSailor extends RandomEvent {
 	}
 
 	/**
-	 * @param totalMonetaryReward the totalMonetaryReward to set
+	 * the totalMonetaryReward to set
 	 */
 	public void setTotalMonetaryReward() {
 		this.totalMonetaryReward = monetaryRewardPerSailor * quantityOfSailorsToRescue;
