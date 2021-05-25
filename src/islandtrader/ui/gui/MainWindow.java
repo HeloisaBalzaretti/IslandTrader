@@ -404,7 +404,6 @@ public class MainWindow {
 				JOptionPane.showMessageDialog(new JFrame(), pirate.getMessagePirateHappy(), pirate.getName(),
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
-
 				game.pirateMadeTraderWalkThePlank(pirate, btnSail);
 
 			}
@@ -414,28 +413,29 @@ public class MainWindow {
 	public String changeIslandImg() {
 		String sourcePath;
 		int indexIsland = game.getCurrentIsland().getIdNumber() - 1;
+		String prefix = "/islandtrader/images/";
 		switch (indexIsland) {
 
 		case 0:
-			sourcePath = "/islandtrader/images/island1Sml.png";
+			sourcePath = "island1Sml.png";
 			break;
 		case 1:
-			sourcePath = "/islandtrader/images/island2Sml.png";
+			sourcePath = "island2Sml.png";
 			break;
 		case 2:
-			sourcePath = "/islandtrader/images/island3Sml.png";
+			sourcePath = "island3Sml.png";
 			break;
 		case 3:
-			sourcePath = "/islandtrader/images/island4Sml.png";
+			sourcePath = "island4Sml.png";
 			break;
 		case 4:
-			sourcePath = "/islandtrader/images/island5Sml.png";
+			sourcePath = "island5Sml.png";
 			break;
 		default:
-			sourcePath = "/islandtrader/images/island0Sml.png";
+			sourcePath = "island0Sml.png";
 			break;
 
 		}
-		return sourcePath;
+		return prefix + sourcePath;
 	}
 }

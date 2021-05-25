@@ -46,7 +46,7 @@ public class RandomEventService {
 	/**
 	 * The minimum percentage chance of encounter for the RandomEvent in the Route
 	 */
-	private final int MIN_PERCENTAGE_OF_ENCOUNTER = 5;
+	private final int MIN_PERCENTAGE_OF_ENCOUNTER = 20;
 
 	/**
 	 * The maximum percentage chance of encounter for the RandomEvent in the Route

@@ -26,7 +26,7 @@ public class Trader extends Entity {
 	/**
 	 * Starting amount of money so the Trader can travel.
 	 */
-	private final double STARTING_MONEY = 10000;
+	private final double STARTING_MONEY = 12000;
 
 	/**
 	 * Trader object to represent the player.

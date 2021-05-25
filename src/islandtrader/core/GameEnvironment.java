@@ -111,9 +111,7 @@ public abstract class GameEnvironment {
 	 * @return
 	 */
 	public RandomEvent getEventFromListOfPossibleEvents(ArrayList<RandomEvent> randomEventList) {
-
 		int randomValue = getRandomBetweenMinMax(0, 100);
-
 		for (RandomEvent randEve : randomEventList) {
 			if (randomValue <= randEve.getPercentageChanceOfEncounter()) {
 				return randEve;
@@ -130,7 +128,6 @@ public abstract class GameEnvironment {
 	 * @return
 	 */
 	protected int getRandomBetweenMinMax(int min, int max) {
-
 		return new Random().nextInt(max - min + 1) + min;
 	}
 

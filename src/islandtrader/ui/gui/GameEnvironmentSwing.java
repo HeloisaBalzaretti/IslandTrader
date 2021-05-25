@@ -225,7 +225,6 @@ public class GameEnvironmentSwing extends GameEnvironment {
 				JOptionPane.OK_OPTION);
 		getTrader().getShipOwned().setAbleToSail(false);
 		makeBtnInvisible(btnToChange);
-
 	}
 
 	public void makeBtnInvisible(JButton btnToChange) {

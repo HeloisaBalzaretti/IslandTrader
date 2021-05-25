@@ -120,6 +120,7 @@ public class IslandStoreWindow {
 		});
 		slider_QtyBuy.setBounds(105, 329, 175, 22);
 		slider_QtyBuy.setMinimum(0);
+		slider_QtyBuy.setMaximum(0);
 		slider_QtyBuy.setValue(0);
 
 		storeWindow.getContentPane().add(slider_QtyBuy);
@@ -133,6 +134,7 @@ public class IslandStoreWindow {
 		});
 		slider_QtySell.setBounds(557, 334, 168, 22);
 		slider_QtySell.setMinimum(0);
+		slider_QtySell.setMaximum(0);
 		slider_QtySell.setValue(0);
 
 		storeWindow.getContentPane().add(slider_QtySell);

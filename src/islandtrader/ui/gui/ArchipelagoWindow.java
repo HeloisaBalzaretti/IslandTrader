@@ -48,7 +48,7 @@ public class ArchipelagoWindow {
 
 		JButton btnIslandOne = new JButton("");
 		btnIslandOne.setBackground(new Color(204, 255, 255));
-		btnIslandOne.setIcon(new ImageIcon(ArchipelagoWindow.class.getResource("/islandtrader/images/Island1Sml.png")));
+		btnIslandOne.setIcon(new ImageIcon(ArchipelagoWindow.class.getResource("/islandtrader/images/island1Sml.png")));
 		btnIslandOne.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

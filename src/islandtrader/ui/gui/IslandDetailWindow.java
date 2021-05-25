@@ -38,7 +38,7 @@ public class IslandDetailWindow {
 	private void initialize() {
 		islandDetailsWindow = new JFrame();
 		islandDetailsWindow.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(IslandDetailWindow.class.getResource("/islandtrader/images/Island1Sml.png")));
+				.getImage(IslandDetailWindow.class.getResource("/islandtrader/images/island1Sml.png")));
 		islandDetailsWindow.setTitle(islandSelected.getName() + " details");
 		islandDetailsWindow.setBounds(100, 100, 741, 540);
 		islandDetailsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -111,30 +111,31 @@ public class IslandDetailWindow {
 
 	public String changeIslandImg() {
 		String sourcePath;
+		String prefix = "/islandtrader/images/";
 		int indexIsland = islandSelected.getIdNumber() - 1;
 		switch (indexIsland) {
 
 		case 0:
-			sourcePath = "/islandtrader/images/Island1Sml.png";
+			sourcePath = "island1Sml.png";
 			break;
 		case 1:
-			sourcePath = "/islandtrader/images/Island2Sml.png";
+			sourcePath = "island2Sml.png";
 			break;
 		case 2:
-			sourcePath = "/islandtrader/images/Island3Sml.png";
+			sourcePath = "island3Sml.png";
 			break;
 		case 3:
-			sourcePath = "/islandtrader/images/Island4Sml.png";
+			sourcePath = "island4Sml.png";
 			break;
 		case 4:
-			sourcePath = "/islandtrader/images/Island5Sml.png";
+			sourcePath = "island5Sml.png";
 			break;
 		default:
-			sourcePath = "/islandtrader/images/Island0Sml.png";
+			sourcePath = "island0Sml.png";
 			break;
 
 		}
-		return sourcePath;
+		return prefix + sourcePath;
 
 	}
 }

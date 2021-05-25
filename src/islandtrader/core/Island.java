@@ -103,18 +103,6 @@ public class Island extends Entity {
 	}
 
 	/**
-	 * Takes destiny island's idNumber and the a distance list to return it's
-	 * distance to origin.
-	 *
-	 * @param i         idNumber of destiny
-	 * @param distances list of distances.
-	 * @return distance to source.
-	 */
-	public int getDistanceToIslandFromMatrix(int i, int[] distances) {
-		return distances[i];
-	}
-
-	/**
 	 * Overrides the method toString() to return a meaningful string.
 	 */
 	@Override

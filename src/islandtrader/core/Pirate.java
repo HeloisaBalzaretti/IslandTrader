@@ -228,13 +228,6 @@ public class Pirate extends RandomEvent {
 	}
 
 	/**
-	 * @param traderCouldEscape the traderCouldEscape to set
-	 */
-	public void setTraderCouldEscape(boolean traderCouldEscape) {
-		this.traderCouldEscape = traderCouldEscape;
-	}
-
-	/**
 	 * Used to personalize the game for each event.
 	 */
 	@Override

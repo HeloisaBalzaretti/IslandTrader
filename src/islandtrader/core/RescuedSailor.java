@@ -85,13 +85,6 @@ public class RescuedSailor extends RandomEvent {
 	}
 
 	/**
-	 * @return the totalMonetaryReward
-	 */
-	public double getTotalMonetaryReward() {
-		return totalMonetaryReward;
-	}
-
-	/**
 	 * @param totalMonetaryReward the totalMonetaryReward to set
 	 */
 	public void setTotalMonetaryReward() {
@@ -103,7 +96,7 @@ public class RescuedSailor extends RandomEvent {
 	 */
 	@Override
 	public void randomEventSpecificAction(Trader trader) {
-		trader.addAmountToBalance(getTotalMonetaryReward());
+		trader.addAmountToBalance(totalMonetaryReward);
 	}
 
 	/**
