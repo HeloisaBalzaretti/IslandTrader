@@ -1,4 +1,4 @@
 /**
  * Contains classes that provide user interface support for Island Trader.
  * */
-package islandtrader.ui;
+package islandtrader.ui.cmd;

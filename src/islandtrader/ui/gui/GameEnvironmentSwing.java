@@ -1,4 +1,4 @@
-package islandTraderSwing.ui.gui;
+package islandtrader.ui.gui;
 
 import java.util.ArrayList;
 
@@ -55,19 +55,19 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	}
 
 	public void launchSetupScreen() {
-		SetupTrader setupWindow = new SetupTrader(this);
+		SetupTraderWindow setupWindow = new SetupTraderWindow(this);
 	}
 
-	public void closeSetupScreen(SetupTrader setupScreen) {
+	public void closeSetupScreen(SetupTraderWindow setupScreen) {
 		setupScreen.closeWindow();
 
 	}
 
 	public void launchRoutesInformation() {
-		RouteInformation routesInformation = new RouteInformation(this, trader);
+		RouteInformationWindow routesInformation = new RouteInformationWindow(this, trader);
 	}
 
-	public void closeRoutesInformation(RouteInformation routesInformationwindow) {
+	public void closeRoutesInformation(RouteInformationWindow routesInformationwindow) {
 		routesInformationwindow.closeWindow();
 
 	}
@@ -77,15 +77,15 @@ public class GameEnvironmentSwing extends GameEnvironment {
 	}
 
 	public void launchIslandDetail(Island island) {
-		IslandDetail islandDetailWindow = new IslandDetail(island);
+		IslandDetailWindow islandDetailWindow = new IslandDetailWindow(island);
 	}
 
 	public void launchIslandStore() {
-		IslandStore islandStore = new IslandStore(this);
+		IslandStoreWindow islandStore = new IslandStoreWindow(this);
 	}
 
 	public void launchCargoStoreTradablesWindow() {
-		CargoAllStoreTradablesWindow cargoWindow = new CargoAllStoreTradablesWindow(this);
+		CargoCurrentGoodsWindow cargoWindow = new CargoCurrentGoodsWindow(this);
 	}
 
 	public void showSliderValue(JSlider slider, JLabel lblToChangeTxt) {
@@ -210,10 +210,12 @@ public class GameEnvironmentSwing extends GameEnvironment {
 
 	@Override
 	public void startGame() {
+		launchSetupScreen();
 
 	}
 
 	public void startMainWindowPanel() {
+		launchMainScreen(trader);
 
 	}
 

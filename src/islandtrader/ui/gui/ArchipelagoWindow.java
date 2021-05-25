@@ -1,4 +1,4 @@
-package islandTraderSwing.ui.gui;
+package islandtrader.ui.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -35,7 +35,7 @@ public class ArchipelagoWindow {
 		frmArchipelagoMap.getContentPane().setBackground(new Color(153, 204, 255));
 		frmArchipelagoMap.setTitle("Archipelago Map");
 		frmArchipelagoMap.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(ArchipelagoWindow.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
+				.getImage(ArchipelagoWindow.class.getResource("/islandtrader/images/shipWater1.png")));
 		frmArchipelagoMap.setBounds(100, 100, 1021, 664);
 		frmArchipelagoMap.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmArchipelagoMap.getContentPane().setLayout(null);
@@ -48,8 +48,7 @@ public class ArchipelagoWindow {
 
 		JButton btnIslandOne = new JButton("");
 		btnIslandOne.setBackground(new Color(204, 255, 255));
-		btnIslandOne.setIcon(
-				new ImageIcon(ArchipelagoWindow.class.getResource("/islandTraderSwing/ui/gui/images/Island1Sml.png")));
+		btnIslandOne.setIcon(new ImageIcon(ArchipelagoWindow.class.getResource("/islandtrader/images/Island1Sml.png")));
 		btnIslandOne.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -68,8 +67,7 @@ public class ArchipelagoWindow {
 			}
 		});
 		btnIslandTwo.setBackground(new Color(204, 255, 255));
-		btnIslandTwo.setIcon(
-				new ImageIcon(ArchipelagoWindow.class.getResource("/islandTraderSwing/ui/gui/images/island2Sml.png")));
+		btnIslandTwo.setIcon(new ImageIcon(ArchipelagoWindow.class.getResource("/islandtrader/images/island2Sml.png")));
 		btnIslandTwo.setBounds(42, 147, 202, 218);
 		frmArchipelagoMap.getContentPane().add(btnIslandTwo);
 
@@ -81,8 +79,8 @@ public class ArchipelagoWindow {
 			}
 		});
 		btnIslandThree.setBackground(new Color(204, 255, 255));
-		btnIslandThree.setIcon(
-				new ImageIcon(ArchipelagoWindow.class.getResource("/islandTraderSwing/ui/gui/images/island3Sml.png")));
+		btnIslandThree
+				.setIcon(new ImageIcon(ArchipelagoWindow.class.getResource("/islandtrader/images/island3Sml.png")));
 		btnIslandThree.setBounds(194, 409, 202, 178);
 		frmArchipelagoMap.getContentPane().add(btnIslandThree);
 
@@ -94,8 +92,8 @@ public class ArchipelagoWindow {
 			}
 		});
 		btnIslandFour.setBackground(new Color(204, 255, 255));
-		btnIslandFour.setIcon(
-				new ImageIcon(ArchipelagoWindow.class.getResource("/islandTraderSwing/ui/gui/images/island4Sml.png")));
+		btnIslandFour
+				.setIcon(new ImageIcon(ArchipelagoWindow.class.getResource("/islandtrader/images/island4Sml.png")));
 		btnIslandFour.setBounds(567, 409, 202, 178);
 		frmArchipelagoMap.getContentPane().add(btnIslandFour);
 
@@ -107,8 +105,8 @@ public class ArchipelagoWindow {
 			}
 		});
 		btnIslandFive.setBackground(new Color(204, 255, 255));
-		btnIslandFive.setIcon(
-				new ImageIcon(ArchipelagoWindow.class.getResource("/islandTraderSwing/ui/gui/images/island5Sml.png")));
+		btnIslandFive
+				.setIcon(new ImageIcon(ArchipelagoWindow.class.getResource("/islandtrader/images/island5Sml.png")));
 		btnIslandFive.setBounds(696, 147, 235, 191);
 		frmArchipelagoMap.getContentPane().add(btnIslandFive);
 

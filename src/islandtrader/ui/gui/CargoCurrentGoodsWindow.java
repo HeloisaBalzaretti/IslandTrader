@@ -1,4 +1,4 @@
-package islandTraderSwing.ui.gui;
+package islandtrader.ui.gui;
 
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -13,7 +13,7 @@ import javax.swing.SwingConstants;
 
 import islandtrader.core.StoreTradable;
 
-public class CargoAllStoreTradablesWindow {
+public class CargoCurrentGoodsWindow {
 
 	private JFrame cargoAllItemsWindow;
 	private GameEnvironmentSwing game;
@@ -21,7 +21,7 @@ public class CargoAllStoreTradablesWindow {
 	/**
 	 * Create the application.
 	 */
-	public CargoAllStoreTradablesWindow(GameEnvironmentSwing incomingGame) {
+	public CargoCurrentGoodsWindow(GameEnvironmentSwing incomingGame) {
 		game = incomingGame;
 		initialize();
 		cargoAllItemsWindow.setVisible(true);
@@ -34,8 +34,8 @@ public class CargoAllStoreTradablesWindow {
 	private void initialize() {
 		cargoAllItemsWindow = new JFrame();
 		cargoAllItemsWindow.setTitle("See my goods");
-		cargoAllItemsWindow.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				CargoAllStoreTradablesWindow.class.getResource("/islandTraderSwing/ui/gui/images/capitain9.png")));
+		cargoAllItemsWindow.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(CargoCurrentGoodsWindow.class.getResource("/islandtrader/images/capitain9.png")));
 		cargoAllItemsWindow.setBounds(100, 100, 900, 439);
 		cargoAllItemsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		cargoAllItemsWindow.getContentPane().setLayout(null);
@@ -47,8 +47,8 @@ public class CargoAllStoreTradablesWindow {
 		cargoAllItemsWindow.getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(
-				CargoAllStoreTradablesWindow.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
+		lblNewLabel_1.setIcon(
+				new ImageIcon(CargoCurrentGoodsWindow.class.getResource("/islandtrader/images/shipWater1.png")));
 		lblNewLabel_1.setBounds(28, 60, 237, 250);
 		cargoAllItemsWindow.getContentPane().add(lblNewLabel_1);
 

@@ -1,3 +1,7 @@
+/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
 package repository;
 
 import java.util.ArrayList;
@@ -16,50 +20,86 @@ import islandtrader.core.Upgrade;
  * according to the store it is being added to) Therefore, the Stores will have
  * their storage of items to buy and items to sell ready to be traded.
  *
- * @author heloisa
+ * @author Maria Heloisa Balzaretti
  *
  */
 public class StoreRepository extends BaseRepository {
 	/**
-	 * ID_NUMBER, NAME, DESCRIPTION, STORE_FEE_TO_CHANGE_PRICES represents a
-	 * property located at the index of the sublist that will be used to build the
-	 * Store
+	 * STORE_FEE_TO_CHANGE_PRICES represents the property located at the index 3 of
+	 * the sublist that will be used to build the Store.It is is at index 3 of the
+	 * sublist of the storesList
 	 */
-	private final int ID_NUMBER = 0;
-	private final int NAME = 1;
-	private final int DESCRIPTION = 2;
+
 	private final int STORE_FEE_TO_CHANGE_PRICES = 3;
+
 	/**
-	 * ID_STORE_TRADABLE represents the unic identifier number for the relationship
-	 * between a Store and a Tradable(each line in the
-	 * StoreRelashionshipItemUpgrade.csv files) ID_NUMBER_STORE represents the
-	 * identifier to which the Tradable shall be sent to. ID_NUMBER_ITEM_OR_UPGRADE
-	 * the Tradable to be inserted in the given store. BUYS_FROM_TRADER,
-	 * SELLS_TO_TRADER, represents a True or False(0 or 1) situation to decide if
-	 * the store sells or buys that Tradable(or both. QUANTITY_BUY_FROM_TRADER,
-	 * QUANTITY_SELL_TO_TRADER the given quantities of each Tradable that the Store
-	 * will have available to buy or sell.
+	 * ID_STORE_TRADABLE represents the unique identifier number for the
+	 * relationship between a Store and a Tradable(each line in the
+	 * StoreRelashionshipItemUpgrade.csv files) it is at index 0 in the sublist of
+	 * storeItemsUpgradesList
 	 */
 	private final int ID_STORE_TRADABLE = 0;
-	private final int ID_NUMBER_STORE = 1;
-	private final int ID_NUMBER_ITEM_OR_UPGRADE = 2;
-	private final int BUYS_FROM_TRADER = 3;
-	private final int SELLS_TO_TRADER = 4;
-	private final int QUANTITY_BUY_FROM_TRADER = 5;
-	private final int QUANTITY_SELL_TO_TRADER = 6;
+
 	/**
-	 * STORE_CSV_FILEPATH and STORE_ITEM_UPGRADE_CSV_FILEPATH the filepaths to the
-	 * csv files that are used to create the Stores and the file that represents a
-	 * relationship between the store and it's' Tradables available.
+	 * ID_NUMBER_STORE represents the identifier to say which Store the Tradable
+	 * shall be sent to. it is at index 1 in the sublist of storeItemsUpgradesList
+	 */
+	private final int ID_NUMBER_STORE = 1;
+
+	/**
+	 * ID_NUMBER_ITEM_OR_UPGRADE the Tradable to be inserted in the given store. It
+	 * is at index 2 in the sublist of storeItemsUpgradesList
+	 */
+	private final int ID_NUMBER_ITEM_OR_UPGRADE = 2;
+
+	/**
+	 * BUYS_FROM_TRADER, represents a True or False(0 or 1) situation to decide if
+	 * the store sells or buys that Tradable(or both). It is at index 3 in the
+	 * sublist of storeItemsUpgradesList
+	 */
+	private final int BUYS_FROM_TRADER = 3;
+
+	/**
+	 * SELLS_TO_TRADER, represents a True or False(0 or 1) situation to decide if
+	 * the store sells or buys that Tradable(or both). It is at index 4 in the
+	 * sublist of storeItemsUpgradesList
+	 */
+	private final int SELLS_TO_TRADER = 4;
+
+	/**
+	 *
+	 * QUANTITY_BUY_FROM_TRADER the given quantities of each Tradable that the Store
+	 * will want to have available to buy from Trader It is at index 5 in the
+	 * sublist of storeItemsUpgradesList
+	 */
+	private final int QUANTITY_BUY_FROM_TRADER = 5;
+
+	/**
+	 *
+	 * QUANTITY_SELL_TO_TRADER the given quantities of each Tradable that the Store
+	 * will have available to sell to the Trader. It is at index 6 in the sublist of
+	 * storeItemsUpgradesList
+	 */
+	private final int QUANTITY_SELL_TO_TRADER = 6;
+
+	/**
+	 * STORE_CSV_FILEPATH the file path to the CSV file that is used to create the
+	 * Store
 	 */
 	private final String STORE_CSV_FILEPATH = "csvFiles/stores.csv";
+
+	/**
+	 * STORE_ITEM_UPGRADE_CSV_FILEPATH the file path to the CSV file that are used
+	 * to create the Stores and the file that represents a relationship between the
+	 * store and it's' Tradables available.
+	 */
 	private final String STORE_ITEM_UPGRADE_CSV_FILEPATH = "csvFiles/storeRelationshipItemUpgrade.csv";
 
 	/**
-	 * from baseRepository, this method is a helper method to the getStores() and
-	 * used to get the list of sublists of Strings that represent the properties for
-	 * the Store. It removes the first line that contains the headers/name of
-	 * properties.
+	 * This method is a helper method to the getStores(List<List<String>>
+	 * storesList) and used to get the list of sublists of Strings that represent
+	 * the properties for the Store. It removes the first line that contains the
+	 * headers/name of properties.
 	 */
 	@Override
 	public ArrayList<Store> getList() {
@@ -79,13 +119,11 @@ public class StoreRepository extends BaseRepository {
 	 */
 	private ArrayList<Store> getStores(List<List<String>> storesList) {
 		ArrayList<Store> storesArray = new ArrayList<>();
-
 		for (List<String> store : storesList) {
 			int idNumber = Integer.parseInt(store.get(ID_NUMBER));
 			String name = store.get(NAME);
 			String description = store.get(DESCRIPTION);
 			float storeFee = Float.parseFloat(store.get(STORE_FEE_TO_CHANGE_PRICES));
-
 			Store newStore = new Store(name, description, storeFee, idNumber);
 			storesArray.add(newStore);
 		}
@@ -103,12 +141,9 @@ public class StoreRepository extends BaseRepository {
 	 */
 	public void SetStoresTradables(List<Store> stores, List<Item> items, List<Upgrade> upgrades) {
 		List<Tradable> tradablesList = getTradablesList(items, upgrades);
-
 		List<List<String>> storeItemsUpgradesList = getStoreItemsUpgradesList();
-
 		ArrayList<StoreTradable> toBuy = new ArrayList<StoreTradable>();
 		ArrayList<StoreTradable> toSell = new ArrayList<StoreTradable>();
-
 		Integer currentStoreIdNumber = null;
 		Store store = null;
 
@@ -120,7 +155,6 @@ public class StoreRepository extends BaseRepository {
 			int sellsToTrader = Integer.parseInt(fileLine.get(SELLS_TO_TRADER));
 			int quantityBuy = Integer.parseInt(fileLine.get(QUANTITY_BUY_FROM_TRADER));
 			int quantitySell = Integer.parseInt(fileLine.get(QUANTITY_SELL_TO_TRADER));
-
 			if (currentStoreIdNumber != storeIdNumber) {
 				if (currentStoreIdNumber == null) {
 					store = getStoreById(storeIdNumber, stores);
@@ -132,7 +166,6 @@ public class StoreRepository extends BaseRepository {
 					store = getStoreById(storeIdNumber, stores);
 				}
 				currentStoreIdNumber = storeIdNumber;
-
 			}
 			addTradableToStoreStorages(tradablesList, toBuy, toSell, idStoreTradable, itemOrUpgradeIdNumber,
 					buysFromTrader, sellsToTrader, quantityBuy, quantitySell);
@@ -188,7 +221,7 @@ public class StoreRepository extends BaseRepository {
 	}
 
 	/**
-	 * Helper to the addTradableToStoreStorages(...)
+	 * Helper to the addTradableToStoreStorages
 	 *
 	 * @param idNumber
 	 * @param tradables
@@ -205,8 +238,8 @@ public class StoreRepository extends BaseRepository {
 	}
 
 	/**
-	 * Helper method to the SetStoresTradables(....) To add the Tradable to the
-	 * correct store.
+	 * Helper method to the SetStoresTradables. To add the Tradable to the correct
+	 * store.
 	 *
 	 * @param idNumber
 	 * @param stores

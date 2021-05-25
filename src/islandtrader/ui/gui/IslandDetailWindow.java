@@ -1,4 +1,4 @@
-package islandTraderSwing.ui.gui;
+package islandtrader.ui.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import islandtrader.core.Island;
 import islandtrader.core.StoreTradable;
 
-public class IslandDetail {
+public class IslandDetailWindow {
 
 	private JFrame islandDetailsWindow;
 
@@ -25,7 +25,7 @@ public class IslandDetail {
 	/**
 	 * Create the application.
 	 */
-	public IslandDetail(Island island) {
+	public IslandDetailWindow(Island island) {
 		islandSelected = island;
 
 		initialize();
@@ -38,7 +38,7 @@ public class IslandDetail {
 	private void initialize() {
 		islandDetailsWindow = new JFrame();
 		islandDetailsWindow.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(IslandDetail.class.getResource("/islandTraderSwing/ui/gui/images/Island1Sml.png")));
+				.getImage(IslandDetailWindow.class.getResource("/islandtrader/images/Island1Sml.png")));
 		islandDetailsWindow.setTitle(islandSelected.getName() + " details");
 		islandDetailsWindow.setBounds(100, 100, 741, 540);
 		islandDetailsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -47,7 +47,7 @@ public class IslandDetail {
 		JLabel lblIslandImg = new JLabel("");
 		lblIslandImg.setHorizontalAlignment(SwingConstants.CENTER);
 		changeIslandImg();
-		lblIslandImg.setIcon(new ImageIcon(IslandDetail.class.getResource(changeIslandImg())));
+		lblIslandImg.setIcon(new ImageIcon(IslandDetailWindow.class.getResource(changeIslandImg())));
 		lblIslandImg.setBounds(10, 10, 276, 234);
 		islandDetailsWindow.getContentPane().add(lblIslandImg);
 
@@ -115,22 +115,22 @@ public class IslandDetail {
 		switch (indexIsland) {
 
 		case 0:
-			sourcePath = "/islandTraderSwing/ui/gui/images/Island1Sml.png";
+			sourcePath = "/islandtrader/images/Island1Sml.png";
 			break;
 		case 1:
-			sourcePath = "/islandTraderSwing/ui/gui/images/Island2Sml.png";
+			sourcePath = "/islandtrader/images/Island2Sml.png";
 			break;
 		case 2:
-			sourcePath = "/islandTraderSwing/ui/gui/images/Island3Sml.png";
+			sourcePath = "/islandtrader/images/Island3Sml.png";
 			break;
 		case 3:
-			sourcePath = "/islandTraderSwing/ui/gui/images/Island4Sml.png";
+			sourcePath = "/islandtrader/images/Island4Sml.png";
 			break;
 		case 4:
-			sourcePath = "/islandTraderSwing/ui/gui/images/Island5Sml.png";
+			sourcePath = "/islandtrader/images/Island5Sml.png";
 			break;
 		default:
-			sourcePath = "/islandTraderSwing/ui/gui/images/Island0Sml.png";
+			sourcePath = "/islandtrader/images/Island0Sml.png";
 			break;
 
 		}

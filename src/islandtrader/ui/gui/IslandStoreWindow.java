@@ -1,4 +1,4 @@
-package islandTraderSwing.ui.gui;
+package islandtrader.ui.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -32,7 +32,7 @@ import islandtrader.core.StoreTradable;
 import islandtrader.core.Trader;
 import islandtrader.core.Upgrade;
 
-public class IslandStore {
+public class IslandStoreWindow {
 
 	private JFrame storeWindow;
 	private GameEnvironmentSwing game;
@@ -40,7 +40,7 @@ public class IslandStore {
 	/**
 	 * Create the application.
 	 */
-	public IslandStore(GameEnvironmentSwing incomingGame) {
+	public IslandStoreWindow(GameEnvironmentSwing incomingGame) {
 		game = incomingGame;
 		initialize();
 		storeWindow.setVisible(true);
@@ -71,8 +71,7 @@ public class IslandStore {
 		storeWindow.getContentPane().add(lblIslStore);
 
 		JLabel lblStoreImg = new JLabel("");
-		lblStoreImg.setIcon(
-				new ImageIcon(IslandStore.class.getResource("/islandTraderSwing/ui/gui/images/storeIsland.png")));
+		lblStoreImg.setIcon(new ImageIcon(IslandStoreWindow.class.getResource("/islandtrader/images/storeIsland.png")));
 		lblStoreImg.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStoreImg.setBounds(296, 41, 192, 150);
 		storeWindow.getContentPane().add(lblStoreImg);
@@ -386,7 +385,7 @@ public class IslandStore {
 
 		storeWindow.setTitle("Store");
 		storeWindow.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(IslandStore.class.getResource("/islandTraderSwing/ui/gui/images/storeIsland.png")));
+				.getImage(IslandStoreWindow.class.getResource("/islandtrader/images/storeIsland.png")));
 		storeWindow.setBounds(100, 100, 825, 691);
 		storeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}

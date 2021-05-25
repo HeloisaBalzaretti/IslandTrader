@@ -1,7 +1,7 @@
 /**
  *
  */
-package islandtrader.ui;
+package islandtrader.ui.cmd;
 
 import java.util.ArrayList;
 

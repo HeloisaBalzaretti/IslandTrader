@@ -1,3 +1,7 @@
+/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
 package repository;
 
 import java.util.ArrayList;
@@ -8,39 +12,62 @@ import islandtrader.core.Upgrade;
 /**
  * Represents a database of Upgrades, it is used to create an ArrayList of
  * Upgrades, from upgrades.csv, that then will be given to the Stores to trade.
+ * Each constant property represents a property located at the index of the
+ * sublist that will be used to build the Upgrade.
  *
- * @author
+ * @author Maria Heloisa Balzaretti
  *
  */
 
 public class UpgradeRepository extends BaseRepository {
-	/**
-	 * Each constant property represents a property located at the index of the
-	 * sublist that will be used to build the Upgrade. The ID_NUMBER, NAME,
-	 * DESCRIPTION, PRICE_STORE_SELLS_TO_TRADER, PRICE_STORE_BUYS_FROM_TRADER
-	 * represent the super(Tradable) properties and INCREASE_THE_SHIP_SPEED,
-	 * INCREASE_THE_SHIP_SNEAKINEES,INCREASE_THE_SHIP_CARGO_CAPACITY,
-	 * INCREASE_THE_SHIP_ENDURANCE are properties exclusive to the Upgrade, used to
-	 * increase the ship properties or decrease if the trades needs to sell these
-	 * later. UPGRADES_CSV_FILEPATH is the file path to the upgrades.csv file
-	 */
 
-	private final int ID_NUMBER = 0;
-	private final int NAME = 1;
-	private final int DESCRIPTION = 2;
+	/**
+	 * this Upgrade price that store will use to sell to the Trader is at index 3 of
+	 * the sublist of the upgradesList
+	 */
 	private final int PRICE_STORE_SELLS_TO_TRADER = 3;
+
+	/**
+	 * this Upgrade price that store will use to buy to the Trader is at index 4 of
+	 * the sublist of the upgradesList
+	 */
 	private final int PRICE_STORE_BUYS_FROM_TRADER = 4;
+
+	/**
+	 * this amount of speed that the upgrade will increase in the Ship is at index 5
+	 * of the sublist of the upgradesList
+	 */
 	private final int INCREASE_THE_SHIP_SPEED = 5;
+
+	/**
+	 * this amount of sneakiness that the upgrade will increase in the Ship is at
+	 * index 6 of the sublist of the upgradesList
+	 */
 	private final int INCREASE_THE_SHIP_SNEAKINEES = 6;
+
+	/**
+	 * this amount of cargo capacity that the upgrade will increase in the Ship is
+	 * at index 7 of the sublist of the upgradesList
+	 */
 	private final int INCREASE_THE_SHIP_CARGO_CAPACITY = 7;
+
+	/**
+	 * this amount of endurance that the upgrade will increase in the Ship is at
+	 * index 8 of the sublist of the upgradesList
+	 */
 	private final int INCREASE_THE_SHIP_ENDURANCE = 8;
+
+	/**
+	 * The file path to the Upgrade CSV file with the information about all the
+	 * Upgrades traded in the game
+	 */
 	private final String UPGRADES_CSV_FILEPATH = "csvFiles/upgrades.csv";
 
 	/**
-	 * from baseRepository, this method is a helper method to the getUpgrades() and
-	 * used to get the list of sublists of Strings that represent the properties for
-	 * the Upgrade. It removes the first line that contains the headers/names of
-	 * properties.
+	 * from baseRepository, this method is a helper method to the
+	 * getUpgrades(List<List<String>> upgradesList) and used to get the list of
+	 * sublists of Strings that represent the properties for the Upgrade. It removes
+	 * the first line that contains the headers/names of properties.
 	 */
 	@Override
 	public ArrayList<Upgrade> getList() {

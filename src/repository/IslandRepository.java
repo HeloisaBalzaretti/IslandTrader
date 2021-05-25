@@ -1,3 +1,7 @@
+/**
+ * Repository package contain all the classes used to read the CSV files that contain the
+ *  game Objects information, name, description etc.
+ */
 package repository;
 
 import java.util.ArrayList;
@@ -14,41 +18,35 @@ import islandtrader.core.Upgrade;
 import service.RandomEventService;
 
 /**
- * Class that models objects of the class Island for the database.
+ * Represents a database of Islands, it is used to create an ArrayList of
+ * Islands, from islands.csv. Here we also add the the Stores, that are already
+ * populated with the StoreTradable objects(which are tradables that have the
+ * correct price and quantity according to the store where it is being traded)
+ * Therefore, the Islands will have their Stores ready to the trade of goods and
+ * upgrades. Also here the Islands have their available routes settled and with
+ * the random events also already defined. The random events will change every
+ * new game. but are still allocated randomly for each route.
  *
- * @author
+ * @author Maria Heloisa Balzaretti
+ *
  */
 public class IslandRepository extends BaseRepository {
+
 	/**
-	 * ID_NUMBER constant that stores the column index number of the .csv file in
-	 * database.
-	 */
-	private final int ID_NUMBER = 0;
-	/**
-	 * NAME constant that stores the column index number of the .csv file in
-	 * database.
-	 */
-	private final int NAME = 1;
-	/**
-	 * DESCRIPTION constant that stores the column index number of the .csv file in
-	 * database.
-	 */
-	private final int DESCRIPTION = 2;
-	/**
-	 * DISTANCE_MATRIX Matrix constant that stores the distances in days from each
-	 * island to each other.
+	 * DISTANCE_MATRIX Matrix constant that stores the distances in days from one
+	 * island to another. It is is at index 3 of the sublist of the IslandsList
 	 */
 	private final int DISTANCE_MATRIX = 3;
 
 	/**
-	 * ISLAND_CSV_FILEPATH constant that stores the column index number of the .csv
-	 * file in database.
+	 * ISLAND_CSV_FILEPATH constant that stores the information to build the islands
+	 * using the islands.csv file in the repository.
 	 */
 	private final String ISLAND_CSV_FILEPATH = "csvFiles/islands.csv";
 
 	/**
-	 * Returns an Array List of objects Island constructed in getIslands() method
-	 * from the given database.
+	 * Returns an Array List of objects Island constructed in
+	 * getIslands(List<List<String>> islandList) method from the given database.
 	 */
 	@Override
 	public ArrayList<Island> getList() {
@@ -60,13 +58,19 @@ public class IslandRepository extends BaseRepository {
 	/**
 	 * Helper method for the function getList(). Receives a list of strings
 	 * constructed by getList() from the given database to returns a list of objects
-	 * Island.
+	 * Island. As this is the main method that creates the Island objects, it needs
+	 * to receive all other Arrays of objects to be able to build the Island with
+	 * the populated Store and the Route with the RandomEvents also in place to
+	 * happen. The randomEvents change every time the game starts. However it is
+	 * being allocated randomly to the Routes, with the probability of happening, to
+	 * meet the requirements.
+	 *
 	 *
 	 * @param a list of lists of strings
 	 * @return a list of objects Island.
 	 */
 
-	private ArrayList<Island> getIslands(List<List<String>> aList) {
+	private ArrayList<Island> getIslands(List<List<String>> islandList) {
 
 		ArrayList<Island> islandsArray = new ArrayList<>();
 
@@ -91,10 +95,8 @@ public class IslandRepository extends BaseRepository {
 		RandomEventService res = new RandomEventService(pirates, sailors, weatherList);
 
 		storeRepository.SetStoresTradables(stores, newItems, newUpgrades);
-
 		int storeIndex = 0;
-
-		for (List<String> island : aList) {
+		for (List<String> island : islandList) {
 			int idNumber = Integer.parseInt(island.get(ID_NUMBER));
 			String name = island.get(NAME);
 			String description = island.get(DESCRIPTION);
@@ -118,7 +120,7 @@ public class IslandRepository extends BaseRepository {
 	}
 
 	/**
-	 * We set the route names based on the list of islands.
+	 * We set the route names based on the islands it connects.
 	 *
 	 * @param islands
 	 */
@@ -149,23 +151,4 @@ public class IslandRepository extends BaseRepository {
 		}
 		return routes;
 	}
-
-	/**
-
-	*/
-	public void getIslandRoutes(ArrayList<Island> islands) {
-		for (Island island : islands) {
-			System.out.println("Routes");
-			for (Route route : island.getRoutes()) {
-				if (route != null) {
-					System.out.println(route.getName());
-					System.out.println(route.getDescription());
-					System.out.println(route.getPossibleEvents());
-				}
-			}
-
-		}
-
-	}
-
 }

@@ -5,8 +5,8 @@
 package islandtrader.core;
 
 /**
- * Class that models an Island. Every entity in the project has to have an
- * identifier that will facilitate the game environment.
+ * Every object in the game is an entity that has to have an identifier that
+ * will facilitate the game environment.
  *
  * @author Maria Heloisa Balzaretti
  */

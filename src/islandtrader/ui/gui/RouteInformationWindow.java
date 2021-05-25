@@ -1,4 +1,4 @@
-package islandTraderSwing.ui.gui;
+package islandtrader.ui.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 import islandtrader.core.Route;
 import islandtrader.core.Trader;
 
-public class RouteInformation {
+public class RouteInformationWindow {
 
 	private final String ROUTE_MENU_LINE_MESSAGE = " %s: <br> %d days and %d kms of sailing with a total cost of %.2f$ to get %s <br>";
 	private JFrame routesInformationWindow;
@@ -24,7 +24,7 @@ public class RouteInformation {
 	/**
 	 * Create the application.
 	 */
-	public RouteInformation(GameEnvironmentSwing incomingGame, Trader trader) {
+	public RouteInformationWindow(GameEnvironmentSwing incomingGame, Trader trader) {
 		game = incomingGame;
 
 		initialize();
@@ -38,7 +38,7 @@ public class RouteInformation {
 	private void initialize() {
 		routesInformationWindow = new JFrame();
 		routesInformationWindow.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(RouteInformation.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
+				.getImage(RouteInformationWindow.class.getResource("/islandtrader/images/shipWater1.png")));
 		routesInformationWindow.setTitle("View routes information");
 		routesInformationWindow.setBounds(100, 100, 842, 721);
 		routesInformationWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -81,22 +81,22 @@ public class RouteInformation {
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(
-				new ImageIcon(RouteInformation.class.getResource("/islandTraderSwing/ui/gui/images/pirateT1.png")));
+		lblNewLabel
+				.setIcon(new ImageIcon(RouteInformationWindow.class.getResource("/islandtrader/images/pirateT1.png")));
 		lblNewLabel.setBounds(10, 470, 155, 204);
 		routesInformationWindow.getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(
-				new ImageIcon(RouteInformation.class.getResource("/islandTraderSwing/ui/gui/images/sailorTom.png")));
+		lblNewLabel_1
+				.setIcon(new ImageIcon(RouteInformationWindow.class.getResource("/islandtrader/images/sailorTom.png")));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(673, 455, 155, 219);
 		routesInformationWindow.getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(new ImageIcon(
-				RouteInformation.class.getResource("/islandTraderSwing/ui/gui/images/badWeatherSmlT.png")));
+		lblNewLabel_2.setIcon(
+				new ImageIcon(RouteInformationWindow.class.getResource("/islandtrader/images/badWeatherSmlT.png")));
 		lblNewLabel_2.setBounds(347, 459, 128, 162);
 		routesInformationWindow.getContentPane().add(lblNewLabel_2);
 	}

@@ -15,6 +15,11 @@ package islandtrader.core;
  */
 
 public abstract class RandomEvent extends Entity implements Cloneable {
+
+	/**
+	 * Percentage chance of encounter is used to calculate the chance of the
+	 * RandomEvent happening in the route.
+	 */
 	protected float percentageChanceOfEncounter;
 
 	/**

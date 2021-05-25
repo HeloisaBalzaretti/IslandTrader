@@ -1,4 +1,4 @@
-package islandTraderSwing.ui.gui;
+package islandtrader.ui.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -27,7 +27,7 @@ import islandtrader.core.Ship;
 import islandtrader.core.Trader;
 
 @SuppressWarnings("serial")
-public class SetupTrader extends JFrame {
+public class SetupTraderWindow extends JFrame {
 
 	private JFrame windowSetupTrader;
 	private JTextField textTraderName;
@@ -35,7 +35,7 @@ public class SetupTrader extends JFrame {
 	private String traderName;
 	private GameEnvironmentSwing game;
 
-	public SetupTrader(GameEnvironmentSwing incomingPlayer) {
+	public SetupTraderWindow(GameEnvironmentSwing incomingPlayer) {
 		game = incomingPlayer;
 		initialize();
 		windowSetupTrader.setVisible(true);
@@ -52,7 +52,7 @@ public class SetupTrader extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public SetupTrader() {
+	public SetupTraderWindow() {
 		initialize();
 	}
 
@@ -65,7 +65,7 @@ public class SetupTrader extends JFrame {
 		windowSetupTrader.getContentPane().setBackground(SystemColor.control);
 		windowSetupTrader.getContentPane().setFont(new Font("Serif", Font.PLAIN, 14));
 		windowSetupTrader.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(SetupTrader.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
+				.getImage(SetupTraderWindow.class.getResource("/islandtrader/images/shipWater1.png")));
 		windowSetupTrader.setTitle("Island Trader Adventure");
 		windowSetupTrader.setBounds(100, 100, 842, 527);
 		windowSetupTrader.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,7 +88,7 @@ public class SetupTrader extends JFrame {
 		lblSteeringWeelImg.setForeground(SystemColor.textHighlightText);
 		lblSteeringWeelImg.setBounds(10, 14, 193, 186);
 		lblSteeringWeelImg.setIcon(
-				new ImageIcon(SetupTrader.class.getResource("/islandTraderSwing/ui/gui/images/SteeringWeelSmall.png")));
+				new ImageIcon(SetupTraderWindow.class.getResource("/islandtrader/images/SteeringWeelSmall.png")));
 		windowSetupTrader.getContentPane().add(lblSteeringWeelImg);
 
 		JLabel lblNewLabel = new JLabel("Welcome to the Island trader adventure!");
@@ -144,8 +144,7 @@ public class SetupTrader extends JFrame {
 
 		JLabel lblShipImg = new JLabel("");
 		lblShipImg.setHorizontalAlignment(SwingConstants.CENTER);
-		lblShipImg.setIcon(
-				new ImageIcon(SetupTrader.class.getResource("/islandTraderSwing/ui/gui/images/shipWater1.png")));
+		lblShipImg.setIcon(new ImageIcon(SetupTraderWindow.class.getResource("/islandtrader/images/shipWater1.png")));
 		lblShipImg.setBounds(588, 218, 230, 204);
 		windowSetupTrader.getContentPane().add(lblShipImg);
 		DefaultListModel<Ship> shipListModel = new DefaultListModel<Ship>();
