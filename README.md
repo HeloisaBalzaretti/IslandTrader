@@ -12,7 +12,7 @@
    To start IslandTrader with a command line interface run:
 
      java -cp bin src.islandtrader.Main cmd
-
+4-You may experience some of the fonts in labels are not showing properly, I did not enforce display configs in the project.
 
 Ensure Java 14 is installed on the machine
 Open the zip folder in a terminal window
